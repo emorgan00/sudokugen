@@ -1,7 +1,8 @@
-from random import shuffle
+from random import shuffle, random
 
-def grid(variant = ''):
+def grid(variant = 'DEFAULT'):
 	'''Variants: 'DEFAULT', 'KNIGHT' '''
+	variant = variant.upper()
 
 	grid = [[None for _ in xrange(9)] for _ in xrange(9)]
 	opts = [[range(9) for _ in xrange(9)] for _ in xrange(9)]
@@ -78,4 +79,7 @@ def grid(variant = ''):
 	return grid
 
 def print_grid(g):
-	for row in g: print ' '.join(str(x+1) for x in row)
+	for row in g: print ' '.join('.' if x == -1 else str(x+1) for x in row)
+
+def partial_grid(g, ratio):
+	return [[x if random() < ratio else -1 for x in row] for row in g]
