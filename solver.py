@@ -19,7 +19,7 @@ def score(g, variant = 'DEFAULT', verbose = False):
 		for x, y in product(xrange(9), xrange(9)):
 			if g[x][y] != -1: continue
 			if len(opts[x][y]) == 0:
-				raise Exception("No solution")
+				raise Exception("No solution at "+str(x)+", "+str(y))
 			if len(opts[x][y]) == 1:
 				g[x][y] = opts[x][y][0]
 				return True
@@ -61,7 +61,7 @@ def score(g, variant = 'DEFAULT', verbose = False):
 	def setup_opts(special = False):
 		global opts
 
-		opts = [[range(9) for _ in xrange(9)] for _ in xrange(9)]
+		opts = [[range(9) if g[x][y] == -1 else [] for y in xrange(9)] for x in xrange(9)]
 		for x, y in product(xrange(9), xrange(9)):
 			if g[x][y] != -1:
 				add(x, y, g[x][y], opts, variant if special else 'DEFAULT')
@@ -81,29 +81,40 @@ def score(g, variant = 'DEFAULT', verbose = False):
 			
 			for k in xrange(9):
 				if len(count[k]) != 2: continue
-				if count[k][0][0] == count[k][1][0]: # same y, slice along x
-					i = count[k][0][0]
+				ax, ay, bx, by = count[k][0][0], count[k][0][1], count[k][1][0], count[k][1][1]
+				if ax == bx: # same x, slice along y
 					for j in xrange(9):
-						if j != count[k][0][1] and j != count[k][1][1] and k in opts[i][j]:
-							opts[i][j].remove(k)
+						if j != ay and j != by and k in opts[bx][j]:
+							opts[bx][j].remove(k)
 							edited = True
-				if count[k][0][1] == count[k][1][1]: # same x, slice along y
-					j = count[k][0][1]
+				if ay == by: # same y, slice along x
 					for i in xrange(9):
-						if i != count[k][0][0] and i != count[k][1][0] and k in opts[i][j]:
+						if i != ax and i != bx and k in opts[i][by]:
+							opts[i][by].remove(k)
+							edited = True
+				box = same_box(ax, ay, bx, by)
+				if box: # same box, remove within box
+					for i, j in product(xrange(box[0], box[0]+3), xrange(box[1], box[1]+3)):
+						if (i != ax or j != ay) and (i != bx or j != by) and k in opts[i][j]:
 							opts[i][j].remove(k)
 							edited = True
+
 			return edited
 
 		flag = False
+		# boxes
 		for cx, cy in product(xrange(0, 9, 3), xrange(0, 9, 3)):
 			if check_group(product(xrange(cx, cx+3), xrange(cy, cy+3))): flag = True
+
+		# rows/cols
+		for i in xrange(9):
+			if check_group(product([i], xrange(9))): flag = True
+			if check_group(product(xrange(9), [i])): flag = True
 
 		return flag
 
 	msg = 'STARTING POSITION'
 	while True:
-
 		if verbose:
 			print msg+' '+str(score)
 			print_grid(g)
@@ -121,7 +132,7 @@ def score(g, variant = 'DEFAULT', verbose = False):
 		c = check()
 		if c:
 			if verbose: msg = 'IMPLICIT '+c
-			score += 5; continue
+			score += 10; continue
 
 		if variant == 'DEFAULT': break
 
@@ -131,7 +142,7 @@ def score(g, variant = 'DEFAULT', verbose = False):
 		c = check()
 		if c:
 			if verbose: msg = 'VARIANT '+c
-			score += 5; continue
+			score += 10; continue
 
 		implicit_opts()
 
