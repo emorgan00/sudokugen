@@ -80,6 +80,7 @@ def grid(variant = 'DEFAULT'):
 
 def print_grid(g):
 	for row in g: print ' '.join('.' if x == -1 else str(x+1) for x in row)
+	print ''
 
 def partial_grid(g, ratio):
 	return [[x if random() < ratio else -1 for x in row] for row in g]
