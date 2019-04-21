@@ -15,7 +15,7 @@ def score(g, variant = 'DEFAULT', verbose = False):
 
 	def elim(): # a box is in direct conflict with 8 other numbers.
 		global opts
-		
+
 		for x, y in product(xrange(9), xrange(9)):
 			if g[x][y] != -1: continue
 			if len(opts[x][y]) == 0:
@@ -66,22 +66,33 @@ def score(g, variant = 'DEFAULT', verbose = False):
 			if g[x][y] != -1:
 				add(x, y, g[x][y], opts, variant if special else 'DEFAULT')
 
-	def implicit_slice(special = False): # a pair slicing another box/row/col
+	def implicit_opts(special = False): # a pair slicing another box/row/col
 		global opts
 
 		# precondition: opts is already setup with setup_opts
 
-		def check_pairs(group):
-			pass
+		def check_group(group):
+			count = [[] for _ in xrange(9)]
+			for x, y in group:
+				if g[x][y] != -1: continue
+				for k in opts[x][y]:
+					count[k].append((x, y))
+			
+			for k in xrange(9):
+				if len(count[k]) != 2: continue
+				if count[k][0][0] == count[k][1][0]: # same y, slice along x
+					i = count[k][0][0]
+					for j in xrange(9):
+						if j != count[k][0][1] and j != count[k][1][1] and k in opts[i][j]:
+							opts[i][j].remove(k)
+				if count[k][0][1] == count[k][1][1]: # same x, slice along y
+					j = count[k][0][1]
+					for i in xrange(9):
+						if i != count[k][0][0] and i != count[k][1][0] and k in opts[i][j]:
+							opts[i][j].remove(k)
 
-		# boxes
 		for cx, cy in product(xrange(0, 9, 3), xrange(0, 9, 3)):
-			if check_pairs(product(xrange(cx, cx+3), xrange(cy, cy+3))): return True
-
-		# rows/cols
-		for i in xrange(9):
-			if check_pairs(product([i], xrange(9))): return True
-			if check_pairs(product(xrange(9), [i])): return True
+			if check_group(product(xrange(cx, cx+3), xrange(cy, cy+3))): return True
 
 		return False
 
@@ -89,7 +100,7 @@ def score(g, variant = 'DEFAULT', verbose = False):
 	while True:
 
 		if verbose:
-			print msg
+			print msg+' '+str(score)
 			print_grid(g)
 
 		# Check for elims/slices
@@ -100,11 +111,11 @@ def score(g, variant = 'DEFAULT', verbose = False):
 			if verbose: msg = c
 			score += 1; continue
 
-		implicit_slice(False)
+		implicit_opts()
 
 		c = check()
 		if c:
-			if verbose: msg = 'PAIR '+c
+			if verbose: msg = 'IMPLICIT '+c
 			score += 5; continue
 
 		# Check for variant elims/slices
@@ -113,14 +124,14 @@ def score(g, variant = 'DEFAULT', verbose = False):
 		c = check()
 		if c:
 			if verbose: msg = 'VARIANT '+c
-			score += 1; continue
+			score += 10; continue
 
-		implicit_slice(True)
+		implicit_opts()
 
 		c = check()
 		if c:
-			if verbose: msg = 'VARIANT PAIR '+c;
-			score += 5; continue
+			if verbose: msg = 'VARIANT IMPLICIT '+c;
+			score += 50; continue
 
 		break
 
@@ -128,20 +139,3 @@ def score(g, variant = 'DEFAULT', verbose = False):
 		if g[x][y] == -1: return -1
 
 	return score
-
-'''
-puzzle = [
-	[-1, -1, -1, -1, -1, -1, -1, -1,  2],
-	[-1, -1, -1, -1, -1, -1, -1, -1, -1],
-	[-1, -1, -1, -1, -1,  2, -1, -1, -1],
-	[-1, -1, -1, -1,  2, -1, -1, -1, -1],
-	[-1, -1, -1, -1, -1, -1,  2, -1, -1],
-	[-1,  3, -1, -1, -1, -1, -1, -1, -1],
-	[-1,  4, -1, -1, -1, -1, -1, -1, -1],
-	[-1,  5, -1, -1, -1, -1, -1, -1, -1],
-	[-1,  6, -1, -1, -1, -1, -1, -1, -1]
-]
-
-print score(puzzle)
-print_grid(puzzle)
-'''

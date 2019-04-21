@@ -1,4 +1,5 @@
 from random import shuffle, random
+from itertools import product
 
 def neighbors(x, y, variant = 'DEFAULT'): # return proceeding cells which are in conflict with (x, y)
 	# horizontal / vertical
@@ -84,3 +85,10 @@ def print_grid(g):
 
 def partial_grid(g, ratio):
 	return [[x if random() < ratio else -1 for x in row] for row in g]
+
+def grid_from_string(s):
+	out = [[-1 for _ in xrange(9)] for _ in xrange(9)]
+	s = s.strip().replace('\n', '').replace(' ', '')
+	for x, y in product(xrange(9), xrange(9)):
+		out[x][y] = int(s[x*9+y])-1 if s[x*9+y].isdigit() else -1 
+	return out
