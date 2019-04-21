@@ -14,7 +14,8 @@ def score(g, variant = 'DEFAULT', verbose = False):
 
 
 	def elim(): # a box is in direct conflict with 8 other numbers.
-
+		global opts
+		
 		for x, y in product(xrange(9), xrange(9)):
 			if g[x][y] != -1: continue
 			if len(opts[x][y]) == 0:
@@ -26,6 +27,7 @@ def score(g, variant = 'DEFAULT', verbose = False):
 		return False
 
 	def slice(): # a box/row/col only has 1 spot where the number can go
+		global opts
 
 		def check_group(group):
 			count = [[0, 0, 0] for _ in xrange(9)]
@@ -57,6 +59,7 @@ def score(g, variant = 'DEFAULT', verbose = False):
 		return None
 
 	def setup_opts(special = False):
+		global opts
 
 		opts = [[range(9) for _ in xrange(9)] for _ in xrange(9)]
 		for x, y in product(xrange(9), xrange(9)):
@@ -64,6 +67,7 @@ def score(g, variant = 'DEFAULT', verbose = False):
 				add(x, y, g[x][y], opts, variant if special else 'DEFAULT')
 
 	def implicit_slice(special = False): # a pair slicing another box/row/col
+		global opts
 
 		# precondition: opts is already setup with setup_opts
 
