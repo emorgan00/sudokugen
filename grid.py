@@ -37,6 +37,11 @@ def neighbors_all(x, y, variant = 'DEFAULT'): # return all cells which are in co
 			if i >= 0 and j >= 0 and i < 9 and j < 9:
 				yield (i, j)
 
+def same_box(ax, ay, bx, by): # return the box corner if the two coordinates are in the same box, False otherwise
+	if ax/3 == bx/3 and ay/3 == by/3:
+		return ax/3*3, ay/3*3
+	return False
+
 def grid(variant = 'DEFAULT'):
 	'''Variants: 'DEFAULT', 'KNIGHT' '''
 	variant = variant.upper()
