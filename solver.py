@@ -66,12 +66,13 @@ def score(g, variant = 'DEFAULT', verbose = False):
 			if g[x][y] != -1:
 				add(x, y, g[x][y], opts, variant if special else 'DEFAULT')
 
-	def implicit_opts(special = False): # a pair slicing another box/row/col
+	def implicit_opts(): # a pair slicing another box/row/col
 		global opts
 
 		# precondition: opts is already setup with setup_opts
 
 		def check_group(group):
+			edited = False
 			count = [[] for _ in xrange(9)]
 			for x, y in group:
 				if g[x][y] != -1: continue
@@ -85,16 +86,20 @@ def score(g, variant = 'DEFAULT', verbose = False):
 					for j in xrange(9):
 						if j != count[k][0][1] and j != count[k][1][1] and k in opts[i][j]:
 							opts[i][j].remove(k)
+							edited = True
 				if count[k][0][1] == count[k][1][1]: # same x, slice along y
 					j = count[k][0][1]
 					for i in xrange(9):
 						if i != count[k][0][0] and i != count[k][1][0] and k in opts[i][j]:
 							opts[i][j].remove(k)
+							edited = True
+			return edited
 
+		flag = False
 		for cx, cy in product(xrange(0, 9, 3), xrange(0, 9, 3)):
-			if check_group(product(xrange(cx, cx+3), xrange(cy, cy+3))): return True
+			if check_group(product(xrange(cx, cx+3), xrange(cy, cy+3))): flag = True
 
-		return False
+		return flag
 
 	msg = 'STARTING POSITION'
 	while True:
@@ -118,13 +123,15 @@ def score(g, variant = 'DEFAULT', verbose = False):
 			if verbose: msg = 'IMPLICIT '+c
 			score += 5; continue
 
+		if variant == 'DEFAULT': break
+
 		# Check for variant elims/slices
 		setup_opts(True)
 
 		c = check()
 		if c:
 			if verbose: msg = 'VARIANT '+c
-			score += 10; continue
+			score += 5; continue
 
 		implicit_opts()
 

@@ -1,9 +1,10 @@
 import sys, os
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
-from grid import *
 from solver import *
 
-m = 150 # a decent baseline score
+# this will generate 1000 puzzles and print the hardest ones along with their respective scores
+
+m = 100
 for _ in xrange(1000):
 	puzzle = grid('KNIGHT')
 	puzzle = partial_grid(puzzle, 0.3)
