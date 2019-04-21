@@ -59,29 +59,25 @@ def score(g, variant = 'DEFAULT', verbose = False):
 
 		return False
 
-	flag = True
 	msg = 'STARTING POSITION'
-	while flag:
+	while True:
 		if verbose:
 			print msg
-			print_grid(puzzle)
+			print_grid(g)
 		if elim(False):
 			if verbose: msg = 'DEFAULT ELIM'
 			score += 1
-			continue
-		if slice(False):
+		elif slice(False):
 			if verbose: msg = 'DEFAULT SLICE'
 			score += 1
-			continue
-		if elim(True):
+		elif elim(True):
 			if verbose: msg = 'SPECIAL ELIM'
 			score += 10
-			continue
-		if slice(True):
+		elif slice(True):
 			if verbose: msg = 'SPECIAL SLICE'
 			score += 10
-			continue
-		flag = False
+		else:
+			break
 
 	for x, y in product(xrange(9), xrange(9)):
 		if g[x][y] == -1: return -1
@@ -104,11 +100,3 @@ puzzle = [
 print score(puzzle)
 print_grid(puzzle)
 '''
-
-
-puzzle = grid('knight')
-print_grid(puzzle)
-puzzle = partial_grid(puzzle, 0.3)
-
-print score(puzzle, 'KNIGHT', True)
-print_grid(puzzle)
