@@ -9,23 +9,25 @@ m_clues = 81
 
 puzzles = []
 
-for _ in xrange(3):
-	g = generate_symmetric_grid('R', 'KNIGHT')
+file_out = 'freeform.txt'
+
+for _ in xrange(100):
+	g = generate_grid('KNIGHT')
 	s = score(g, 'KNIGHT')
 	c = sum(sum(x != -1 for x in row) for row in g)
 	puzzles.append((g, s, c))
 
-with open('puzzles.txt', 'w') as f:
-	puzzles.sort(key = lambda x: x[1], reverse = True)
-	f.write('HARDEST:\n')
+with open(file_out, 'w') as f:
+	puzzles.sort(key = lambda x: (x[1], x[2]), reverse = True)
+	f.write('HARDEST:')
 	for p, s, c in puzzles:
-		f.write('SCORE: '+str(s))
-		f.write('CLUES: '+str(c))
+		f.write('\n\nSCORE: '+str(s)+'\n')
+		f.write('CLUES: '+str(c)+'\n')
 		f.write(grid_to_string(p))
 
-	puzzles.sort(key = lambda x: x[2])
-	f.write('FEWEST CLUES:\n')
+	puzzles.sort(key = lambda x: (x[2], x[1]))
+	f.write('\n\nFEWEST CLUES:')
 	for p, s, c in puzzles:
-		f.write('SCORE: '+str(s))
-		f.write('CLUES: '+str(c))
+		f.write('\n\nSCORE: '+str(s)+'\n')
+		f.write('CLUES: '+str(c)+'\n')
 		f.write(grid_to_string(p))
