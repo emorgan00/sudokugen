@@ -11,15 +11,15 @@ def grid_remove(g, variant = 'DEFAULT'):
 
 	for x, y in choices:
 		if g[x][y] != -1:
-			k = copy[x][y]
-			copy[x][y] = -1
+			k = g[x][y]
+			g[x][y] = -1
 			s = score(g, variant)
 
 			if s > m_score:
 				m_score = s
 				m_loc = (x, y)
 
-			copy[x][y] = k
+			g[x][y] = k
 
 	if m_score == -1:
 		return -1
