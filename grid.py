@@ -84,6 +84,9 @@ def grid(variant = 'DEFAULT'):
 	fill(0, 0)
 	return grid
 
+def grid_to_string(g):
+	return '\n'.join(' '.join('.' if x == -1 else str(x+1) for x in row) for row in g)
+
 def print_grid(g):
 	for row in g: print ' '.join('.' if x == -1 else str(x+1) for x in row)
 	print ''

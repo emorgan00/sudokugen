@@ -11,13 +11,15 @@ def grid_remove(g, variant = 'DEFAULT'):
 
 	for x, y in choices:
 		if g[x][y] != -1:
-			copy = [[k for k in row] for row in g]
+			k = copy[x][y]
 			copy[x][y] = -1
-			s = score(copy, variant)
+			s = score(g, variant)
 
 			if s > m_score:
 				m_score = s
 				m_loc = (x, y)
+
+			copy[x][y] = k
 
 	if m_score == -1:
 		return -1
@@ -70,17 +72,18 @@ def grid_remove_symmetric(g, style, variant = 'DEFAULT'):
 
 	for x, y in choices:
 		if g[x][y] != -1:
-			copy = [[k for k in row] for row in g]
-			
-			copy[x][y] = -1
 			nx, ny = flip(x, y)
-			copy[nx][ny] = -1
 
-			s = score(copy, variant)
+			k0, k1 = g[x][y], g[nx][ny]
+			g[x][y], g[nx][ny] = -1, -1
+
+			s = score(g, variant)
 
 			if s > m_score:
 				m_score = s
 				m_loc = (x, y, nx, ny)
+
+			g[x][y], g[nx][ny] = k0, k1
 
 	if m_score == -1:
 		return -1

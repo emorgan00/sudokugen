@@ -113,6 +113,8 @@ def score(g, variant = 'DEFAULT', verbose = False):
 
 		return flag
 
+	g = [[x for x in row] for row in g]
+
 	msg = 'STARTING POSITION'
 	while True:
 		if verbose:
