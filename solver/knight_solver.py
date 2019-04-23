@@ -78,6 +78,9 @@ def make_step(g, opts):
 		add_pairs_in_group(product([i], xrange(9)))
 		add_pairs_in_group(product(xrange(9), [i]))
 
+	# note: not all potential triples may be included here. Finding other triples (linked by knight logic) is very non-trivial, most likely would be scored 1000+.
+	# I'm not totally sure how to detect other triples (or if they even exist), I would have to look for some examples in practice.
+
 # LINEAR/BOX PAIR SLICE (score: 10)
 # take all pairs which are arranged along a line, and slice along that line and in that box
 
@@ -113,7 +116,43 @@ def make_step(g, opts):
 
 	if edited: return 10, 'PAIR SLICE', False
 
-# LINEAR/BOX IMPLICIT PAIR SLICE (score: 10)
+# LINEAR/BOX TRIPLE SLICE (score: 15)
+
+	def evaluate_triple(triple):
+		e = False
+		k = triple[0]
+		ax, ay = pair[1][0]
+		bx, by = pair[1][1]
+		cx, cy = pair[1][2]
+
+		if ax == bx == cx: # same x
+			for i in xrange(9):
+				if i != ay and i != by and i != cy and k in opts[ax][i]:
+					opts[ax][i].remove(k)
+					e = True
+
+		if ay == by == cy: # same y
+			for i in xrange(9):
+				if i != ax and i != bx and i != cx and k in opts[i][ay]:
+					opts[i][ay].remove(k)
+					e = True
+
+		box = same_box(ax, ay, bx, by)
+		test = same_box(ax, ay, cx, cy)
+		if box and test:
+			for i, j in product(xrange(box[0], box[0]+3), xrange(box[1], box[1]+3)):
+				if (i != ax or j != ay) and (i != bx or j != by) and (i != cx or j != cy) and k in opts[i][j]:
+					opts[i][j].remove(k)
+					e = True
+		return e
+
+	edited = False
+	for triple in triples:
+		if evaluate_triple(triple): edited = True
+
+	if edited: return 15, 'TRIPLE SLICE', False
+
+# LINEAR/BOX IMPLICIT PAIR SLICE (score: 20)
 # an implicit pair exists which we can slice by
 
 	implicit_pairs = []
@@ -145,7 +184,7 @@ def make_step(g, opts):
 		if evaluate_pair(pair): edited = True
 		pairs.append(pair)
 
-	if edited: return 10, 'IMPLICIT PAIR SLICE', False
+	if edited: return 20, 'IMPLICIT PAIR SLICE', False
 
 # KNIGHT PAIR SLICE (score: 100)
 # if both parts of a pair see the same tile by knight moves, we can eliminate
