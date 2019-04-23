@@ -1,4 +1,5 @@
 from solver import *
+from grid import *
 
 def grid_remove(g, variant = 'DEFAULT'):
 	''' given a valid sudoku, remove a number from the grid to produce another valid sudoku.

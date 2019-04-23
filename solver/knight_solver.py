@@ -1,5 +1,3 @@
-import sys, os
-sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from grid import *
 from itertools import product
 

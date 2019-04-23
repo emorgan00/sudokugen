@@ -26,4 +26,4 @@ to do:
 
 include triples in pair reduction
 detect implicit triples (non-trivial)
-knight slicing by pairs
+detect knight-move-linked pairs
