@@ -1,5 +1,6 @@
 import sys, os
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
+sys.path.insert(1, os.path.join(sys.path[0], '../solver'))
 from generator import *
 
 # generate many puzzles, and keep track of the best ones. also, write them to a file.
@@ -11,11 +12,13 @@ puzzles = []
 
 file_out = 'freeform.txt'
 
-for _ in xrange(100):
+for i in xrange(1, 101):
 	g = generate_grid('KNIGHT')
 	s = score(g, 'KNIGHT')
 	c = sum(sum(x != -1 for x in row) for row in g)
 	puzzles.append((g, s, c))
+	print str(i)+' puzzles generated'
+	sys.stdout.flush()
 
 with open(file_out, 'w') as f:
 	puzzles.sort(key = lambda x: (x[1], x[2]), reverse = True)
