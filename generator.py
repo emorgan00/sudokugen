@@ -1,3 +1,4 @@
+from sys import stdout
 from solver import *
 from grid import *
 
@@ -97,14 +98,14 @@ def generate_grid(variant = 'DEFAULT', verbose = False):
 	'''randomly generate a brand new puzzle, and deconstruct it to produce a maximally difficult set of clues'''
 	s, g = -1, None
 	while s == -1:
-		g = partial_grid(grid(variant), 0.6)
-		copy = [[x for x in row] for row in g]
-		s = score(copy, variant)
+		g = partial_grid(grid(variant), 0.7)
+		s = score(g, variant)
 
 	while s != -1:
 		if verbose:
 			print s
 			print_grid(g)
+			stdout.flush()
 		s = grid_remove(g, variant)
 
 	return g
@@ -112,16 +113,14 @@ def generate_grid(variant = 'DEFAULT', verbose = False):
 def generate_symmetric_grid(style, variant = 'DEFAULT', verbose = False):
 	'''randomly generate a brand new puzzle, and deconstruct it to produce a maximally difficult set of clues'''
 	style = style.upper()
-	s, g = -1, None
-	while s == -1:
-		g = grid(variant)
-		copy = [[x for x in row] for row in g]
-		s = score(copy, variant)
+	s, g = 0, None
+	g = grid(variant)
 
 	while s != -1:
 		if verbose:
 			print s
 			print_grid(g)
+			stdout.flush()
 		s = grid_remove_symmetric(g, style, variant)
 
 	return g

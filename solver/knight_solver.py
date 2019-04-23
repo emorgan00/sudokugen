@@ -1,3 +1,4 @@
+from sys import stdout
 from grid import *
 from itertools import product
 
@@ -20,7 +21,7 @@ def make_step(g, opts):
 	for x, y in product(xrange(9), xrange(9)):
 		if g[x][y] != -1: continue
 		if len(opts[x][y]) == 0:
-			raise Exception("No solution at "+str(x)+", "+str(y))
+			return -1, 'ERROR', False
 		if len(opts[x][y]) == 1:
 			g[x][y] = opts[x][y].pop()
 			return 1, 'COLLAPSE', True
@@ -179,7 +180,8 @@ def make_step(g, opts):
 	for pair in pairs:
 		if evaluate_pair_knight(pair): edited = True
 
-	if edited: return 100, 'KNIGHT PAIR SLICE', False
+	if edited:
+		return 100, 'KNIGHT PAIR SLICE', False
 
 # NOTHING WORKED (either we are done, or the puzzle is unsolvable)
 
@@ -204,6 +206,7 @@ def knight_score(g, verbose = False):
 			print name+' '+str(score)
 			if display:
 				print_grid(g)
+			stdout.flush()
 
 	for x, y in product(xrange(9), xrange(9)):
 		if g[x][y] == -1: return -1

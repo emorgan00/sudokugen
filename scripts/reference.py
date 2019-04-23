@@ -1,19 +1,20 @@
 import sys, os
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
 sys.path.insert(1, os.path.join(sys.path[0], '../solver'))
 from solver import score
 from grid import grid_from_string
 
 puzzle = grid_from_string('''
 
-. . . 1 2 6 . . .
-. . . . 5 . . . .
-6 . . 9 4 . . . 8
-. . . . . . 2 . .
+. . . . 6 1 7 . .
+7 . 5 . 3 . . 2 .
+. . . . . . 9 . .
 . . . . . . . . .
-. . 6 . . . . . .
-3 . . . 1 4 . . 2
-. . . . 3 . . . .
-. . . 8 6 2 . . .
+1 . . . 8 . . . 9
+. . . . . . . . .
+. . 2 . . . . . .
+. 4 . . 7 . 3 . 2
+. . 3 5 9 . . . .
 
 ''')
 
