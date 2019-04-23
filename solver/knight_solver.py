@@ -121,9 +121,9 @@ def make_step(g, opts):
 	def evaluate_triple(triple):
 		e = False
 		k = triple[0]
-		ax, ay = pair[1][0]
-		bx, by = pair[1][1]
-		cx, cy = pair[1][2]
+		ax, ay = triple[1][0]
+		bx, by = triple[1][1]
+		cx, cy = triple[1][2]
 
 		if ax == bx == cx: # same x
 			for i in xrange(9):
