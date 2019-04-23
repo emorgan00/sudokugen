@@ -16,7 +16,7 @@ def make_step(g, opts):
 				if k in opts[i][j]:
 					opts[i][j].remove(k)
 
-# CHECK IF THERE ARE SINGLE-OPT BOXES (score: 1)
+# COLLAPSE (collapse a list of opts w/ len 1 into a grid number) (score: 1)
 
 	for x, y in product(xrange(9), xrange(9)):
 		if g[x][y] != -1: continue
@@ -24,11 +24,11 @@ def make_step(g, opts):
 			raise Exception("No solution at "+str(x)+", "+str(y))
 		if len(opts[x][y]) == 1:
 			g[x][y] = opts[x][y].pop()
-			return 1, 'ELIM'
+			return 1, 'COLLAPSE'
 
-# CHECK IF THERE ARE NUMBERS APPEARING ONCE IN A BOX/ROW/COL (score: 1)
+# BOX/ROW/COL SLICE (score: 1)
 
-	def check_group(group):
+	def slice_group(group):
 		count = [[0, 0, 0] for _ in xrange(9)]
 		for x, y in group:
 			if g[x][y] != -1: continue
@@ -43,12 +43,43 @@ def make_step(g, opts):
 
 	# boxes
 	for cx, cy in product(xrange(0, 9, 3), xrange(0, 9, 3)):
-		if check_group(product(xrange(cx, cx+3), xrange(cy, cy+3))): return 1, 'BOX SLICE'
+		if slice_group(product(xrange(cx, cx+3), xrange(cy, cy+3))): return 1, 'BOX SLICE'
 
 	# rows/cols
 	for i in xrange(9):
-		if check_group(product([i], xrange(9))): return 1, 'ROW SLICE'
-		if check_group(product(xrange(9), [i])): return 1, 'COL SLICE'
+		if slice_group(product([i], xrange(9))): return 1, 'ROW SLICE'
+		if slice_group(product(xrange(9), [i])): return 1, 'COL SLICE'
+
+# at this point, we will need to start using pairs, which are set up here
+# pair format: (k, [(x, y), (x, y)]) (same goes for triples, quads)
+	
+	pairs = []
+	def add_pairs_in_group(group):
+		count = [[] for _ in xrange(9)]
+		for x, y in group:
+			if g[x][y] != -1: continue
+			for k in opts[x][y]:
+				count[k].append((x, y))
+		
+		for k in xrange(9):
+			if len(count[k]) != 2: continue
+			pairs.append((k, count[k]))
+
+	# boxes
+	for cx, cy in product(xrange(0, 9, 3), xrange(0, 9, 3)):
+		add_pairs_in_group(product(xrange(cx, cx+3), xrange(cy, cy+3)))
+
+	# rows/cols
+	for i in xrange(9):
+		add_pairs_in_group(product([i], xrange(9)))
+		add_pairs_in_group(product(xrange(9), [i]))
+
+# LINEAR PAIR SLICE (score: 5)
+
+	for pair in pairs:
+		print pair
+
+# NOTHING WORKED (either we are done, or the puzzle is unsolvable)
 
 	return -1, 'DONE'
 
