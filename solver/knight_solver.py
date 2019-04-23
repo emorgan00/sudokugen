@@ -56,6 +56,7 @@ def make_step(g, opts):
 # pair format: (k, [(x, y), (x, y)]) (same goes for triples, quads)
 	
 	pairs = []
+	triples = []
 	def add_pairs_in_group(group):
 		count = [[] for _ in xrange(9)]
 		for x, y in group:
@@ -64,8 +65,10 @@ def make_step(g, opts):
 				count[k].append((x, y))
 		
 		for k in xrange(9):
-			if len(count[k]) != 2: continue
-			pairs.append((k, count[k]))
+			if len(count[k]) == 2:
+				pairs.append((k, count[k]))
+			if len(count[k]) == 3:
+				triples.append((k, count[k]))
 
 	# boxes
 	for cx, cy in product(xrange(0, 9, 3), xrange(0, 9, 3)):
@@ -76,28 +79,76 @@ def make_step(g, opts):
 		add_pairs_in_group(product([i], xrange(9)))
 		add_pairs_in_group(product(xrange(9), [i]))
 
-# LINEAR PAIR SLICE (score: 10)
-# take all pairs which are arranged along a line, and slice along that line
+# LINEAR/BOX PAIR SLICE (score: 10)
+# take all pairs which are arranged along a line, and slice along that line and in that box
+
+	def evaluate_pair(p):
+		e = False
+		k = pair[0]
+		ax, ay = pair[1][0]
+		bx, by = pair[1][1]
+
+		if ax == bx: # same x
+			for i in xrange(9):
+				if i != ay and i != by and k in opts[ax][i]:
+					opts[ax][i].remove(k)
+					e = True
+
+		if ay == by: # same y
+			for i in xrange(9):
+				if i != ax and i != bx and k in opts[i][ay]:
+					opts[i][ay].remove(k)
+					e = True
+
+		box = same_box(ax, ay, bx, by)
+		if box:
+			for i, j in product(xrange(box[0], box[0]+3), xrange(box[1], box[1]+3)):
+				if (i != ax or j != ay) and (i != bx or j != by) and k in opts[i][j]:
+					opts[i][j].remove(k)
+					e = True
+		return e
 
 	edited = False
 	for pair in pairs:
-		k = pair[0]
-
-		if pair[1][0][0] == pair[1][1][0]: # same x
-			x = pair[1][0][0]
-			for i in xrange(9):
-				if i != pair[1][0][1] and i != pair[1][1][1] and k in opts[x][i]:
-					opts[x][i].remove(k)
-					edited = True
-
-		if pair[1][0][1] == pair[1][1][1]: # same y
-			y = pair[1][0][1]
-			for i in xrange(9):
-				if i != pair[1][0][0] and i != pair[1][1][0] and k in opts[i][y]:
-					opts[i][y].remove(k)
-					edited = True
+		if evaluate_pair(pair): edited = True
 
 	if edited: return 10, 'PAIR SLICE', False
+
+# LINEAR/BOX IMPLICIT PAIR SLICE (score: 10)
+# an implicit pair exists which we can slice by
+
+	implicit_pairs = []
+	def implicit_pairs_in_group(group):
+		candidates = []
+		for x, y in group:
+			if len(opts[x][y]) == 2: candidates.append((x, y))
+
+		for i in xrange(len(candidates)):
+			for j in xrange(i):
+				ax, ay = candidates[i]
+				bx, by = candidates[j]
+
+				k0, k1 = opts[ax][ay]
+				if k0 == opts[bx][by][0] and k1 == opts[bx][by][1]:
+					implicit_pairs.append((k0, [candidates[i], candidates[j]]))
+					implicit_pairs.append((k1, [candidates[i], candidates[j]]))
+
+	# boxes
+	for cx, cy in product(xrange(0, 9, 3), xrange(0, 9, 3)):
+		implicit_pairs_in_group(product(xrange(cx, cx+3), xrange(cy, cy+3)))
+
+	# rows/cols
+	for i in xrange(9):
+		implicit_pairs_in_group(product([i], xrange(9)))
+		implicit_pairs_in_group(product(xrange(9), [i]))
+
+	for pair in implicit_pairs:
+		if evaluate_pair(pair): edited = True
+		pairs.append(pair)
+
+	if edited: return 10, 'IMPLICIT PAIR SLICE', False
+
+	print implicit_pairs
 
 # NOTHING WORKED (either we are done, or the puzzle is unsolvable)
 
@@ -105,6 +156,7 @@ def make_step(g, opts):
 
 def knight_score(g, verbose = False):
 	'''generate a score on how advanced techniques are needed to solve'''
+
 	score = 0
 	opts = [[range(9) if g[x][y] == -1 else [] for y in xrange(9)] for x in xrange(9)]
 
