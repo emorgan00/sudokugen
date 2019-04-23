@@ -82,7 +82,7 @@ def make_step(g, opts):
 # LINEAR/BOX PAIR SLICE (score: 10)
 # take all pairs which are arranged along a line, and slice along that line and in that box
 
-	def evaluate_pair(p):
+	def evaluate_pair(pair):
 		e = False
 		k = pair[0]
 		ax, ay = pair[1][0]
@@ -148,7 +148,40 @@ def make_step(g, opts):
 
 	if edited: return 10, 'IMPLICIT PAIR SLICE', False
 
-	print implicit_pairs
+# KNIGHT PAIR SLICE (score: 100)
+# if both parts of a pair see the same tile by knight moves, we can eliminate
+# as a side note, reaching this point is rare enough that we don't need to worry about runtimes of these tactics
+
+	def intersecting(a, b):
+		ax, ay = a
+		bx, by = b
+		if ax == bx and ay == by: return False # same tile
+		if ax == bx or ay == by or same_box(ax, ay, bx, by): return True
+		if (ax-bx, ay-by) in [(2, 1), (-2, 1), (1, 2), (-1, 2), (2, -1), (-2, -1), (1, -2), (-1, -2)]: return True
+		return False
+
+	def common_tiles(pair):
+		a, b = pair[1]
+		out = []
+		for p in product(xrange(9), xrange(9)):
+			if intersecting(p, a) and intersecting(p, b):
+				out.append(p)
+		return out
+
+	def evaluate_pair_knight(pair):
+		k = pair[0]
+		e = False
+		for x, y in common_tiles(pair):
+			if k in opts[x][y]:
+				opts[x][y].remove(k)
+				e = True
+		return e
+
+	edited = False
+	for pair in pairs:
+		if evaluate_pair_knight(pair): edited = True
+
+	if edited: return 100, 'KNIGHT PAIR SLICE', False
 
 # NOTHING WORKED (either we are done, or the puzzle is unsolvable)
 

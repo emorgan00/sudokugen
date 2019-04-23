@@ -24,5 +24,6 @@ fewest clues so far:
 
 to do:
 
-include triples in implicit reduction
-non-trivial tactics
+include triples in pair reduction
+detect implicit triples (non-trivial)
+knight slicing by pairs
