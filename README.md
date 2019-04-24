@@ -1,14 +1,14 @@
 highest score so far:
-3.01
-3 . . . . . . 7 .
-5 . . . . 4 . 9 .
-4 . . 5 . . . . .
-. . . . . . . . 7
-. . . . . . . . .
-. . 1 . . . . . .
-8 7 9 . . . . 3 .
-2 . . . . . . 8 .
-. 5 . . . . . 2 .
+3.11
+. . . . . 6 . . .
+. . 3 . . . . . 7
+2 . . 3 . . 4 9 .
+6 . . . . . . 4 5
+. . 2 . . . 8 . .
+. . . 1 . . . . .
+3 . . . . . . . .
+7 . . . . 1 . . 9
+. . . . . . 5 . .
 
 fewest clues so far:
 12 (2.28)
@@ -24,6 +24,5 @@ fewest clues so far:
 
 to do:
 
-include triples in pair reduction
 detect implicit triples (non-trivial)
-detect knight-move-linked pairs
+detect knight-linked implicit triples (really non-trivial)

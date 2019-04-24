@@ -2,6 +2,8 @@ from sys import stdout
 from grid import *
 from itertools import product
 
+KNIGHT_STEPS = [(2, 1), (-2, 1), (1, 2), (-1, 2), (2, -1), (-2, -1), (1, -2), (-1, -2)]
+
 def make_step(g, opts):
 	'''try each method in turn, exiting once any progress is made and returning the difficulty score of that method
 	returns (score, name of method, grid modified?)'''
@@ -84,7 +86,7 @@ def make_step(g, opts):
 # LINEAR/BOX PAIR SLICE (score: 10)
 # take all pairs which are arranged along a line, and slice along that line and in that box
 
-	def evaluate_pair(pair):
+	def evaluate_pair(pair): # this is the same as evaluate_pair_knight, but cheaper and doesn't include knight moves
 		e = False
 		k = pair[0]
 		ax, ay = pair[1][0]
@@ -152,7 +154,7 @@ def make_step(g, opts):
 
 	if edited: return 15, 'TRIPLE SLICE', False
 
-# LINEAR/BOX IMPLICIT PAIR SLICE (score: 20)
+# LINEAR/BOX IMPLICIT PAIR (score: 20)
 # an implicit pair exists which we can slice by
 
 	implicit_pairs = []
@@ -184,7 +186,7 @@ def make_step(g, opts):
 		if evaluate_pair(pair): edited = True
 		pairs.append(pair)
 
-	if edited: return 20, 'IMPLICIT PAIR SLICE', False
+	if edited: return 20, 'IMPLICIT PAIR', False
 
 # KNIGHT PAIR SLICE (score: 100)
 # if both parts of a pair see the same tile by knight moves, we can eliminate
@@ -195,7 +197,7 @@ def make_step(g, opts):
 		bx, by = b
 		if ax == bx and ay == by: return False # same tile
 		if ax == bx or ay == by or same_box(ax, ay, bx, by): return True
-		if (ax-bx, ay-by) in [(2, 1), (-2, 1), (1, 2), (-1, 2), (2, -1), (-2, -1), (1, -2), (-1, -2)]: return True
+		if (ax-bx, ay-by) in KNIGHT_STEPS: return True
 		return False
 
 	def common_tiles(pair):
@@ -221,6 +223,26 @@ def make_step(g, opts):
 
 	if edited:
 		return 100, 'KNIGHT PAIR SLICE', False
+
+# KNIGHT-LINKED IMPLICIT PAIR (score: 105)
+
+	knight_pairs = []
+	for x, y in product(xrange(9), xrange(9)):
+		o = opts[x][y]
+		if len(o) == 2:
+			for dx, dy in KNIGHT_STEPS:
+				nx, ny = x+dx, y+dy
+				if in_range(nx, ny) and len(opts[nx][ny]) == 2:
+					k0, k1 = o
+					if k0 == opts[nx][ny][0] and k1 == opts[nx][ny][1]:
+						implicit_pairs.append((k0, [(x, y), (nx, ny)]))
+						implicit_pairs.append((k1, [(x, y), (nx, ny)]))
+
+	for pair in knight_pairs:
+		if evaluate_pair_knight(pair): edited = True
+		pairs.append(pair)
+
+	if edited: return 105, 'KNIGHT-LINKED IMPLICIT PAIR', False
 
 # NOTHING WORKED (either we are done, or the puzzle is unsolvable)
 

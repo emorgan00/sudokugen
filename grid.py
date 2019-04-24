@@ -42,6 +42,9 @@ def same_box(ax, ay, bx, by): # return the box corner if the two coordinates are
 		return ax/3*3, ay/3*3
 	return False
 
+def in_range(x, y):
+	return x >= 0 and y >= 0 and x < 9 and y < 9
+
 def grid(variant = 'DEFAULT'):
 	'''Variants: 'DEFAULT', 'KNIGHT' '''
 	variant = variant.upper()
