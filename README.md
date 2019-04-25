@@ -24,5 +24,6 @@ fewest clues so far:
 
 to do:
 
+evaluate triples w/ knight moves (not too hard)
 detect implicit triples (non-trivial)
 detect knight-linked implicit triples (really non-trivial)
