@@ -1,5 +1,5 @@
-from knight_solver import knight_score
 from math import log10
+from knight_solver import *
 
 def score(g, variant = 'DEFAULT', verbose = False):
 	'''return the difficulty score for this puzzle.

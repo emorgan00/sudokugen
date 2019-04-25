@@ -1,6 +1,6 @@
 from sys import stdout
-from grid import *
 from itertools import product
+from grid import print_grid, neighbors_all, same_box, in_range
 
 KNIGHT_STEPS = [(2, 1), (-2, 1), (1, 2), (-1, 2), (2, -1), (-2, -1), (1, -2), (-1, -2)]
 

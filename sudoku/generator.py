@@ -1,6 +1,8 @@
 from sys import stdout
-from solver import *
-from grid import *
+from itertools import product
+from random import shuffle
+from grid import grid, print_grid
+from solver import score
 
 def grid_remove(g, variant = 'DEFAULT'):
 	''' given a valid sudoku, remove a number from the grid to produce another valid sudoku.
