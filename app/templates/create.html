@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+	<form method='POST'>
+		Select Variant
+		<p>
+			<input type='radio' name='variant' value='KNIGHT' required> Knight Sudoku<br>
+			<input type='submit' value='Generate Sudoku!'>
+		</p>
+	</form>
+{% endblock %}
