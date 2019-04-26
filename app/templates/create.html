@@ -2,10 +2,19 @@
 
 {% block contents %}
 	<form method='POST'>
-		Select Variant
-		<p>
-			<input type='radio' name='variant' value='KNIGHT' required> Knight Sudoku<br>
-			<input type='submit' value='Generate Sudoku!'>
-		</p>
+		<p class = 'choice_header'>Variant</p>
+		<div class = 'choice_box'>
+			<input type='radio' name='variant' value='KNIGHT' required> Knight sudoku <br>
+		</div>
+		<p class = 'choice_header'>Symmetry</p>
+		<div class = 'choice_box'>
+			<input type='radio' name='symmetry' value='N' required> None <br>
+			<input type='radio' name='symmetry' value='R' required> Rotational <br>
+			<input type='radio' name='symmetry' value='H' required> Horizontal <br>
+			<input type='radio' name='symmetry' value='V' required> Vertical <br>
+			<input type='radio' name='symmetry' value='D+' required> Diagonal (+) <br>
+			<input type='radio' name='symmetry' value='D-' required> Diagonal (-) <br>
+		</div>
+		<input type='submit' value='Generate Sudoku!' style = 'margin-top: 50px'>
 	</form>
 {% endblock %}

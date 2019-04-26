@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
 {% block contents %}
-	<div style = 'width: 500px'>
-		{{ variant|safe }}
+	<div style = 'width: 540px'>
+		{{ puzzle|safe }}
+		<div class = 'sudoku_info'>
+			Variant: {{ variant }}<br>
+			Symmetry: {{ symmetry }}<br>
+			Difficulty Score: {{ difficulty }}
+		</div>
 	</div>
 {% endblock %}

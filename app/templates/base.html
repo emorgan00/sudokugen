@@ -1,7 +1,7 @@
 <!doctype HTML>
 <head>
 
-	<title>Sudoku Variants</title>
+	<title>Sudoku Variant Generator</title>
 
 </head>
 <body>
@@ -13,6 +13,22 @@
 </body>
 <style>
 
+	/* formatting for selection interface */
+
+	.choice_box {
+		text-align: left;
+		border: 1px solid black;
+		width: 540px;
+		padding: 25px;
+	}
+
+	.choice_header {
+		font-style: bold;
+		font-size: 1.5em;
+	}
+
+	/* formatting for sudoku puzzles */
+
 	.sudoku_container {
 		width: 100%;
   		border-collapse: collapse;
@@ -22,7 +38,8 @@
 		width: 11.1%;
 		text-align: center;
 		position: relative;
-		border: 1px solid;
+		border: 1px solid black;
+		vertical-align: middle;
 	}
 	.sudoku_tile:after {
 		content: '';
@@ -47,10 +64,18 @@
 
 	.sudoku_number {
 		position: absolute;
+		font-size: 30px;
+		padding: 13px;
 		top: 0;
 		bottom: 0;
 		left: 0;
 		right: 0;
+	}
+
+	.sudoku_info {
+		text-align: center;
+		width: 538px;
+		margin-bottom: 30px;
 	}
 
 </style>

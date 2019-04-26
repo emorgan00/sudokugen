@@ -19,5 +19,14 @@ def create():
 		return render_template('create.html')
 
 	elif request.method == 'POST':
-
-		return render_template('display.html', variant = render_grid(grid(request.form['variant'])))
+		if request.form['symmetry'] == 'N':
+			g  = generate_grid(request.form['variant'])
+		else:
+			g  = generate_symmetric_grid(request.form['symmetry'], request.form['variant'])
+		return render_template(
+			'display.html',
+			puzzle = render_grid(g),
+			variant = request.form['variant'],
+			symmetry = request.form['symmetry'],
+			difficulty = score(g, request.form['variant'])
+		)

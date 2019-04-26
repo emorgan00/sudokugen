@@ -1,7 +1,7 @@
 from sys import stdout
 from itertools import product
 from random import shuffle
-from grid import grid, print_grid
+from grid import grid, print_grid, partial_grid
 from solver import score
 
 def grid_remove(g, variant = 'DEFAULT'):
