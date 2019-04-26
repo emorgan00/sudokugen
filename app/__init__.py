@@ -1,5 +1,8 @@
-import os
+import os, sys
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from flask import *
+from render import *
+from sudoku import *
 
 app = Flask(__name__)
 
@@ -17,4 +20,4 @@ def create():
 
 	elif request.method == 'POST':
 
-		return render_template('display.html', variant = request.form['variant'])
+		return render_template('display.html', variant = render_grid(grid(request.form['variant'])))

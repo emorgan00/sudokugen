@@ -1,7 +1,56 @@
 <!doctype HTML>
 <head>
+
 	<title>Sudoku Variants</title>
+
 </head>
 <body>
-	{% block contents %}{% endblock %}
+
+	<div align='center'>
+		{% block contents %}{% endblock %}
+	</div>
+
 </body>
+<style>
+
+	.sudoku_container {
+		width: 100%;
+  		border-collapse: collapse;
+		border: 2px solid;
+	}
+	.sudoku_tile {
+		width: 11.1%;
+		text-align: center;
+		position: relative;
+		border: 1px solid;
+	}
+	.sudoku_tile:after {
+		content: '';
+		display: block;
+		margin-top: 100%;
+	}
+
+	/* grid lines within sudoku grid */
+
+	.sudoku_tile:first-child {
+		border-left: 2px solid;
+	}
+	.sudoku_tile:nth-child(3n) {
+		border-right: 2px solid ;
+	}
+	.sudoku_row:first-child {
+		border-top: 2px solid;
+	}
+	.sudoku_row:nth-child(3n) .sudoku_tile {
+		border-bottom: 2px solid;
+	}
+
+	.sudoku_number {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+
+</style>
