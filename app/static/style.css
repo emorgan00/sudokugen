@@ -72,6 +72,7 @@
 }
 
 .sudoku_input {
+    outline-width: 0;
 	text-align: center;
 	align-self: center;
 	font-family: 'Lucida Casual', 'Comic Sans MS';
