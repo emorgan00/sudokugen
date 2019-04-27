@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
 
-	<form class='sudoku_form' method='POST' onkeypress='return event.keyCode != 13;'>
-		<p class='choice_header'>Variant</p>
-		<div class='choice_box'>
-			<input type='radio' name='variant' value='KNIGHT' required checked> Knight sudoku <br>
+	<form class='sudoku_form' method='POST' onkeypress='return event.keyCode != 13;' action='/solve'>
+		<div style='width: 50%; float: left'>
+			<p class='choice_header'>Variant</p>
+			<div class='choice_box'>
+				<input type='radio' name='variant' value='KNIGHT' required checked> Knight Sudoku <br>
+			</div>
 		</div>
-		<p class='choice_header'>Edit Grid:</p>
-		<div style='width: 540px'>
-			{{ puzzle|safe }}
+		<div style='width: 50%; min-width: 540px; float: left'>
+			<div style='width: 540px; float: center'>
+				<p class='choice_header'>Edit Grid:</p>
+				{{ puzzle|safe }}
+				<input id='solve_button' type='submit' value='Generate Solution' style='margin-top: 50px' onclick='loading();'>
+			</div>
 		</div>
-		<input id='solve_button' type='submit' value='Generate Solution' style='margin-top: 50px' onclick='loading();'>
 	</form>
 
 	<script type='text/javascript'>

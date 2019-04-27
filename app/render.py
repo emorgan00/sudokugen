@@ -1,4 +1,5 @@
 from itertools import product
+from sudoku import grid_from_string, grid_to_string
 
 def render_grid(g):
 	'''render a sudoku grid as an HTML element'''
@@ -14,10 +15,10 @@ def render_grid(g):
 				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'>{}</div></td>\n'.format(x+1)
 		out += '</tr>'
 
-	return out+'</table>'
+	return out+'</table><input type=\'hidden\' name=\'grid\' value=\'{}\'>'.format(grid_to_string(g))
 
 def form_grid():
-	'''render a fillable sudoku grid as part of an HTML form'''
+	'''render a blank fillable sudoku grid as part of an HTML form'''
 
 	out = '<table class=\'sudoku_container\'>'
 
@@ -32,12 +33,14 @@ def form_grid():
 def grid_from_form(form):
 	'''take a filled html form and return a standard grid. <form> should accept request.form'''
 
-	grid = [[-1 for _ in xrange(9)] for _ in xrange(9)]
+	if 'grid' in form:
+		grid = grid_from_string(form['grid'])
+	else:
+		grid = [[-1 for _ in xrange(9)] for _ in xrange(9)]
+		for x, y in product(xrange(9), xrange(9)):
 
-	for x, y in product(xrange(9), xrange(9)):
-
-		k = form['{}{}'.format(x, y)]
-		if k.isdigit():
-			grid[x][y] = int(k)-1
+			k = form['{}{}'.format(x, y)]
+			if k.isdigit():
+				grid[x][y] = int(k)-1
 
 	return grid

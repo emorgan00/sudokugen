@@ -27,7 +27,6 @@ fewest clues so far:
 to do:
 
 SITE:
-solver page
 about page
 
 KNIGHT:

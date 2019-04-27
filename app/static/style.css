@@ -4,7 +4,10 @@
 	text-align: left;
 	border: 1px solid black;
 	width: 540px;
-	padding: 25px;
+	max-width: 90%;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	padding-left: 25px;
 }
 
 .choice_header {
@@ -60,7 +63,7 @@
 
 #sudoku_info {
 	text-align: center;
-	width: 538px;
+	max-width: 538px;
 	margin-top: 30px;
 	margin-bottom: 30px;
 }
