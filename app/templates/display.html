@@ -6,7 +6,7 @@
 			Variant: {{ variant }}<br>
 			Difficulty Score: {{ difficulty }}
 		</div>
-		<form class='sudoku_form' method='POST' onkeypress='return event.keyCode != 13;' action='{{ solve_url }}'>
+		<form class='sudoku_form' method='POST' onkeypress='return event.keyCode != 13;'>
 			{{ puzzle|safe }}
 			<input type='hidden' name='variant' value='{{ variant }}'>
 		</form>

@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 
-	<form class='sudoku_form' method='POST' onkeypress='return event.keyCode != 13;' action='/solve'>
+	<form class='sudoku_form' id='sudoku_form' method='POST' onkeypress='return event.keyCode != 13;'>
 		<div style='width: 50%; float: left'>
 			<p class='choice_header'>Variant</p>
 			<div class='choice_box'>
 				{% for v in variants %}
 				<input type='radio' name='variant' value='{{ v.code }}' required checked> {{ v.name }} <br>
 				{% endfor %}
+			</div>
+			<p class='choice_header'>Import Code</p>
+			<div class='choice_box'>
+				<input type='button' value='Import Code...' onclick='import_code();'>
+				<input type='text' id='code' placeholder='Enter Code'>
 			</div>
 		</div>
 		<div style='width: 50%; min-width: 540px; float: left'>
@@ -25,6 +30,10 @@
 			document.getElementById("content").style.opacity = "0.5";
 			document.getElementsByTagName("BODY")[0].style.cursor = "wait";
 			document.getElementById("solve_button").style.cursor = "wait";
+		}
+
+		function import_code() {
+			alert('Coming soon');
 		}
 
 	</script>

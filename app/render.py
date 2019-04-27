@@ -15,7 +15,7 @@ def render_grid(g):
 				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'>{}</div></td>\n'.format(x+1)
 		out += '</tr>'
 
-	return out+'</table><input type=\'hidden\' name=\'grid\' value=\'{}\'>'.format(grid_to_string(g))
+	return out+'</table><input type=\'hidden\' name=\'grid\' value=\'{}\'>'.format(grid_to_string(g, True))
 
 def form_grid():
 	'''render a blank fillable sudoku grid as part of an HTML form'''

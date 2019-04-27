@@ -42,8 +42,7 @@ def create():
 			'display.html',
 			puzzle = render_grid(g),
 			variant = v,
-			difficulty = sudoku.score(g, v),
-			solve_url = url_for('solve')
+			difficulty = sudoku.score(g, v)
 		)
 
 @app.route('/solve', methods = ('GET', 'POST'))
