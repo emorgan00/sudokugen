@@ -38,6 +38,8 @@
 			var code = code_input.value;
 			code_input.value = '';
 
+			code = code.replace(/\s/g,'').replace(/\n/g,'').replace(/\t/g,'');
+
 			for (i = 0; i < code.length; i++) {
 				var ch = code.charAt(i);
 				var x = i%9;
