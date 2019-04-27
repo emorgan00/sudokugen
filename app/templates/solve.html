@@ -5,7 +5,9 @@
 		<div style='width: 50%; float: left'>
 			<p class='choice_header'>Variant</p>
 			<div class='choice_box'>
-				<input type='radio' name='variant' value='KNIGHT' required checked> Knight Sudoku <br>
+				{% for v in variants %}
+				<input type='radio' name='variant' value='{{ v.code }}' required checked> {{ v.name }} <br>
+				{% endfor %}
 			</div>
 		</div>
 		<div style='width: 50%; min-width: 540px; float: left'>

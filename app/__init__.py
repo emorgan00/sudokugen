@@ -6,6 +6,10 @@ import sudoku
 
 app = Flask(__name__)
 
+VARIANTS = [
+	{'code': 'KNIGHT', 'name': 'Knight Sudoku'}
+]
+
 @app.route('/')
 def index():
 
@@ -16,7 +20,10 @@ def create():
 
 	if request.method == 'GET':
 
-		return render_template('create.html')
+		return render_template(
+			'create.html',
+			variants = VARIANTS
+		)
 
 	elif request.method == 'POST':
 
@@ -44,7 +51,11 @@ def solve():
 
 	if request.method == 'GET':
 
-		return render_template('solve.html', puzzle = form_grid())
+		return render_template(
+			'solve.html',
+			variants = VARIANTS,
+			puzzle = form_grid()
+		)
 
 	elif request.method == 'POST':
 
