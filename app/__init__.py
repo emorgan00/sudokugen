@@ -22,6 +22,7 @@ def create():
 
 		return render_template(
 			'create.html',
+			title = 'Generator',
 			variants = VARIANTS
 		)
 
@@ -40,6 +41,7 @@ def create():
 			g = sudoku.generate_symmetric_grid(s, v, m)
 		return render_template(
 			'display.html',
+			title = 'Generator',
 			puzzle = render_grid(g),
 			variant = v,
 			difficulty = sudoku.score(g, v),
@@ -53,6 +55,7 @@ def solve():
 
 		return render_template(
 			'solve.html',
+			title = 'Solver',
 			variants = VARIANTS,
 			puzzle = form_grid()
 		)
@@ -66,6 +69,7 @@ def solve():
 
 		return render_template(
 			'display.html',
+			title = 'Solver',
 			puzzle = render_grid(g),
 			variant = v,
 			difficulty = sc,

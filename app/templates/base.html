@@ -1,6 +1,10 @@
 <!doctype HTML>
 <head>
-	<title>Sudoku Variant Generator</title>
+	{% if title %}
+		<title>Sudokugen | {{ title }}</title>
+	{% else %}
+		<title>Sudokugen</title>
+	{% endif %}
 	<meta name='author' content='Ethan Morgan'>
 	<link rel='icon' href='static/favicon.png'>
 	<link rel='stylesheet' type='text/css' href='static/style.css'>
