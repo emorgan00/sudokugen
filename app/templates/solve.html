@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+	<div style='width: 540px'>
+		<p class='choice_header'>Edit Grid:</p>
+		<form class='sudoku_form' method='POST' onkeypress='return event.keyCode != 13;'>
+			{{ puzzle|safe }}
+			<input id='generate_button' type='submit' value='Generate Sulution' style='margin-top: 50px' onclick='loading();'>
+		</form>
+	</div>
+
+	<script type='text/javascript'>
+
+		function loading() {
+			document.getElementById("content").style.opacity = "0.5";
+			document.getElementsByTagName("BODY")[0].style.cursor = "wait";
+			document.getElementById("solve_button").style.cursor = "wait";
+		}
+
+	</script>
+
+{% endblock %}

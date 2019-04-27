@@ -44,8 +44,8 @@ def solve():
 
 	if request.method == 'GET':
 
-		return render_template('solve.html')
+		return render_template('solve.html', puzzle = form_grid())
 
 	elif request.method == 'POST':
 
-		return 'Coming Soon.'
+		return 'Coming Soon.\n'+str(grid_from_form(request.form))

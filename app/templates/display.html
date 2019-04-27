@@ -2,12 +2,12 @@
 {% block content %}
 
 	<div style='width: 540px'>
-		{{ puzzle|safe }}
 		<div id='sudoku_info'>
 			Variant: {{ variant }}<br>
 			Symmetry: {{ symmetry }}<br>
 			Difficulty Score: {{ difficulty }}
 		</div>
+		{{ puzzle|safe }}
 	</div>
 
 {% endblock %}
