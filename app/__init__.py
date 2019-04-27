@@ -38,3 +38,14 @@ def create():
 			symmetry = s,
 			difficulty = score(g, v)
 		)
+
+@app.route('/solve', methods = ('GET', 'POST'))
+def solve():
+
+	if request.method == 'GET':
+
+		return render_template('solve.html')
+
+	elif request.method == 'POST':
+
+		return 'Coming Soon.'
