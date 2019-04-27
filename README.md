@@ -27,8 +27,8 @@ fewest clues so far:
 to do:
 
 SITE:
+site header
 about page
-import to solve as code
 
 KNIGHT:
 evaluate triples w/ knight moves (not too hard)
