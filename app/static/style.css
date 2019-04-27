@@ -60,10 +60,6 @@
 #sudoku_info {
 	text-align: center;
 	width: 538px;
+	margin-top: 30px;
 	margin-bottom: 30px;
-}
-
-#loading {
-	display: none;
-	background: url(/static/loading.gif) no-repeat;
 }
