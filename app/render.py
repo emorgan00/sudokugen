@@ -25,7 +25,9 @@ def form_grid():
 	for x in xrange(9):
 		out += '<tr class=\'sudoku_row\'>'
 		for y in xrange(9):
-			out += '<td class=\'sudoku_tile\'><input class=\'sudoku_input\' name=\'{}{}\' type=\'text\' maxlength=\'1\' autocomplete=\'new-password\'></td>\n'.format(x, y)
+			out += '''<td class=\'sudoku_tile\'>
+				<input class=\'sudoku_input\' name=\'tile_{}{}\' type=\'text\' maxlength=\'1\' autocomplete=\'new-password\'>
+				</td>\n'''.format(x, y)
 		out += '</tr>'
 
 	return out+'</table>'
@@ -39,7 +41,7 @@ def grid_from_form(form):
 		grid = [[-1 for _ in xrange(9)] for _ in xrange(9)]
 		for x, y in product(xrange(9), xrange(9)):
 
-			k = form['{}{}'.format(x, y)]
+			k = form['tile_{}{}'.format(x, y)]
 			if k.isdigit():
 				grid[x][y] = int(k)-1
 

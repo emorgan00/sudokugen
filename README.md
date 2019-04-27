@@ -28,7 +28,6 @@ to do:
 
 SITE:
 about page
-export from display as code
 import to solve as code
 
 KNIGHT:
