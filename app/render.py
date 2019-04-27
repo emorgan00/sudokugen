@@ -9,7 +9,7 @@ def render_grid(g):
 		out += '<tr class=\'sudoku_row\'>'
 		for x in row:
 			if x == -1:
-				out += '<td class=\'sudoku_tile\'><input class=\'sudoku_input\' type=\'text\' maxlength=\'1\'></td>\n'
+				out += '<td class=\'sudoku_tile\'><input class=\'sudoku_input\' type=\'text\' maxlength=\'1\' autocomplete=\'off\'></td>\n'
 			else:
 				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'>{}</div></td>\n'.format(x+1)
 		out += '</tr>'
@@ -24,7 +24,7 @@ def form_grid():
 	for x in xrange(9):
 		out += '<tr class=\'sudoku_row\'>'
 		for y in xrange(9):
-			out += '<td class=\'sudoku_tile\'><input class=\'sudoku_input\' name=\'{}{}\' type=\'text\' maxlength=\'1\'></td>\n'.format(x, y)
+			out += '<td class=\'sudoku_tile\'><input class=\'sudoku_input\' name=\'{}{}\' type=\'text\' maxlength=\'1\' autocomplete=\'off\'></td>\n'.format(x, y)
 		out += '</tr>'
 
 	return out+'</div>'
