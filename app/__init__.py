@@ -35,8 +35,7 @@ def create():
 			'display.html',
 			puzzle = render_grid(g),
 			variant = v,
-			symmetry = s,
-			difficulty = score(g, v)
+			difficulty = sudoku.score(g, v)
 		)
 
 @app.route('/solve', methods = ('GET', 'POST'))
@@ -48,6 +47,14 @@ def solve():
 
 	elif request.method == 'POST':
 
+		v = request.form['variant']
 		g = grid_from_form(request.form)
+		sc = sudoku.score(g, v)
 		sudoku.solve(g, 'KNIGHT') # this needs to be updated
-		return 'Coming Soon.\n'+sudoku.grid_to_string(g)
+
+		return render_template(
+			'display.html',
+			puzzle = render_grid(g),
+			variant = v,
+			difficulty = sc
+		)

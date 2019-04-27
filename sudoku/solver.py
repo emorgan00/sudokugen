@@ -14,7 +14,7 @@ def score(g, variant = 'DEFAULT', verbose = False):
 	else:
 		raise Exception('unsupported variant')
 
-	return -1 if score < 0 else round(log10(score), 2)
+	return -1 if score <= 0 else round(log10(score), 2)
 
 def solve(g, variant = 'DEFAULT', verbose = False):
 	'''solve this puzzle.'''
