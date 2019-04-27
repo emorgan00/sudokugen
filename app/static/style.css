@@ -1,15 +1,16 @@
 /* formatting for global site header */
 
 .site_header {
-	height: 50px;
+	height: 30px;
 	width: 100%;
 	background-color: #FFFFFF;
 	margin-bottom: 15px;
+	border-bottom: 1px solid black
 }
 
 .header_item {
 	font-size: 20px;
-	margin: 15px;
+	margin-right: 20px;
     bottom: 0;
 	vertical-align: text-bottom;
 	text-align: center;
