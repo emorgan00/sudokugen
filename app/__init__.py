@@ -2,7 +2,7 @@ import os, sys
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from flask import *
 from render import *
-from sudoku import *
+import sudoku
 
 app = Flask(__name__)
 
@@ -28,9 +28,9 @@ def create():
 		except: m = None
 
 		if request.form['symmetry'] == 'N':
-			g = generate_grid(v, m)
+			g = sudoku.generate_grid(v, m)
 		else:
-			g = generate_symmetric_grid(s, v, m)
+			g = sudoku.generate_symmetric_grid(s, v, m)
 		return render_template(
 			'display.html',
 			puzzle = render_grid(g),
@@ -48,4 +48,6 @@ def solve():
 
 	elif request.method == 'POST':
 
-		return 'Coming Soon.\n'+str(grid_from_form(request.form))
+		g = grid_from_form(request.form)
+		sudoku.solve(g, 'KNIGHT') # this needs to be updated
+		return 'Coming Soon.\n'+sudoku.grid_to_string(g)

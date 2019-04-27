@@ -38,6 +38,6 @@ def grid_from_form(form):
 
 		k = form['{}{}'.format(x, y)]
 		if k.isdigit():
-			grid[x][y] = int(k)
+			grid[x][y] = int(k)-1
 
 	return grid
