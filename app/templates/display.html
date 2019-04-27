@@ -6,10 +6,29 @@
 			Variant: {{ variant }}<br>
 			Difficulty Score: {{ difficulty }}
 		</div>
-		<form class='sudoku_form' method='POST' onkeypress='return event.keyCode != 13;'>
+		<form class='sudoku_form' id='sudoku_form' method='POST' onkeypress='return event.keyCode != 13;'>
 			{{ puzzle|safe }}
 			<input type='hidden' name='variant' value='{{ variant }}'>
 		</form>
+		<div style='margin-top: 50px;'>
+			<input type='button' value='Export as Code...' onclick='toggle_code();' style='float: left;'>
+		</div> <br>
+		<div class='sudoku_info' id='code' style='margin-top: 50px; display: none; text-align: left;'>
+			{{ code }}
+		</div>
 	</div>
+
+	<script type='text/javascript'>
+
+		function toggle_code() {
+			var code = document.getElementById('code');
+			if (code.style.display === 'none') {
+				code.style.display = 'block';
+			} else {
+				code.style.display = 'none';
+			}
+		}
+
+	</script>
 
 {% endblock %}
