@@ -1,3 +1,24 @@
+/* formatting for global site header */
+
+.site_header {
+	height: 50px;
+	width: 100%;
+	background-color: #FFFFFF;
+	margin-bottom: 15px;
+}
+
+.header_item {
+	font-size: 20px;
+	margin: 15px;
+    bottom: 0;
+	vertical-align: text-bottom;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	position: relative;
+	float: left;
+}
+
 /* formatting for selection interface */
 
 .choice_box {
@@ -5,9 +26,7 @@
 	border: 1px solid black;
 	width: 540px;
 	max-width: 90%;
-	padding-top: 25px;
-	padding-bottom: 25px;
-	padding-left: 25px;
+	padding: 25px;
 }
 
 .choice_header {
