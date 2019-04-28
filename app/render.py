@@ -26,7 +26,7 @@ def render_grid_pdf(g):
 		out += '<tr class=\'sudoku_row\'>'
 		for x in row:
 			if x == -1:
-				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'> </div></td>\n'
+				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'>&nbsp;</div></td>\n'
 			else:
 				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'>{}</div></td>\n'.format(x+1)
 		out += '</tr>'
