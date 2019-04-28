@@ -80,9 +80,14 @@ def solve():
 @app.route('/pdf', methods = ['POST'])
 def pdf():
 
+	v = 'Unknown Variant'
+	for d in VARIANTS:
+		if d['code'] = request.form['variant']:
+			v = d['name']
+
 	html = render_template(
 		'grid_pdf.html',
 		puzzle = render_grid_pdf(grid_from_string(request.form['code'])),
-		variant = request.form['variant']
+		variant = v
 	)
 	return render_pdf(HTML(string = html))
