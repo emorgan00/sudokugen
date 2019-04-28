@@ -28,7 +28,9 @@ to do:
 
 SITE:
 about page
-export to pdf
+
+CLASSIC:
+detect implicit triples
 
 KNIGHT:
 evaluate triples w/ knight moves (not too hard)

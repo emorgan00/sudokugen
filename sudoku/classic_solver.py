@@ -2,8 +2,6 @@ from sys import stdout
 from itertools import product
 from grid import print_grid, neighbors_all, same_box, in_range
 
-KNIGHT_STEPS = [(2, 1), (-2, 1), (1, 2), (-1, 2), (2, -1), (-2, -1), (1, -2), (-1, -2)]
-
 def make_step(g, opts):
 	'''try each method in turn, exiting once any progress is made and returning the difficulty score of that method
 	returns (score, name of method, grid modified?)'''
@@ -13,7 +11,7 @@ def make_step(g, opts):
 	for x, y in product(xrange(9), xrange(9)):
 		if g[x][y] != -1:
 			k = g[x][y]
-			for i, j in neighbors_all(x, y, 'KNIGHT'): # from grid module
+			for i, j in neighbors_all(x, y, 'CLASSIC'): # from grid module
 				if k in opts[i][j]:
 					opts[i][j].remove(k)
 
@@ -28,7 +26,7 @@ def make_step(g, opts):
 			g[x][y] = opts[x][y].pop()
 			return 1, 'COLLAPSE', True
 
-# BOX/ROW/COL SLICE (score: 1)
+# SLICE (score: 1)
 # if an option only appears once in a group, assign that grid square that value
 
 	def slice_group(group):
@@ -80,10 +78,7 @@ def make_step(g, opts):
 		add_pairs_in_group(product([i], xrange(9)))
 		add_pairs_in_group(product(xrange(9), [i]))
 
-	# note: not all potential triples may be included here. Finding other triples (linked by knight logic) is very non-trivial, most likely would be scored 1000+.
-	# I'm not totally sure how to detect other triples (or if they even exist), I would have to look for some examples in practice.
-
-# LINEAR/BOX PAIR SLICE (score: 10)
+# PAIR SLICE (score: 10)
 # take all pairs which are arranged along a line, and slice along that line and in that box
 
 	def evaluate_pair(pair): # this is the same as evaluate_pair_knight, but cheaper and doesn't include knight moves
@@ -118,7 +113,7 @@ def make_step(g, opts):
 
 	if edited: return 10, 'PAIR SLICE', False
 
-# LINEAR/BOX TRIPLE SLICE (score: 15)
+# TRIPLE SLICE (score: 15)
 
 	def evaluate_triple(triple):
 		e = False
@@ -154,7 +149,7 @@ def make_step(g, opts):
 
 	if edited: return 15, 'TRIPLE SLICE', False
 
-# LINEAR/BOX IMPLICIT PAIR (score: 20)
+# NAKED PAIR (score: 20)
 # an implicit pair exists which we can slice by
 
 	implicit_pairs = []
@@ -186,7 +181,7 @@ def make_step(g, opts):
 		if evaluate_pair(pair): edited = True
 		pairs.append(pair)
 
-	if edited: return 20, 'IMPLICIT PAIR', False
+	if edited: return 20, 'NAKED PAIR', False
 
 # OVERLAPPING PAIR (score: 25)
 
@@ -227,67 +222,11 @@ def make_step(g, opts):
 
 	if edited: return 30, 'OVERLAPPING TRIPLE', False
 
-# KNIGHT PAIR SLICE (score: 100)
-# if both parts of a pair see the same tile by knight moves, we can eliminate
-# as a side note, reaching this point is rare enough that we don't need to worry about runtimes of these tactics
-
-	def intersecting(a, b):
-		ax, ay = a
-		bx, by = b
-		if ax == bx and ay == by: return False # same tile
-		if ax == bx or ay == by or same_box(ax, ay, bx, by): return True
-		if (ax-bx, ay-by) in KNIGHT_STEPS: return True
-		return False
-
-	def common_tiles(pair):
-		a, b = pair[1]
-		out = []
-		for p in product(xrange(9), xrange(9)):
-			if intersecting(p, a) and intersecting(p, b):
-				out.append(p)
-		return out
-
-	def evaluate_pair_knight(pair):
-		k = pair[0]
-		e = False
-		for x, y in common_tiles(pair):
-			if k in opts[x][y]:
-				opts[x][y].remove(k)
-				e = True
-		return e
-
-	edited = False
-	for pair in pairs:
-		if evaluate_pair_knight(pair): edited = True
-
-	if edited:
-		return 100, 'KNIGHT PAIR SLICE', False
-
-# KNIGHT-LINKED IMPLICIT PAIR (score: 105)
-
-	knight_pairs = []
-	for x, y in product(xrange(9), xrange(9)):
-		o = opts[x][y]
-		if len(o) == 2:
-			for dx, dy in KNIGHT_STEPS:
-				nx, ny = x+dx, y+dy
-				if in_range(nx, ny) and len(opts[nx][ny]) == 2:
-					k0, k1 = o
-					if k0 == opts[nx][ny][0] and k1 == opts[nx][ny][1]:
-						implicit_pairs.append((k0, [(x, y), (nx, ny)]))
-						implicit_pairs.append((k1, [(x, y), (nx, ny)]))
-
-	for pair in knight_pairs:
-		if evaluate_pair_knight(pair): edited = True
-		pairs.append(pair)
-
-	if edited: return 105, 'KNIGHT-LINKED IMPLICIT PAIR', False
-
 # NOTHING WORKED (either we are done, or the puzzle is unsolvable)
 
 	return -1, 'DONE', True
 
-def knight_score(g, verbose = False):
+def classic_score(g, verbose = False):
 	'''generate a score on how advanced techniques are needed to solve'''
 
 	score = 0
@@ -300,6 +239,8 @@ def knight_score(g, verbose = False):
 	while True:
 		s, name, display = make_step(g, opts)
 		if s == -1: break
+
+		for row in opts: print row
 
 		score += s
 		if verbose:

@@ -1,7 +1,7 @@
 from random import shuffle, random
 from itertools import product
 
-def neighbors(x, y, variant = 'DEFAULT'): # return proceeding cells which are in conflict with (x, y)
+def neighbors(x, y, variant = 'CLASSIC'): # return proceeding cells which are in conflict with (x, y)
 	# horizontal / vertical
 	out = []
 	for i in xrange(9):
@@ -19,7 +19,7 @@ def neighbors(x, y, variant = 'DEFAULT'): # return proceeding cells which are in
 			if i >= 0 and j >= 0 and i < 9 and j < 9:
 				yield (i, j)
 
-def neighbors_all(x, y, variant = 'DEFAULT'): # return all cells which are in conflict with (x, y)
+def neighbors_all(x, y, variant = 'CLASSIC'): # return all cells which are in conflict with (x, y)
 	# horizontal / vertical
 	out = []
 	for i in xrange(9):
@@ -45,8 +45,8 @@ def same_box(ax, ay, bx, by): # return the box corner if the two coordinates are
 def in_range(x, y):
 	return x >= 0 and y >= 0 and x < 9 and y < 9
 
-def grid(variant = 'DEFAULT'):
-	'''Variants: 'DEFAULT', 'KNIGHT' '''
+def grid(variant = 'CLASSIC'):
+	'''Variants: 'CLASSIC', 'KNIGHT' '''
 	variant = variant.upper()
 
 	grid = [[None for _ in xrange(9)] for _ in xrange(9)]
