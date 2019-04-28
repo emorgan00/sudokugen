@@ -75,3 +75,11 @@ def solve():
 			difficulty = sc,
 			code = sudoku.grid_to_string(g, True)
 		)
+
+@app.route('/pdf', methods = ['POST'])
+def pdf():
+
+	from flask_weasyprint import HTML, render_pdf
+
+	html = render_grid(grid_from_form(request.form))
+	return render_pdf(HTML(string = html))

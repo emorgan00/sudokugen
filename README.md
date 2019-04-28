@@ -27,8 +27,8 @@ fewest clues so far:
 to do:
 
 SITE:
-site header
 about page
+export to pdf
 
 KNIGHT:
 evaluate triples w/ knight moves (not too hard)

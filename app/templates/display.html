@@ -6,12 +6,16 @@
 			Variant: {{ variant }}<br>
 			Difficulty Score: {{ difficulty }}
 		</div>
-		<form class='sudoku_form' id='sudoku_form' method='POST' onkeypress='return event.keyCode != 13;'>
+		<form class='sudoku_form'>
 			{{ puzzle|safe }}
-			<input type='hidden' name='variant' value='{{ variant }}'>
 		</form>
 		<div style='margin-top: 50px;'>
-			<input type='button' value='Export as Code...' onclick='toggle_code();' style='float: left;'>
+			<form action='/pdf' target='_blank' method='POST' onkeypress='return event.keyCode != 13;'>
+				<input type='button' value='Export as Code...' onclick='toggle_code();' style='float: left;'>
+				<input type='submit' value='Export as PDF...' style='float: left; margin-left: 15px;'>
+				<input type='hidden' name='variant' value='{{ variant }}'>
+				<input type='hidden' name='code' value='{{ code }}'>
+			</form>
 		</div> <br>
 		<div class='sudoku_info' id='code' style='margin-top: 50px; display: none; text-align: left;'>
 			{{ code }}
