@@ -85,4 +85,4 @@ def pdf():
 		puzzle = render_grid(grid_from_string(request.form['code'])),
 		variant = request.form['variant']
 	)
-    return render_pdf(HTML(string = html))
+	return render_pdf(HTML(string = html))
