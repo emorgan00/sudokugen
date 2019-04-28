@@ -1,7 +1,12 @@
 <!doctype html>
 <html>
-	<div align='center'>
-		<p style='text-align: center;'><i>{{ variant }}<i></p>
-		{{ puzzle|safe }}
-	<div>
+	<link rel='stylesheet' type='text/css' href='static/style.css'>
+	<div align='center' id='content'>
+		<div style='width: 540px'>
+			<p style='text-align: center;'><i>{{ variant }}</i></p>
+			<form class='sudoku_form'>
+				{{ puzzle|safe }}
+			</form>
+		<div>
+	</div>
 </html>
