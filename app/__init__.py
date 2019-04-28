@@ -82,7 +82,7 @@ def pdf():
 
 	v = 'Unknown Variant'
 	for d in VARIANTS:
-		if d['code'] = request.form['variant']:
+		if d['code'] == request.form['variant']:
 			v = d['name']
 
 	html = render_template(
