@@ -202,6 +202,7 @@ def make_step(g, opts):
 	if edited: return 25, 'OVERLAPPING PAIR', False
 
 # OVERLAPPING TRIPLE (score: 30)
+# note: this won't detect triples with pairs as components (which is most triples)
 
 	for i in xrange(len(triples)):
 		a = triples[i]
@@ -212,7 +213,6 @@ def make_step(g, opts):
 				c = triples[h]
 				k0, k1, k2 = a[0], b[0], c[0]
 				if all(a[1][p] == b[1][p] == c[1][p] for p in xrange(3)) and k0 != k1 and k1 != k2 and k0 != k2:
-					edited = True
 					for p in xrange(3):
 						o = opts[a[1][p][0]][a[1][p][1]] 
 						for k in xrange(9):
@@ -239,8 +239,6 @@ def classic_score(g, verbose = False):
 	while True:
 		s, name, display = make_step(g, opts)
 		if s == -1: break
-
-		for row in opts: print row
 
 		score += s
 		if verbose:

@@ -2,7 +2,6 @@ import os, sys
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from flask import *
 from render import *
-from flask_weasyprint import HTML, render_pdf
 import sudoku
 
 app = Flask(__name__)
@@ -79,6 +78,8 @@ def solve():
 
 @app.route('/pdf', methods = ['POST'])
 def pdf():
+	
+	from flask_weasyprint import HTML, render_pdf
 
 	v = 'Unknown Variant'
 	for d in VARIANTS:

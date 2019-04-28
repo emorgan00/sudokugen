@@ -4,9 +4,17 @@ from sudoku import *
 
 puzzle = grid_from_string('''
 
-720408030080000047401076802810739000000851000000264080209680413340000008168943275
+3 . . . 1 7 2 4 .
+. . 5 . . . . . .
+. . . . . 8 . . .
+9 8 6 . 5 . . . .
+1 . . . . 2 . . .
+. . . . . . . . .
+. . . . . 1 . . 4
+. . 4 3 . . . . .
+. 7 . . 6 . . . .
 
 ''')
 
 if __name__ == '__main__':
-	print score(puzzle, 'CLASSIC', True)
+	print score(puzzle, 'KNIGHT', True)
