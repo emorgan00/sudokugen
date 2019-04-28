@@ -7,6 +7,7 @@ import sudoku
 app = Flask(__name__)
 
 VARIANTS = [
+	{'code': 'CLASSIC', 'name': 'Classic Sudoku'},
 	{'code': 'KNIGHT', 'name': 'Knight Sudoku'}
 ]
 
@@ -65,7 +66,7 @@ def solve():
 		v = request.form['variant']
 		g = grid_from_form(request.form)
 		sc = sudoku.score(g, v)
-		sudoku.solve(g, 'KNIGHT') # this needs to be updated
+		sudoku.solve(g, v)
 
 		return render_template(
 			'display.html',
