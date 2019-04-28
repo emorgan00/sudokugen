@@ -17,6 +17,22 @@ def render_grid(g):
 
 	return out+'</table><input type=\'hidden\' name=\'grid\' value=\'{}\'>'.format(grid_to_string(g, True))
 
+def render_grid_pdf(g):
+	'''render a sudoku grid as an HTML element, optimized for use in PDFs. Contains no form elements.'''
+
+	out = '<table class=\'sudoku_container\'>'
+
+	for row in g:
+		out += '<tr class=\'sudoku_row\'>'
+		for x in row:
+			if x == -1:
+				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'> </div></td>\n'
+			else:
+				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'>{}</div></td>\n'.format(x+1)
+		out += '</tr>'
+
+	return out+'</table><input type=\'hidden\' name=\'grid\' value=\'{}\'>'.format(grid_to_string(g, True))
+
 def form_grid():
 	'''render a blank fillable sudoku grid as part of an HTML form'''
 
