@@ -188,11 +188,23 @@ def make_step(g, opts):
 
 	if edited: return 20, 'IMPLICIT PAIR', False
 
+# at this point, we may have some duplicate pairs, which we prune off here.
+
+	distinct_pairs = []
+	def same_pair(a, b):
+		return a[0] == b[0] and a[1][0] == b[1][0] and a[1][1] == b[1][1]
+
+	for pair in pairs:
+		pair[1].sort()
+		if all(not same_pair(pair, comp) for comp in distinct_pairs):
+			distinct_pairs.append(pair)
+
+	pairs = distinct_pairs
+
 # OVERLAPPING PAIR (score: 25)
 
 	for i in xrange(len(pairs)):
 		a = pairs[i]
-		a[1].sort()
 		for j in xrange(i):
 			b = pairs[j]
 			k0, k1 = a[0], b[0]
@@ -208,25 +220,25 @@ def make_step(g, opts):
 
 # OVERLAPPING TRIPLE (score: 30)
 # note: this won't detect triples with pairs as components (which is most triples)
+# note: this is currently commented out because it is SUPER expensive and rarely is useful
 
-	for i in xrange(len(triples)):
-		a = triples[i]
-		a[1].sort()
-		for j in xrange(i):
-			b = triples[j]
-			for h in xrange(j):
-				c = triples[h]
-				k0, k1, k2 = a[0], b[0], c[0]
-				if all(a[1][p] == b[1][p] == c[1][p] for p in xrange(3)) and k0 != k1 and k1 != k2 and k0 != k2:
-					for p in xrange(3):
-						o = opts[a[1][p][0]][a[1][p][1]] 
-						for k in xrange(9):
-							if k != k0 and k != k1 and k != k2 and k in o:
-								edited = True
-								print k, o
-								o.remove(k)
+	# for i in xrange(len(triples)):
+	# 	a = triples[i]
+	# 	a[1].sort()
+	# 	for j in xrange(i):
+	# 		b = triples[j]
+	# 		for h in xrange(j):
+	# 			c = triples[h]
+	# 			k0, k1, k2 = a[0], b[0], c[0]
+	# 			if all(a[1][p] == b[1][p] == c[1][p] for p in xrange(3)) and k0 != k1 and k1 != k2 and k0 != k2:
+	# 				for p in xrange(3):
+	# 					o = opts[a[1][p][0]][a[1][p][1]] 
+	# 					for k in xrange(9):
+	# 						if k != k0 and k != k1 and k != k2 and k in o:
+	# 							edited = True
+	# 							o.remove(k)
 
-	if edited: return 30, 'OVERLAPPING TRIPLE', False
+	# if edited: return 30, 'OVERLAPPING TRIPLE', False
 
 # KNIGHT PAIR SLICE (score: 100)
 # if both parts of a pair see the same tile by knight moves, we can eliminate
@@ -283,6 +295,39 @@ def make_step(g, opts):
 		pairs.append(pair)
 
 	if edited: return 105, 'KNIGHT-LINKED IMPLICIT PAIR', False
+
+# X WING (score: 100)
+
+	for i in xrange(len(pairs)):
+		a = pairs[i]
+		for j in xrange(i):
+			b = pairs[j]
+			k0, k1 = a[0], b[0]
+			if k0 != k1: continue
+
+			# slicing along row
+			if a[1][0][0] == b[1][0][0] and a[1][1][0] == b[1][1][0]:
+				j0, j1 = a[1][0][0], a[1][1][0]
+				for i in xrange(9):
+					if i != a[1][0][1] and i != b[1][0][1] and k0 in opts[j0][i]:
+						opts[j0][i].remove(k0)
+						edited = True
+					if i != a[1][1][1] and i != b[1][1][1] and k0 in opts[j1][i]:
+						opts[j1][i].remove(k0)
+						edited = True
+
+			# slicing along col
+			if a[1][0][1] == b[1][0][1] and a[1][1][1] == b[1][1][1]:
+				j0, j1 = a[1][0][1], a[1][1][1]
+				for i in xrange(9):
+					if i != a[1][0][0] and i != b[1][0][0] and k0 in opts[i][j0]:
+						opts[i][j0].remove(k0)
+						edited = True
+					if i != a[1][1][0] and i != b[1][1][0] and k0 in opts[i][j1]:
+						opts[i][j1].remove(k0)
+						edited = True
+
+	if edited: return 100, 'X WING', False
 
 # NOTHING WORKED (either we are done, or the puzzle is unsolvable)
 

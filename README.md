@@ -1,5 +1,17 @@
 www.sudokugen.com
 
+Difficulty guide:
+
+1.5 - Child's play
+1.8 - Very easy
+2.0 - Casual (typical easy-medium puzzle)
+2.3 - Tricky (typical medium-hard puzzle)
+2.5 - Advanced (strategies like X-wing, Y-wing will be required)
+2.8 - Very advanced (most people won't be able solve this)
+3.0 - Not for the faint of heart
+
+Highest score ever recorded: 3.11
+
 highest score so far:
 3.11
 . . . . . 6 . . .
