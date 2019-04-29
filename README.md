@@ -40,11 +40,14 @@ to do:
 
 SITE:
 about page
+format it nicely
+improvements to pdf (display difficulty)
+something other than cursor in grid? the vert. line
 
 CLASSIC:
 detect implicit triples
+y wing
 
 KNIGHT:
 evaluate triples w/ knight moves (not too hard)
-detect implicit triples (non-trivial)
 detect knight-linked implicit triples (really non-trivial)

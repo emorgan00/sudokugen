@@ -276,6 +276,44 @@ def make_step(g, opts):
 	if edited:
 		return 100, 'KNIGHT PAIR SLICE', False
 
+# X WING (score: 100)
+
+	x_wing_pairs = [] # used at a later step
+	for i in xrange(len(pairs)):
+		a = pairs[i]
+		for j in xrange(i):
+			b = pairs[j]
+			k0, k1 = a[0], b[0]
+			if k0 != k1: continue
+
+			# slicing along row
+			if a[1][0][0] == b[1][0][0] and a[1][1][0] == b[1][1][0]:
+				x_wing_pairs.append((k0, [a[1][0], b[1][0]]))
+				x_wing_pairs.append((k0, [a[1][1], b[1][1]]))
+				j0, j1 = a[1][0][0], a[1][1][0]
+				for i in xrange(9):
+					if i != a[1][0][1] and i != b[1][0][1] and k0 in opts[j0][i]:
+						opts[j0][i].remove(k0)
+						edited = True
+					if i != a[1][1][1] and i != b[1][1][1] and k0 in opts[j1][i]:
+						opts[j1][i].remove(k0)
+						edited = True
+
+			# slicing along col
+			if a[1][0][1] == b[1][0][1] and a[1][1][1] == b[1][1][1]:
+				x_wing_pairs.append((k0, [a[1][0], b[1][0]]))
+				x_wing_pairs.append((k0, [a[1][1], b[1][1]]))
+				j0, j1 = a[1][0][1], a[1][1][1]
+				for i in xrange(9):
+					if i != a[1][0][0] and i != b[1][0][0] and k0 in opts[i][j0]:
+						opts[i][j0].remove(k0)
+						edited = True
+					if i != a[1][1][0] and i != b[1][1][0] and k0 in opts[i][j1]:
+						opts[i][j1].remove(k0)
+						edited = True
+
+	if edited: return 100, 'X WING', False
+
 # KNIGHT-LINKED IMPLICIT PAIR (score: 105)
 
 	knight_pairs = []
@@ -296,38 +334,13 @@ def make_step(g, opts):
 
 	if edited: return 105, 'KNIGHT-LINKED IMPLICIT PAIR', False
 
-# X WING (score: 100)
+# KNIGHT X WING (score: 200)
 
-	for i in xrange(len(pairs)):
-		a = pairs[i]
-		for j in xrange(i):
-			b = pairs[j]
-			k0, k1 = a[0], b[0]
-			if k0 != k1: continue
+	for pair in x_wing_pairs:
+		if evaluate_pair_knight(pair): edited = True
+		pairs.append(pair)
 
-			# slicing along row
-			if a[1][0][0] == b[1][0][0] and a[1][1][0] == b[1][1][0]:
-				j0, j1 = a[1][0][0], a[1][1][0]
-				for i in xrange(9):
-					if i != a[1][0][1] and i != b[1][0][1] and k0 in opts[j0][i]:
-						opts[j0][i].remove(k0)
-						edited = True
-					if i != a[1][1][1] and i != b[1][1][1] and k0 in opts[j1][i]:
-						opts[j1][i].remove(k0)
-						edited = True
-
-			# slicing along col
-			if a[1][0][1] == b[1][0][1] and a[1][1][1] == b[1][1][1]:
-				j0, j1 = a[1][0][1], a[1][1][1]
-				for i in xrange(9):
-					if i != a[1][0][0] and i != b[1][0][0] and k0 in opts[i][j0]:
-						opts[i][j0].remove(k0)
-						edited = True
-					if i != a[1][1][0] and i != b[1][1][0] and k0 in opts[i][j1]:
-						opts[i][j1].remove(k0)
-						edited = True
-
-	if edited: return 100, 'X WING', False
+	if edited: return 150, 'KNIGHT X WING', False
 
 # NOTHING WORKED (either we are done, or the puzzle is unsolvable)
 

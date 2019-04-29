@@ -6,9 +6,10 @@ import sudoku
 
 app = Flask(__name__)
 
+# commenting a variant here will totally remove it from the site
 VARIANTS = [
 	{'code': 'CLASSIC', 'name': 'Classic Sudoku'},
-	{'code': 'KNIGHT', 'name': 'Knight Sudoku'}
+	{'code': 'KNIGHT', 'name': 'Anti-Knight Sudoku'}
 ]
 
 @app.route('/')

@@ -6,7 +6,7 @@
 			<p class='choice_header'>Variant</p>
 			<div class='choice_box'>
 				{% for v in variants %}
-				<input type='radio' name='variant' value='{{ v.code }}' required {% if v.code == 'CLASSIC' %}checked{% endif %}> {{ v.name }} <br>
+				<input type='radio' name='variant' value='{{ v.code }}' required {% if v.code == 'KNIGHT' %}checked{% endif %}> {{ v.name }} <br>
 				{% endfor %}
 			</div>
 			<p class='choice_header'>Import Code</p>
