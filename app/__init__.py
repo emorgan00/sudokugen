@@ -91,6 +91,7 @@ def pdf():
 	html = render_template(
 		'grid_pdf.html',
 		puzzle = render_grid_pdf(grid_from_string(request.form['code'])),
-		variant = v
+		variant = v,
+		difficulty = request.form['code']
 	)
 	return render_pdf(HTML(string = html))
