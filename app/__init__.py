@@ -12,6 +12,16 @@ VARIANTS = [
 	{'code': 'KNIGHT', 'name': 'Anti-Knight Sudoku'}
 ]
 
+def full_name(code):
+	'''return the full name of the variant'''
+	v = 'Unknown Variant'
+	for d in VARIANTS:
+		if d['code'] == code:
+			v = d['name']
+	return v
+
+# routing
+
 @app.route('/')
 def index():
 
@@ -45,7 +55,7 @@ def create():
 			'display.html',
 			title = 'Generator',
 			puzzle = render_grid(g),
-			variant = v,
+			variant = full_name(request.form['variant']),
 			difficulty = sudoku.score(g, v),
 			code = sudoku.grid_to_string(g, True)
 		)
@@ -73,7 +83,7 @@ def solve():
 			'display.html',
 			title = 'Solver',
 			puzzle = render_grid(g),
-			variant = v,
+			variant = full_name(request.form['variant']),
 			difficulty = sc,
 			code = sudoku.grid_to_string(g, True)
 		)
@@ -83,15 +93,10 @@ def pdf():
 	
 	from flask_weasyprint import HTML, render_pdf
 
-	v = 'Unknown Variant'
-	for d in VARIANTS:
-		if d['code'] == request.form['variant']:
-			v = d['name']
-
 	html = render_template(
 		'grid_pdf.html',
 		puzzle = render_grid_pdf(grid_from_string(request.form['code'])),
-		variant = v,
+		variant = full_name(request.form['variant']),
 		difficulty = request.form['difficulty']
 	)
 	return render_pdf(HTML(string = html))
