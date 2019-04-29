@@ -1,23 +1,28 @@
 /* formatting for global site header */
 
 .site_header {
-	height: 30px;
+    height: 39.5px;
 	width: 100%;
-	background-color: #FFFFFF;
+	background-color: #555566;
 	margin-bottom: 15px;
-	border-bottom: 1px solid black
 }
 
 .header_item {
 	font-size: 20px;
-	margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     bottom: 0;
 	vertical-align: text-bottom;
 	text-align: center;
 	text-decoration: none;
-	color: black;
+    color: #DDDDEE;
 	position: relative;
 	float: left;
+}
+
+.header_item:hover {
+	color: white;
 }
 
 /* formatting for selection interface */
