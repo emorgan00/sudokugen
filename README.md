@@ -10,38 +10,20 @@ Difficulty guide:
 2.8 - Very advanced (most people won't be able solve this)
 3.0 - Not for the faint of heart
 
-Highest score ever recorded: 3.11
+Highest score ever recorded: 3.15
 
-highest score so far:
-3.11
-. . . . . 6 . . .
-. . 3 . . . . . 7
-2 . . 3 . . 4 9 .
-6 . . . . . . 4 5
-. . 2 . . . 8 . .
-. . . 1 . . . . .
-3 . . . . . . . .
-7 . . . . 1 . . 9
-. . . . . . 5 . .
+highest scores so far:  
+3.11: .....6.....3.....72..3..49.6......45..2...8.....1.....3........7....1..9......5..  
+3.06: ..2.......17....................9......84......9..56..7.....3.8..8.............19  
+3.03: .....6......21..7........1.....9..61...5....8.3..8......3.4.......7...8.......4.2  
 
-fewest clues so far:
-12 (2.28)
-. . . . . . . 6 .
-1 . 6 . . . 2 4 .
-. . . . 3 . 5 . .
-. . . . . . . . .
-. . . . . . . 8 9
-. . . . . . . . .
-. . . . . . . . .
-. . . . 4 . . . .
-. . . 8 1 . . . .
+fewest clues so far:  
+12: .......6.1.6...24.....3.5..................89......................4.......81....
 
 to do:
 
 SITE:
 about page
-format it nicely
-improvements to pdf (display difficulty)
 something other than cursor in grid? the vert. line
 
 CLASSIC:

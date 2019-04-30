@@ -19,7 +19,8 @@
 			<div style='width: 540px; float: center'>
 				<p class='choice_header'>Edit Grid:</p>
 				{{ puzzle|safe }}
-				<input id='solve_button' type='submit' value='Generate Solution' style='margin-top: 50px' onclick='loading();'>
+				<input id='solve_button' type='submit' name='submit_type' value='Solve' style='margin-top: 50px; float: left;' onclick='loading();'>
+				<input id='solve_button' type='submit' name='submit_type' value='Score (Without Solving)' style='margin-top: 50px; float: left; margin-left: 15px;' onclick='loading();'>
 			</div>
 		</div>
 	</form>

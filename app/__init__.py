@@ -77,7 +77,7 @@ def solve():
 		v = request.form['variant']
 		g = grid_from_form(request.form)
 		sc = sudoku.score(g, v)
-		sudoku.solve(g, v)
+		if request.form['submit_type'] == 'Solve': sudoku.solve(g, v)
 
 		return render_template(
 			'display.html',
