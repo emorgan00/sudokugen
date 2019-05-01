@@ -19,7 +19,7 @@ def grid_remove(g, variant = 'CLASSIC', max_difficulty = None):
 			g[x][y] = -1
 			s = score(g, variant)
 
-			if s > m_score and (s < max_difficulty or max_difficulty == None):
+			if s > m_score and (s <= max_difficulty or max_difficulty == None):
 				m_score = s
 				m_loc = (x, y)
 
