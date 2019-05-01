@@ -53,6 +53,7 @@
 	border: 1px solid black;
 	vertical-align: middle;
 	cursor: default;
+	-webkit-user-select: none;
 }
 .sudoku_tile:after {
 	content: '';
@@ -120,18 +121,26 @@
 	float: left;
 	font-size: 13px;
 	font-family: Comic Sans MS, sans-serif;
+	z-index: 3;
+}
+
+.full_mark {
+	width: 100%;
+	font-size: 30px;
+	font-family: Comic Sans MS, sans-serif;
+	z-index: 2;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.inactive {
 	color: rgba(0, 0, 0, 0);
 }
 
-.pencil_mark:hover {
-	color: #AAAAAA;
-}
-
-.pencil_mark_active {
-	width: 33%;
-	height: 33%;
-	float: left;
-	font-size: 13px;
-	font-family: Comic Sans MS, sans-serif;
+.active {
 	color: #666666;
 }
