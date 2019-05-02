@@ -24,10 +24,26 @@ def solve(g, variant = 'CLASSIC', verbose = False):
 	'''solve this puzzle.'''
 
 	if variant == 'KNIGHT':
-		knight_score(g, verbose)
+		score = knight_score(g, verbose)
 
 	elif variant == 'CLASSIC':
-		classic_score(g, verbose)
+		score = classic_score(g, verbose)
+
+	else:
+		raise Exception('unsupported variant')
+
+	return -1 if score <= 0 else round(log10(score), 2)
+
+def solvable(g, variant = 'CLASSIC'):
+	'''return whether the puzzle has a unique solution'''
+
+	g = [[x for x in row] for row in g]
+
+	if variant == 'KNIGHT':
+		return knight_solvable(g)
+
+	# elif variant == 'CLASSIC':
+	# 	score = classic_solvable(g, verbose)
 
 	else:
 		raise Exception('unsupported variant')

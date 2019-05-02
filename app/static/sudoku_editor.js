@@ -2,6 +2,18 @@ var pencil = false;
 var pencil_marks = document.getElementsByClassName("pencil_mark");
 var full_marks = document.getElementsByClassName("full_mark");
 
+window.oncontextmenu = function () {
+	for (var i = pencil_marks.length - 1; i >= 0; i--) {
+		var m = pencil_marks[i];
+		if (m.matches(":hover")) {
+			toggle_pencil();
+			clean_marks();
+			return false;
+		}
+	}
+	return true;
+}
+
 function toggle_pencil() {
 	window.pencil = !window.pencil;
 
@@ -33,8 +45,20 @@ function click_number(id) {
 	}
 }
 
-function update_full(f) {
-	if (f.className == "full_mark inactive") f.style.color = "rgba(0, 0, 0, 0)";
+function clean_marks() {
+	for (var i = full_marks.length - 1; i >= 0; i--) {
+		var f_other = full_marks[i];
+		if (f_other.className == "full_mark inactive") f_other.style.color = "rgba(0, 0, 0, 0)";
+	}
+	for (var i = pencil_marks.length - 1; i >= 0; i--) {
+		var m_other = pencil_marks[i];
+		if (m_other.className == "pencil_mark active") {
+			f_other = document.getElementById(m_other.id.substring(0, m_other.id.length-2));
+			if (f_other.className == "full_mark inactive") m_other.style.color = "#666666";
+		} else {
+			m_other.style.color = "rgba(0, 0, 0, 0)";
+		}
+	}
 }
 
 document.addEventListener("mousemove", function update_marks() {
@@ -75,17 +99,5 @@ document.addEventListener("mousemove", function update_marks() {
 			}
 		}
 	}
-	if (outside) {
-		for (var i = full_marks.length - 1; i >= 0; i--) {
-			var f_other = full_marks[i];
-			if (f_other.className == "full_mark inactive") f_other.style.color = "rgba(0, 0, 0, 0)";
-		}
-		for (var i = pencil_marks.length - 1; i >= 0; i--) {
-			var m_other = pencil_marks[i];
-			if (m_other.className == "pencil_mark active") {
-				f_other = document.getElementById(m_other.id.substring(0, m_other.id.length-2));
-				if (f_other.className == "full_mark inactive") m_other.style.color = "#666666";
-			}
-		}
-	}
+	if (outside) clean_marks();
 });

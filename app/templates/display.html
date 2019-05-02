@@ -6,7 +6,13 @@
 	<div style='width: 540px'>
 		<div id='sudoku_info'>
 			Variant: {{ variant }}<br>
-			Difficulty Score: {{ difficulty }}
+			{% if difficulty == -1 %}
+				<div style='color: red'>Unsolvable</div>
+			{% elif difficulty == 0 %}
+				<div style='color: yellow'>Unsolvable with known techniques, unique solution exists</div>
+			{% else %}
+				<div>Difficulty Score: {{ difficulty }}</div>
+			{% endif %}
 		</div>
 		<form class='sudoku_form'>
 			{{ puzzle|safe }}

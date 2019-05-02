@@ -13,7 +13,7 @@ def formless_input(x, y):
 def render_grid(g):
 	'''render a sudoku grid as an HTML element'''
 
-	out = '<table class=\'sudoku_container\'>'
+	out = '<table class=\'sudoku_container\' id=\'sudoku_container\'>'
 
 	for x, row in enumerate(g):
 		out += '<tr class=\'sudoku_row\'>'

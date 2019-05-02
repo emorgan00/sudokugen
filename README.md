@@ -24,7 +24,9 @@ to do:
 
 SITE:
 about page
-something other than cursor in grid? the vert. line
+add recursive solver
+put grid in folder for each variant
+add timer
 
 CLASSIC:
 detect implicit triples
