@@ -77,8 +77,15 @@ document.addEventListener("mousemove", function update_marks() {
 	}
 	if (outside) {
 		for (var i = full_marks.length - 1; i >= 0; i--) {
-			var other = full_marks[i];
-			if (other.className == "full_mark inactive") other.style.color = "rgba(0, 0, 0, 0)";
+			var f_other = full_marks[i];
+			if (f_other.className == "full_mark inactive") f_other.style.color = "rgba(0, 0, 0, 0)";
+		}
+		for (var i = pencil_marks.length - 1; i >= 0; i--) {
+			var m_other = pencil_marks[i];
+			if (m_other.className == "pencil_mark active") {
+				f_other = document.getElementById(m_other.id.substring(0, m_other.id.length-2));
+				if (f_other.className == "full_mark inactive") m_other.style.color = "#666666";
+			}
 		}
 	}
 });
