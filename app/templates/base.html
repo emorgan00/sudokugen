@@ -6,8 +6,8 @@
 		<title>Sudokugen</title>
 	{% endif %}
 	<meta name='author' content='Ethan Morgan'>
-	<link rel='icon' href='static/favicon.png'>
-	<link rel='stylesheet' type='text/css' href='static/style.css'>
+	<link rel='icon' href='{{ url_for("static", filename="favicon.png") }}'>
+	<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="style.css") }}'>
 </head>
 <body style='margin: 0px'>
 	<div class='site_header'>

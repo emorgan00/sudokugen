@@ -103,3 +103,17 @@ def pdf():
 		difficulty = request.form['difficulty']
 	)
 	return render_pdf(HTML(string = html))
+
+@app.route('/load/<v>/<code>', methods = ['GET'])
+def load(v, code):
+
+	g = grid_from_string(code, v);
+
+	return render_template(
+		'display.html',
+		title = 'Load Puzzle',
+		puzzle = render_grid(g, v),
+		variant = full_name(v),
+		difficulty = sudoku.score(g, v),
+		code = sudoku.grid_to_string(g, v, True)
+	)

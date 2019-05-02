@@ -4,7 +4,7 @@ from random import shuffle
 from grid import grid, print_grid, partial_grid, grid_to_string
 from solver import score
 
-def grid_remove(g, variant = 'CLASSIC', max_difficulty = None):
+def grid_remove(g, variant, max_difficulty = None):
 	''' given a valid sudoku, remove a number from the grid to produce another valid sudoku.
 	If no such sudoku is possible, return -1. Otherwise return the new score.'''
 
@@ -31,7 +31,7 @@ def grid_remove(g, variant = 'CLASSIC', max_difficulty = None):
 	g[m_loc[0]][m_loc[1]] = -1
 	return m_score
 
-def grid_remove_symmetric(g, style, variant = 'CLASSIC', max_difficulty = None):
+def grid_remove_symmetric(g, style, variant, max_difficulty = None):
 	''' given a valid sudoku, remove 2 numbers from the grid in a symmetric fashion to produce another valid sudoku.
 	If no such sudoku is possible, return -1. Otherwise return the new score.
 	style options: H, V, R, D+, D-
@@ -96,7 +96,7 @@ def grid_remove_symmetric(g, style, variant = 'CLASSIC', max_difficulty = None):
 	g[m_loc[2]][m_loc[3]] = -1
 	return m_score
 
-def generate_grid(variant = 'CLASSIC', max_difficulty = None, verbose = False):
+def generate_grid(variant, max_difficulty = None, verbose = False):
 	'''randomly generate a brand new puzzle, and deconstruct it to produce a maximally difficult set of clues'''
 	s, g = -1, None
 	while s == -1:
@@ -112,7 +112,7 @@ def generate_grid(variant = 'CLASSIC', max_difficulty = None, verbose = False):
 
 	return g
 
-def generate_symmetric_grid(style, variant = 'CLASSIC', max_difficulty = None, verbose = False):
+def generate_symmetric_grid(style, variant, max_difficulty = None, verbose = False):
 	'''randomly generate a brand new puzzle, and deconstruct it to produce a maximally difficult set of clues'''
 	style = style.upper()
 	s, g = 0, None
