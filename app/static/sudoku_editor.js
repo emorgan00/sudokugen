@@ -8,6 +8,7 @@ window.oncontextmenu = function () {
 		if (m.matches(":hover")) {
 			toggle_pencil();
 			clean_marks();
+			document.dispatchEvent(new Event("mousemove"));
 			return false;
 		}
 	}
