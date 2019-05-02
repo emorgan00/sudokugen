@@ -15,7 +15,7 @@
 			<form action='/pdf' target='_blank' method='POST' onkeypress='return event.keyCode != 13;'>
 				<input type='button' value='Export as Code...' onclick='toggle_code();' style='float: left;'>
 				<input type='submit' value='Export as PDF...' style='float: left; margin-left: 15px;'>
-				<input type='button' value='Toggle Pencil Marks' onclick='pencil = !pencil;' style='float: right;'>
+				<input type='button' id='pencil_toggle' value='Numbers' onclick='toggle_pencil();' style='float: right;'>
 				<input type='hidden' name='variant' value='{{ variant }}'>
 				<input type='hidden' name='difficulty' value='{{ difficulty }}'>
 				<input type='hidden' name='code' value='{{ code }}'>

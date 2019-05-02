@@ -5,9 +5,9 @@ def formless_input(x, y):
 	out = '<td class=\'sudoku_tile\'><div style=\'position: absolute; z-index: 2;\'>'
 	# pencil mark numbers
 	for k in xrange(1, 10):
-		out += '<div class=\'pencil_mark inactive\' onclick=\'click_number(this.id);\' id=\'tile_{x}{y}_{k}\'>{k}</div>'.format(x = x, y = y, k = k)
+		out += '<div class=\'pencil_mark inactive\' onclick=\'click_number(this.id);\' id=\'tile_{x}{y}_{k}\' style=\'color: rgba(0, 0, 0, 0)\'>{k}</div>'.format(x = x, y = y, k = k)
 	out += '</div><div style=\'position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 1;\'>'
-	out += '<div class=\'full_mark inactive\' id=\'tile_{x}{y}\'>0</div>'.format(x = x, y = y)
+	out += '<div class=\'full_mark inactive\' id=\'tile_{x}{y}\' style=\'color: rgba(0, 0, 0, 0)\'>0</div>'.format(x = x, y = y)
 	return out + '</div></td>'
 
 def render_grid(g):
