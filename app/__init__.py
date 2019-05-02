@@ -54,10 +54,10 @@ def create():
 		return render_template(
 			'display.html',
 			title = 'Generator',
-			puzzle = render_grid(g),
-			variant = full_name(request.form['variant']),
+			puzzle = render_grid(g, v),
+			variant = full_name(v),
 			difficulty = sudoku.score(g, v),
-			code = sudoku.grid_to_string(g, True)
+			code = sudoku.grid_to_string(g, v, True)
 		)
 
 @app.route('/solve', methods = ('GET', 'POST'))
@@ -75,17 +75,20 @@ def solve():
 	elif request.method == 'POST':
 
 		v = request.form['variant']
-		g = grid_from_form(request.form)
-		sc = sudoku.score(g, v)
-		if request.form['submit_type'] == 'Solve': sudoku.solve(g, v)
+		g = grid_from_form(request.form, v)
+		sc = None
+		if request.form['submit_type'] == 'Solve':
+			sc = sudoku.solve(g, v)
+		else:
+			sc = sudoku.score(g, v)
 
 		return render_template(
 			'display.html',
 			title = 'Solver',
-			puzzle = render_grid(g),
-			variant = full_name(request.form['variant']),
+			puzzle = render_grid(g, v),
+			variant = full_name(v),
 			difficulty = sc,
-			code = sudoku.grid_to_string(g, True)
+			code = sudoku.grid_to_string(g, v, True)
 		)
 
 @app.route('/pdf', methods = ['POST'])
@@ -95,7 +98,7 @@ def pdf():
 
 	html = render_template(
 		'grid_pdf.html',
-		puzzle = render_grid_pdf(grid_from_string(request.form['code'])),
+		puzzle = render_grid_pdf(grid_from_string(request.form['code'], v), v),
 		variant = request.form['variant'], # should contain full name, not short name
 		difficulty = request.form['difficulty']
 	)

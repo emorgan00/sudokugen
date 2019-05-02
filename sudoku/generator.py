@@ -1,7 +1,7 @@
 from sys import stdout
 from itertools import product
 from random import shuffle
-from grid import grid, print_grid, partial_grid
+from grid import grid, print_grid, partial_grid, grid_to_string
 from solver import score
 
 def grid_remove(g, variant = 'CLASSIC', max_difficulty = None):
@@ -100,13 +100,13 @@ def generate_grid(variant = 'CLASSIC', max_difficulty = None, verbose = False):
 	'''randomly generate a brand new puzzle, and deconstruct it to produce a maximally difficult set of clues'''
 	s, g = -1, None
 	while s == -1:
-		g = partial_grid(grid(variant), 0.7)
+		g = partial_grid(grid(variant), 0.7, variant)
 		s = score(g, variant)
 
 	while s != -1:
 		if verbose:
 			print s
-			print_grid(g)
+			print grid_to_string(g, variant)
 			stdout.flush()
 		s = grid_remove(g, variant, max_difficulty)
 
@@ -121,7 +121,7 @@ def generate_symmetric_grid(style, variant = 'CLASSIC', max_difficulty = None, v
 	while s != -1:
 		if verbose:
 			print s
-			print_grid(g)
+			print grid_to_string(g, variant)
 			stdout.flush()
 		s = grid_remove_symmetric(g, style, variant, max_difficulty)
 

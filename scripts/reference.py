@@ -8,7 +8,7 @@ puzzle = grid_from_string('''
 
 5.2.......17......9.............9......84.9...79..56..79.15.3.8..8.9.........8.19
 
-''')
+''', 'CLASSIC')
 
 if __name__ == '__main__':
-	print score(puzzle, 'KNIGHT', True)
+	print score(puzzle, 'CLASSIC', True)

@@ -12,12 +12,12 @@ Difficulty guide:
 
 Highest score ever recorded: 3.15
 
-highest scores so far:  
+highest scores so far: (KNIGHT)  
 3.11: .....6.....3.....72..3..49.6......45..2...8.....1.....3........7....1..9......5..  
 3.06: ..2.......17....................9......84......9..56..7.....3.8..8.............19  
 3.03: .....6......21..7........1.....9..61...5....8.3..8......3.4.......7...8.......4.2  
 
-fewest clues so far:  
+fewest clues so far: (KNIGHT)  
 12: .......6.1.6...24.....3.5..................89......................4.......81....  
 
 to do:
@@ -25,7 +25,6 @@ to do:
 SITE:
 about page
 add recursive solver
-put grid in folder for each variant
 add timer
 
 CLASSIC:

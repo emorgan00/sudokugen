@@ -4,6 +4,6 @@ from sudoku import *
 
 if __name__ == '__main__':
 	# puzzle = generate_symmetric_grid('R', 'CLASSIC', None, True)
-	puzzle = generate_grid('KNIGHT', None, True)
+	puzzle = generate_grid('KNIGHT', 1.5, True)
 	print score(puzzle, 'KNIGHT')
-	print_grid(puzzle)
+	print_grid(puzzle, 'KNIGHT')

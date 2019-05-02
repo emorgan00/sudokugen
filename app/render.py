@@ -10,7 +10,7 @@ def formless_input(x, y):
 	out += '<div class=\'full_mark inactive\' id=\'tile_{x}{y}\' style=\'color: rgba(0, 0, 0, 0)\'>0</div>'.format(x = x, y = y)
 	return out + '</div></td>'
 
-def render_grid(g):
+def render_grid(g, v):
 	'''render a sudoku grid as an HTML element'''
 
 	out = '<table class=\'sudoku_container\' id=\'sudoku_container\'>'
@@ -24,9 +24,9 @@ def render_grid(g):
 				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'>{}</div></td>\n'.format(k+1)
 		out += '</tr>'
 
-	return out+'</table><input type=\'hidden\' name=\'grid\' value=\'{}\'>'.format(grid_to_string(g, True))
+	return out+'</table><input type=\'hidden\' name=\'grid\' value=\'{}\'>'.format(grid_to_string(g, v, True))
 
-def render_grid_pdf(g):
+def render_grid_pdf(g, v):
 	'''render a sudoku grid as an HTML element, optimized for use in PDFs. Contains no form elements.'''
 
 	out = '<table class=\'sudoku_container\'>'
@@ -40,7 +40,7 @@ def render_grid_pdf(g):
 				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'>{}</div></td>\n'.format(k+1)
 		out += '</tr>'
 
-	return out+'</table><input type=\'hidden\' name=\'grid\' value=\'{}\'>'.format(grid_to_string(g, True))
+	return out+'</table><input type=\'hidden\' name=\'grid\' value=\'{}\'>'.format(grid_to_string(g, v, True))
 
 def form_grid():
 	'''render a blank fillable sudoku grid as part of an HTML form'''
@@ -57,11 +57,11 @@ def form_grid():
 
 	return out+'</table>'
 
-def grid_from_form(form):
+def grid_from_form(form, v):
 	'''take a filled html form and return a standard grid. <form> should accept request.form'''
 
 	if 'grid' in form:
-		grid = grid_from_string(form['grid'])
+		grid = grid_from_string(form['grid'], v)
 	else:
 		grid = [[-1 for _ in xrange(9)] for _ in xrange(9)]
 		for x, y in product(xrange(9), xrange(9)):
