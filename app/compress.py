@@ -32,4 +32,4 @@ def decompress_code(code):
 		out += OUT_CHARS[i%L_o]
 		i /= L_o
 
-	return out
+	return out[::-1]
