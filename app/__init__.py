@@ -99,10 +99,12 @@ def pdf():
 	
 	from flask_weasyprint import HTML, render_pdf
 
+	v = request.form['variant']
+
 	html = render_template(
 		'grid_pdf.html',
 		puzzle = render_grid_pdf(grid_from_string(request.form['code'], v), v),
-		variant = request.form['variant'], # should contain full name, not short name
+		variant = v, # should contain full name, not short name
 		difficulty = request.form['difficulty']
 	)
 	return render_pdf(HTML(string = html))

@@ -33,5 +33,3 @@ detect implicit triples
 y wing
 
 KNIGHT:
-evaluate triples w/ knight moves (not too hard)
-detect knight-linked implicit triples (really non-trivial)
