@@ -99,11 +99,11 @@ def pdf():
 	
 	from flask_weasyprint import HTML, render_pdf
 
-	v = request.form['v_code'] # should contain short name, not full name
+	v = request.form['variant'] # should contain short name, not full name
 
 	html = render_template(
 		'grid_pdf.html',
-		puzzle = render_grid_pdf(grid_from_string(request.form['code'], v), v),
+		puzzle = render_grid_pdf(sudoku.grid_from_string(request.form['code'], v), v),
 		variant = full_name(v),
 		difficulty = request.form['difficulty']
 	)
