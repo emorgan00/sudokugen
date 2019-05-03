@@ -3,7 +3,7 @@ var pencil_marks = document.getElementsByClassName("pencil_mark");
 var full_marks = document.getElementsByClassName("full_mark");
 
 var circle = document.createElement('div');
-circle.innerHTML = "<img src='www.sudokugen.com/static/circle.png' style='width: 100%; position: absolute; left: 0; top: 0; z-index: 0;'>"
+circle.innerHTML = "<img src='/static/circle.png' style='width: 100%; position: absolute; left: 0; top: 0; z-index: 0;'>"
 circle = circle.firstChild;
 
 window.oncontextmenu = function () {
