@@ -55,6 +55,7 @@ def create():
 			'display.html',
 			title = 'Generator',
 			puzzle = render_grid(g, v),
+			v_code = v,
 			variant = full_name(v),
 			difficulty = sudoku.score(g, v),
 			code = sudoku.grid_to_string(g, v, True)
@@ -87,6 +88,7 @@ def solve():
 			title = 'Solver',
 			puzzle = render_grid(g, v),
 			variant = full_name(v),
+			v_code = v,
 			difficulty = sc,
 			code = sudoku.grid_to_string(g, v, True)
 		)
@@ -114,6 +116,7 @@ def load(v, code):
 		title = 'Load Puzzle',
 		puzzle = render_grid(g, v),
 		variant = full_name(v),
+		v_code = v,
 		difficulty = sudoku.score(g, v),
 		code = sudoku.grid_to_string(g, v, True)
 	)
