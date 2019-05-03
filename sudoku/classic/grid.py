@@ -86,6 +86,7 @@ def partial_grid(g, ratio):
 def grid_from_string(s):
 	out = [[-1 for _ in xrange(9)] for _ in xrange(9)]
 	s = s.strip().replace('\n', '').replace(' ', '')
+	while len(s) < 81: s += '.'
 	for x, y in product(xrange(9), xrange(9)):
 		out[x][y] = int(s[x*9+y])-1 if s[x*9+y].isdigit() else -1 
 	return out

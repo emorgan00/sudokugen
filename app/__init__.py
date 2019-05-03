@@ -2,6 +2,7 @@ import os, sys
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from flask import *
 from render import *
+from compress import *
 import sudoku
 
 app = Flask(__name__)
@@ -52,6 +53,9 @@ def create():
 			g = sudoku.generate_grid(v, m)
 		else:
 			g = sudoku.generate_symmetric_grid(s, v, m)
+
+		code = sudoku.grid_to_string(g, v, True)
+
 		return render_template(
 			'display.html',
 			title = 'Generator',
@@ -59,7 +63,8 @@ def create():
 			v_code = v,
 			variant = full_name(v),
 			difficulty = sudoku.score(g, v),
-			code = sudoku.grid_to_string(g, v, True)
+			code = code,
+			c_code = compress_code(code)
 		)
 
 @app.route('/solve', methods = ('GET', 'POST'))
@@ -78,6 +83,8 @@ def solve():
 
 		v = request.form['variant']
 		g = grid_from_form(request.form, v)
+		code = sudoku.grid_to_string(g, v, True)
+
 		sc = None
 		if request.form['submit_type'] == 'Solve':
 			sc = sudoku.solve(g, v)
@@ -91,7 +98,8 @@ def solve():
 			variant = full_name(v),
 			v_code = v,
 			difficulty = sc,
-			code = sudoku.grid_to_string(g, v, True)
+			code = code,
+			c_code = compress_code(code)
 		)
 
 @app.route('/pdf', methods = ['POST'])
@@ -112,7 +120,11 @@ def pdf():
 @app.route('/load/<v>/<code>', methods = ['GET'])
 def load(v, code):
 
+	if any(c not in '.123456789' for c in code):
+		code = decompress_code(code)
+
 	g = grid_from_string(code, v);
+	code = sudoku.grid_to_string(g, v, True)
 
 	return render_template(
 		'display.html',
@@ -121,5 +133,6 @@ def load(v, code):
 		variant = full_name(v),
 		v_code = v,
 		difficulty = sudoku.score(g, v),
-		code = sudoku.grid_to_string(g, v, True)
+		code = code,
+		c_code = compress_code(code)
 	)
