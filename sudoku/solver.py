@@ -6,6 +6,8 @@ def score(g, variant, verbose = False):
 	'''return the difficulty score for this puzzle.
 	the score increases linearly with respect to the hardest type of tactic that has to be used.'''
 
+	variant = variant.upper()
+
 	g = [[x for x in row] for row in g]
 	score = None
 
@@ -23,6 +25,8 @@ def score(g, variant, verbose = False):
 def solve(g, variant, verbose = False):
 	'''solve this puzzle.'''
 
+	variant = variant.upper()
+
 	if variant == 'KNIGHT':
 		score = knight.score(g, verbose)
 
@@ -36,6 +40,8 @@ def solve(g, variant, verbose = False):
 
 def solvable(g, variant):
 	'''return whether the puzzle has a unique solution'''
+
+	variant = variant.upper()
 
 	g = [[x for x in row] for row in g]
 

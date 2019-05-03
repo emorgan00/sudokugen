@@ -3,6 +3,8 @@ import classic.grid, classic.solver
 
 def grid(variant):
 
+	variant = variant.upper()
+
 	if variant == 'KNIGHT':
 		return knight.grid()
 
@@ -13,6 +15,8 @@ def grid(variant):
 		raise Exception('unsupported variant')
 
 def grid_to_string(g, variant, noFormat = False):
+
+	variant = variant.upper()
 
 	if variant == 'KNIGHT':
 		return knight.grid_to_string(g, noFormat)
@@ -29,6 +33,8 @@ def print_grid(g, variant):
 
 def grid_from_string(g, variant):
 
+	variant = variant.upper()
+
 	if variant == 'KNIGHT':
 		return knight.grid_from_string(g)
 
@@ -39,6 +45,8 @@ def grid_from_string(g, variant):
 		raise Exception('unsupported variant')
 
 def partial_grid(g, ratio, variant):
+
+	variant = variant.upper()
 
 	if variant == 'KNIGHT':
 		return knight.partial_grid(g, ratio)
