@@ -99,7 +99,7 @@ def pdf():
 	
 	from flask_weasyprint import HTML, render_pdf
 
-	v = request.form['variant'] # should contain short name, not full name
+	v = request.form['v_code'] # should contain short name, not full name
 
 	html = render_template(
 		'grid_pdf.html',

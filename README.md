@@ -33,3 +33,6 @@ detect implicit triples
 y wing
 
 KNIGHT:
+higher order group set
+singly chained recursive slice
+higher order recursive slice
