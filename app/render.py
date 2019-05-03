@@ -1,57 +1,61 @@
 from itertools import product
 from sudoku import grid_from_string, grid_to_string
 
-def formless_input(x, y):
-	out = '<td class=\'sudoku_tile\'><div style=\'position: absolute; z-index: 2;\'>'
+def formless_input(x, y, k):
+	out = '<td class="sudoku_tile"><div style="position: absolute; z-index: 2; top: 0; bottom: 0; left: 0; right: 0;">'
 	# pencil mark numbers
-	for k in xrange(1, 10):
-		out += '<div class=\'pencil_mark inactive\' onclick=\'click_number(this.id);\' id=\'tile_{x}{y}_{k}\' style=\'color: rgba(0, 0, 0, 0)\'>{k}</div>'.format(x = x, y = y, k = k)
-	out += '</div><div style=\'position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 1;\'>'
-	out += '<div class=\'full_mark inactive\' id=\'tile_{x}{y}\' style=\'color: rgba(0, 0, 0, 0)\'>0</div>'.format(x = x, y = y)
+	for k0 in xrange(1, 10):
+		out += '''<div class="pencil_mark inactive" onclick="click_number(this.id, event.shiftKey, {editable});" id="tile_{x}{y}_{k}" style="color: rgba(0, 0, 0, 0)">
+				<text style="position: absolute; left: 0; right: 0; margin: auto;">{k}</text>
+			</div>'''.format(x = x, y = y, k = k0, editable = 'true' if k == 0 else 'false')
+	out += '</div><div style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 1;">'
+
+	if k == 0:
+		out += '<div class="full_mark inactive" id="tile_{x}{y}" style="color: rgba(0, 0, 0, 0)">0</div>'.format(x = x, y = y)
+	else:
+		out += '<div class="full_mark immutable" id="tile_{x}{y}" style="color: #000000;">{k}</div>'.format(x = x, y = y, k = k)
+
 	return out + '</div></td>'
 
 def render_grid(g, v):
 	'''render a sudoku grid as an HTML element'''
 
-	out = '<table class=\'sudoku_container\' id=\'sudoku_container\'>'
+	out = '<table class="sudoku_container" id="sudoku_container">'
 
 	for x, row in enumerate(g):
-		out += '<tr class=\'sudoku_row\'>'
+		out += '<tr class="sudoku_row">'
 		for y, k in enumerate(row):
-			if k == -1:
-				out += formless_input(x, y)
-			else:
-				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'>{}</div></td>\n'.format(k+1)
+			out += formless_input(x, y, k+1)
 		out += '</tr>'
 
-	return out+'</table><input type=\'hidden\' name=\'grid\' value=\'{}\'>'.format(grid_to_string(g, v, True))
+	return out+'</table><input type="hidden" name="grid" value="{}">'.format(grid_to_string(g, v, True))
 
 def render_grid_pdf(g, v):
 	'''render a sudoku grid as an HTML element, optimized for use in PDFs. Contains no form elements.'''
 
-	out = '<table class=\'sudoku_container\'>'
+	out = '<table class="sudoku_container">'
 
 	for row in g:
-		out += '<tr class=\'sudoku_row\'>'
+		out += '<tr class="sudoku_row">'
 		for k in row:
 			if k == -1:
-				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'>&nbsp;</div></td>\n'
+				out += '<td class="sudoku_tile"><div class="sudoku_number">&nbsp;</div></td>\n'
 			else:
-				out += '<td class=\'sudoku_tile\'><div class=\'sudoku_number\'>{}</div></td>\n'.format(k+1)
+				out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(k+1)
 		out += '</tr>'
 
-	return out+'</table><input type=\'hidden\' name=\'grid\' value=\'{}\'>'.format(grid_to_string(g, v, True))
+	return out+'</table><input type="hidden" name="grid" value="{}">'.format(grid_to_string(g, v, True))
 
 def form_grid():
 	'''render a blank fillable sudoku grid as part of an HTML form'''
 
-	out = '<table class=\'sudoku_container\'>'
+	out = '<table class="sudoku_container">'
 
 	for x in xrange(9):
-		out += '<tr class=\'sudoku_row\'>'
+		out += '<tr class="sudoku_row">'
 		for y in xrange(9):
-			out += '''<td class=\'sudoku_tile\'>
-				<input class=\'sudoku_number sudoku_input\' name=\'tile_{}{}\' type=\'text\' maxlength=\'1\' autocomplete=\'new-password\'>
+			out += '''<td class="sudoku_tile">
+				<input class="sudoku_number sudoku_input" name="tile_{}{}" type="text" maxlength="1" autocomplete="new-password">
 				</td>\n'''.format(x, y)
 		out += '</tr>'
 

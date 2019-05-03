@@ -76,21 +76,11 @@
 	border-bottom: 2px solid;
 }
 
-.sudoku_number {
-	position: absolute;
-	font-size: 30px;
-	padding: 13px;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-}
-
 .sudoku_input {
 	outline-width: 0;
 	text-align: center;
 	align-self: center;
-	font-family: 'Comic Sans MS', sans-serif;
+	font-family: Comic Sans MS, sans-serif;
 	background-color: rgba(0, 0, 0, 0);
 	color: #666666;
 	border: none;
@@ -123,6 +113,8 @@
 	font-family: Comic Sans MS, sans-serif;
 	z-index: 3;
 	background-color: rgba(0, 0, 0, 0);
+	position: relative;
+	text-align: center;
 }
 
 .full_mark {
@@ -137,4 +129,10 @@
 	padding-top: 8px;
 	padding-bottom: 8px;
 	background-color: rgba(0, 0, 0, 0);
+}
+
+.immutable {
+	padding-top: 13px;
+	padding-bottom: 11px;
+	font-family: Times New Roman, serif;
 }

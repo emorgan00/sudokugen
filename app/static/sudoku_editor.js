@@ -2,6 +2,10 @@ var pencil = false;
 var pencil_marks = document.getElementsByClassName("pencil_mark");
 var full_marks = document.getElementsByClassName("full_mark");
 
+var circle = document.createElement('div');
+circle.innerHTML = "<img src='www.sudokugen.com/static/circle.png' style='width: 100%; position: absolute; left: 0; top: 0; z-index: 0;'>"
+circle = circle.firstChild;
+
 window.oncontextmenu = function () {
 	for (var i = pencil_marks.length - 1; i >= 0; i--) {
 		var m = pencil_marks[i];
@@ -23,41 +27,52 @@ function toggle_pencil() {
 	else pencil_button.value = "Numbers";
 }
 
-function click_number(id) {
+function click_number(id, shift, editable) {
 	var m = document.getElementById(id);
 	var f = document.getElementById(id.substring(0, id.length-2));
 
-	if (pencil && f.className == "full_mark inactive") {
-		if (m.className == "pencil_mark inactive") {
-			m.className = "pencil_mark active";
-			m.style.color = "#666666";
+	if (pencil && editable && f.className == "full_mark inactive") {
+		if (shift) {
+			if (m.lastChild.nodeName == "IMG") m.removeChild(m.lastChild);
+			else m.appendChild(circle.cloneNode(true));
 		} else {
-			m.className = "pencil_mark inactive";
-			m.style.color = "#AAAAAA";
+			if (m.className == "pencil_mark inactive") {
+				m.className = "pencil_mark active";
+				m.style.color = "#666666";
+			} else {
+				m.className = "pencil_mark inactive";
+				m.style.color = "#AAAAAA";
+			}
 		}
 	} else if (!pencil) {
-		if (f.className == "full_mark inactive") {
-			f.className = "full_mark active";
-			f.style.color = "#666666";
-		} else {
-			f.className = "full_mark inactive";
-			f.style.color = "#AAAAAA";
+		if (shift) {
+			if (f.lastChild.nodeName == "IMG") f.removeChild(f.lastChild);
+			else f.appendChild(circle.cloneNode(true));
+		} else if (editable) {
+			if (f.className == "full_mark inactive") {
+				f.className = "full_mark active";
+				f.style.color = "#666666";
+			} else {
+				f.className = "full_mark inactive";
+				f.style.color = "#AAAAAA";
+			}
 		}
 	}
 }
 
 function clean_marks() {
 	for (var i = full_marks.length - 1; i >= 0; i--) {
-		var f_other = full_marks[i];
-		if (f_other.className == "full_mark inactive") f_other.style.color = "rgba(0, 0, 0, 0)";
+		var f = full_marks[i];
+		if (f.className == "full_mark inactive")
+			f.style.color = "rgba(0, 0, 0, 0)";
 	}
 	for (var i = pencil_marks.length - 1; i >= 0; i--) {
-		var m_other = pencil_marks[i];
-		if (m_other.className == "pencil_mark active") {
-			f_other = document.getElementById(m_other.id.substring(0, m_other.id.length-2));
-			if (f_other.className == "full_mark inactive") m_other.style.color = "#666666";
-		} else {
-			m_other.style.color = "rgba(0, 0, 0, 0)";
+		var m = pencil_marks[i];
+		f = document.getElementById(m.id.substring(0, m.id.length-2));
+		if (f.className == "full_mark inactive") {
+			if (m.className == "pencil_mark active") m.style.color = "#666666";
+			else m.style.color = "rgba(0, 0, 0, 0)";
+			if (m.lastChild.nodeName == "IMG") m.lastChild.style.display = "block";
 		}
 	}
 }
@@ -78,22 +93,26 @@ document.addEventListener("mousemove", function update_marks() {
 			if (m.matches(":hover")) {
 				outside = false;
 				if (f.className == "full_mark inactive") {
-					f.innerHTML = m.id.substring(m.id.length-1, m.id.length);
+					f.firstChild.textContent = m.id.substring(m.id.length-1, m.id.length);
 					f.style.color = "#AAAAAA";
 				}
 				for (var i = full_marks.length - 1; i >= 0; i--) {
 					var f_other = full_marks[i];
-					if (f_other != f && f_other.className == "full_mark inactive") f_other.style.color = "rgba(0, 0, 0, 0)";
+					if (f_other != f && f_other.className == "full_mark inactive") {
+						f_other.style.color = "rgba(0, 0, 0, 0)";
+					}
 				}
 				for (var i = pencil_marks.length - 1; i >= 0; i--) {
 					var m_other = pencil_marks[i];
-					if (m_other.className == "pencil_mark active") {
-						f_other_id = m_other.id.substring(0, m_other.id.length-2);
-						if (f_other_id == f_id) {
-							m_other.style.color = "rgba(0, 0, 0, 0)";
-						} else {
-							f_other = document.getElementById(f_other_id);
-							if (f_other.className == "full_mark inactive") m_other.style.color = "#666666";
+					f_other_id = m_other.id.substring(0, m_other.id.length-2);
+					if (f_other_id == f_id) {
+						if (m_other.className == "pencil_mark active") m_other.style.color = "rgba(0, 0, 0, 0)";
+						if (m_other.lastChild.nodeName == "IMG") m_other.lastChild.style.display = "none";
+					} else {
+						f_other = document.getElementById(f_other_id);
+						if (f_other.className == "full_mark inactive") {
+							if (m_other.className == "pencil_mark active") m_other.style.color = "#666666";
+							if (m_other.lastChild.nodeName == "IMG") m_other.lastChild.style.display = "block";
 						}
 					}
 				}
