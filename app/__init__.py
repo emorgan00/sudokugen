@@ -14,6 +14,7 @@ VARIANTS = [
 
 def full_name(code):
 	'''return the full name of the variant'''
+	code = code.upper()
 	v = 'Unknown Variant'
 	for d in VARIANTS:
 		if d['code'] == code:
