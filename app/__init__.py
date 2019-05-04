@@ -7,10 +7,12 @@ import sudoku
 
 app = Flask(__name__)
 
+
 # commenting a variant here will totally remove it from the site
 VARIANTS = [
-	{'code': 'CLASSIC', 'name': 'Classic Sudoku'}, # commented as the algo for this is simply too weak. puzzles are too easy.
-	{'code': 'KNIGHT', 'name': 'Anti-Knight Sudoku'}
+	{'code': 'CLASSIC', 'name': 'Classic Sudoku'},
+	{'code': 'KNIGHT', 'name': 'Anti-Knight Sudoku'},
+	{'code': 'BETWEEN', 'name': 'Between 1 & 9 Sudoku'}
 ]
 
 def full_name(code):
@@ -49,7 +51,7 @@ def create():
 		except: m = None
 
 		if request.form['symmetry'] == 'N':
-			g = sudoku.generate_grid(v, m)
+			g = [[4, 6, 0, 2, 7, 1, 3, 5, 8], [3, 1, 5, 0, 4, 8, 2, 6, 7], [8, 7, 2, 3, 6, 5, 4, 0, 1], [5, 8, 4, 1, 3, 0, 6, 7, 2], [1, 0, 7, 6, 5, 2, 8, 3, 4], [2, 3, 6, 7, 8, 4, 0, 1, 5], [0, 5, 1, 4, 2, 6, 7, 8, 3], [6, 4, 3, 8, 1, 7, 5, 2, 0], [7, 2, 8, 5, 0, 3, 1, 4, 6], [11, 0, 35, 26, 5, 6, 0, 14, 28], [23, 5, 33, 11, 24, 5, 31, 19, 6]]
 		else:
 			g = sudoku.generate_symmetric_grid(s, v, m)
 
@@ -61,7 +63,7 @@ def create():
 			puzzle = render_grid(g, v),
 			v_code = v,
 			variant = full_name(v),
-			difficulty = sudoku.score(g, v),
+			difficulty = 1.00,
 			code = code,
 			c_code = compress_code(code)
 		)

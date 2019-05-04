@@ -2,6 +2,7 @@ from itertools import product
 from sudoku import grid_from_string, grid_to_string
 
 def formless_input(x, y, k):
+
 	out = '<td class="sudoku_tile"><div style="position: absolute; z-index: 2; top: 0; bottom: 0; left: 0; right: 0;">'
 	# pencil mark numbers
 	for k0 in xrange(1, 10):
@@ -10,7 +11,7 @@ def formless_input(x, y, k):
 			</div>'''.format(x = x, y = y, k = k0, editable = 'true' if k == 0 else 'false')
 	out += '</div><div style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 1;">'
 
-	if k == 0:
+	if k <= 0:
 		out += '<div class="full_mark inactive" id="tile_{x}{y}" style="color: rgba(0, 0, 0, 0)">0</div>'.format(x = x, y = y)
 	else:
 		out += '<div class="full_mark immutable" id="tile_{x}{y}" style="color: #000000;">{k}</div>'.format(x = x, y = y, k = k)
@@ -20,15 +21,34 @@ def formless_input(x, y, k):
 def render_grid(g, v):
 	'''render a sudoku grid as an HTML element'''
 
-	out = '<table class="sudoku_container" id="sudoku_container">'
+	if v.upper() in ('CLASSIC', 'KNIGHT'):
+		out = '<table class="sudoku_container" id="sudoku_container">'
 
-	for x, row in enumerate(g):
+		for x, row in enumerate(g):
+			out += '<tr class="sudoku_row">'
+			for y, k in enumerate(row):
+				out += formless_input(x, y, k+1)
+			out += '</tr>'
+
+		return out+'</table><input type="hidden" name="grid" value="{}">'.format(grid_to_string(g, v, True))
+
+	if v.upper() in ('BETWEEN'):
+		out = '<table class="sudoku_container" id="sudoku_container">'
+
 		out += '<tr class="sudoku_row">'
-		for y, k in enumerate(row):
-			out += formless_input(x, y, k+1)
+		out += formless_input(9, 0, -1)
+		for y, k in enumerate(g[9]):
+			out += formless_input(9, y+1, k)
 		out += '</tr>'
 
-	return out+'</table><input type="hidden" name="grid" value="{}">'.format(grid_to_string(g, v, True))
+		for x, row in enumerate(g[:9]):
+			out += '<tr class="sudoku_row">'
+			out += formless_input(10, x, g[10][x])
+			for y, k in enumerate(row):
+				out += formless_input(x, y, k+1)
+			out += '</tr>'
+
+		return out+'</table><input type="hidden" name="grid" value="{}">'.format(grid_to_string(g, v, True))
 
 def render_grid_pdf(g, v):
 	'''render a sudoku grid as an HTML element, optimized for use in PDFs. Contains no form elements.'''

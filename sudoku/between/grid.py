@@ -117,4 +117,4 @@ def grid_from_string(s):
 		out[x][y] = int(s[x*9+y])-1 if s[x*9+y].isdigit() else -1 
 	return out
 
-print grid_to_string(grid())
+print grid()

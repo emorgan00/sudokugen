@@ -4,9 +4,7 @@
 		<p style='text-align: center; margin-bottom: 0; font-size: 30px;'>{{ variant }}</p>
 		<p style='text-align: center; margin-bottom: 30px;'>
 			{% if difficulty == -1 %}
-				<i>Unsolvable</i>
-			{% elif difficulty == 0 %}
-				<i>Unsolvable with known techniques, unique solution exists</i>
+				<i>Unknown Difficulty</i>
 			{% else %}
 				<i>Difficulty: {{ difficulty }}</i>
 			{% endif %}

@@ -15,8 +15,13 @@
 				<input type='text' id='code' placeholder='Enter Code' autocomplete='new-password'>
 			</div>
 		</div>
-		<div style='width: 50%; min-width: 540px; float: left'>
-			<div style='width: 540px; float: center'>
+		{% if v_code in ("CLASSIC, KNIGHT") %}
+			<div style='width: 50%; min-width: 540px; float: left'>
+				<div style='width: 540px; float: center'>
+		{% elif v_code in ("BETWEEN") %}
+			<div style='width: 50%; min-width: 600px; float: left'>
+				<div style='width: 600px; float: center'>
+		{% endif %}
 				<p class='choice_header'>Edit Grid:</p>
 				{{ puzzle|safe }}
 				<input id='solve_button' type='submit' name='submit_type' value='Solve' style='margin-top: 50px; float: left;' onclick='loading();'>

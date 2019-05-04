@@ -2,8 +2,13 @@
 {% block content %}
 
 	<script src='{{ url_for("static", filename="sudoku_editor.js") }}'></script>
-
-	<div style='width: 540px'>
+	{% if v_code in ("CLASSIC, KNIGHT") %}
+		<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_classic.css") }}'>
+		<div style='width: 540px'>
+	{% elif v_code in ("BETWEEN") %}
+		<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_labeled.css") }}'>
+		<div style='width: 600px;'>
+	{% endif %}
 		<div id='sudoku_info'>
 			Variant: {{ variant }}<br>
 			{% if difficulty == -1 %}

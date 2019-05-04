@@ -1,5 +1,6 @@
 import knight.grid, knight.solver
 import classic.grid, classic.solver
+import between.grid
 
 def grid(variant):
 
@@ -10,6 +11,9 @@ def grid(variant):
 
 	elif variant == 'CLASSIC':
 		return classic.grid()
+
+	elif variant == 'BETWEEN':
+		return between.grid()
 
 	else:
 		raise Exception('unsupported variant')
@@ -23,6 +27,9 @@ def grid_to_string(g, variant, noFormat = False):
 
 	elif variant == 'CLASSIC':
 		return classic.grid_to_string(g, noFormat)
+
+	elif variant == 'BETWEEN':
+		return between.grid_to_string(g, noFormat)
 
 	else:
 		raise Exception('unsupported variant')
@@ -41,6 +48,9 @@ def grid_from_string(g, variant):
 	elif variant == 'CLASSIC':
 		return classic.grid_from_string(g)
 
+	elif variant == 'BETWEEN':
+		return between.grid_from_string(g)
+
 	else:
 		raise Exception('unsupported variant')
 
@@ -53,6 +63,9 @@ def partial_grid(g, ratio, variant):
 
 	elif variant == 'CLASSIC':
 		return classic.partial_grid(g, ratio)
+
+	elif variant == 'BETWEEN':
+		return between.partial_grid(g, ratio)
 
 	else:
 		raise Exception('unsupported variant')
