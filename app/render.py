@@ -70,20 +70,25 @@ def render_grid_pdf(g, v):
 
 	return out+'</table><input type="hidden" name="grid" value="{}">'.format(grid_to_string(g, v, True))
 
-def form_grid():
+def form_grid(v):
 	'''render a blank fillable sudoku grid as part of an HTML form'''
 
-	out = '<table class="sudoku_container">'
+	if v.upper() in ('CLASSIC', 'KNIGHT'):
+		out = '<table class="sudoku_container">'
 
-	for x in xrange(9):
-		out += '<tr class="sudoku_row">'
-		for y in xrange(9):
-			out += '''<td class="sudoku_tile">
-				<input class="sudoku_number sudoku_input" name="tile_{}{}" type="text" maxlength="1" autocomplete="new-password">
-				</td>\n'''.format(x, y)
-		out += '</tr>'
+		for x in xrange(9):
+			out += '<tr class="sudoku_row">'
+			for y in xrange(9):
+				out += '''<td class="sudoku_tile">
+					<input class="sudoku_number sudoku_input" name="tile_{}{}" type="text" maxlength="1" autocomplete="new-password">
+					</td>\n'''.format(x, y)
+			out += '</tr>'
 
-	return out+'</table>'
+		return out+'</table>'
+
+	if v.upper() in ('BETWEEN'):
+
+		return ''
 
 def grid_from_form(form, v):
 	'''take a filled html form and return a standard grid. <form> should accept request.form'''

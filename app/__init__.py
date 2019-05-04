@@ -73,11 +73,16 @@ def solve():
 
 	if request.method == 'GET':
 
+		v = request.args.get('v')
+		if v == None: v = 'CLASSIC'
+		else: v = v.upper()
+
 		return render_template(
 			'solve.html',
 			title = 'Solver',
 			variants = VARIANTS,
-			puzzle = form_grid()
+			puzzle = form_grid(v),
+			v_code = v
 		)
 
 	elif request.method == 'POST':
