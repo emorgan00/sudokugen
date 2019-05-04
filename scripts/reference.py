@@ -4,9 +4,9 @@ from sudoku import *
 
 puzzle = grid_from_string('''
 
-..9...7.2...9....5.5..4.....1.......7.......1.......9.....6..3.3....9...5.8...6..
+000000000001900500560310090100600028004000700270004003040068035002005900000000000
 
 ''', 'CLASSIC')
 
 if __name__ == '__main__':
-	print score(puzzle, 'knight', True)
+	print score(puzzle, 'classic', True)
