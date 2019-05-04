@@ -37,19 +37,3 @@ def solve(g, variant, verbose = False):
 		raise Exception('unsupported variant')
 
 	return -1 if score <= 0 else round(log10(score), 2)
-
-def solvable(g, variant):
-	'''return whether the puzzle has a unique solution'''
-
-	variant = variant.upper()
-
-	g = [[x for x in row] for row in g]
-
-	if variant == 'KNIGHT':
-		return knight.solvable(g)
-
-	# elif variant == 'CLASSIC':
-	# 	score = classic.solvable(g, verbose)
-
-	else:
-		raise Exception('unsupported variant')

@@ -9,18 +9,17 @@ app = Flask(__name__)
 
 # commenting a variant here will totally remove it from the site
 VARIANTS = [
-	# {'code': 'CLASSIC', 'name': 'Classic Sudoku'}, # commented as the algo for this is simply too weak. puzzles are too easy.
+	{'code': 'CLASSIC', 'name': 'Classic Sudoku'}, # commented as the algo for this is simply too weak. puzzles are too easy.
 	{'code': 'KNIGHT', 'name': 'Anti-Knight Sudoku'}
 ]
 
 def full_name(code):
 	'''return the full name of the variant'''
 	code = code.upper()
-	v = 'Unknown Variant'
 	for d in VARIANTS:
 		if d['code'] == code:
-			v = d['name']
-	return v
+			return d['name']
+	return 'Unknown Variant'
 
 # routing
 
@@ -131,7 +130,7 @@ def load(v, code):
 		title = 'Load Puzzle',
 		puzzle = render_grid(g, v),
 		variant = full_name(v),
-		v_code = v,
+		v_code = v.upper(),
 		difficulty = sudoku.score(g, v),
 		code = code,
 		c_code = compress_code(code)
