@@ -87,8 +87,31 @@ def form_grid(v):
 		return out+'</table>'
 
 	if v.upper() in ('BETWEEN'):
+		out = '<table class="sudoku_container">'
 
-		return ''
+		for x in xrange(10):
+			out += '<tr class="sudoku_row">'
+			for y in xrange(10):
+				outer = True
+
+				if y == 0:
+					if x == 0:
+						out += '<td class="sudoku_tile"></td>'
+						continue
+					i, j = 10, x-1
+				elif x == 0:
+					i, j = 9, y-1
+				else:
+					i, j = x-1, y-1
+					outer = False
+
+				out += '''<td class="sudoku_tile{i}">
+					<input class="sudoku_number sudoku_input" name="tile_{x}{y}" type="text" maxlength="{m}" autocomplete="new-password">
+					</td>\n'''.format(x = i, y = j, i = ' sum' if outer else '', m = 2 if outer else 1)
+
+			out += '</tr>'
+
+		return out+'</table>'
 
 def grid_from_form(form, v):
 	'''take a filled html form and return a standard grid. <form> should accept request.form'''

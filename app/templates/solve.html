@@ -17,13 +17,13 @@
 			</div>
 		</div>
 		{% if v_code in ("CLASSIC", "KNIGHT") %}
-			<link id='v_link' rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_classic.css") }}'>
-			<div id='v_container' style='width: 50%; min-width: 540px; float: left'>
-				<div id='v_width' style='width: 540px; float: center'>
+			<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_classic.css") }}'>
+			<div style='width: 50%; min-width: 540px; float: left'>
+				<div style='width: 540px; float: center'>
 		{% elif v_code in ("BETWEEN") %}
-			<link id='v_link' rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_labeled.css") }}'>
-			<div id='v_container' style='width: 50%; min-width: 600px; float: left'>
-				<div id='v_width' style='width: 600px; float: center'>
+			<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_labeled.css") }}'>
+			<div style='width: 50%; min-width: 600px; float: left'>
+				<div style='width: 600px; float: center'>
 		{% endif %}
 				<p class='choice_header'>Edit Grid:</p>
 				<div>{{ puzzle|safe }}</div>

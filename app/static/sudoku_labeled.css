@@ -23,14 +23,20 @@
 
 /* grid lines within sudoku grid */
 
+.sudoku_tile:nth-child(3n+1) {
+	border-right: 2px solid ;
+}
+
+.sudoku_row:nth-child(3n+1) .sudoku_tile {
+	border-bottom: 2px solid;
+}
+
+/* display-specific */
+
 .sudoku_tile:first-child {
 	border-left: none;
 	border-top: none;
 	border-bottom: none;
-}
-
-.sudoku_tile:nth-child(3n+1) {
-	border-right: 2px solid ;
 }
 
 .sudoku_row:first-child .sudoku_tile {
@@ -39,10 +45,24 @@
 	border-top: none;
 }
 
-.sudoku_row:nth-child(3n+1) .sudoku_tile {
-	border-bottom: 2px solid;
-}
-
 .sudoku_row:nth-child(3n+1) .sudoku_tile:first-child {
 	border-bottom: none;
+}
+
+/* solve-specific */
+
+.sudoku_tile.sum:first-child {
+	border-left: dotted;
+	border-top: dotted;
+	border-bottom: dotted;
+}
+
+.sudoku_row:first-child .sudoku_tile.sum {
+	border-left: dotted;
+	border-right: dotted;
+	border-top: dotted;
+}
+
+.sudoku_row:nth-child(3n+1) .sudoku_tile.sum:first-child {
+	border-bottom: dotted;
 }

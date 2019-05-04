@@ -81,14 +81,13 @@
 	background-color: rgba(0, 0, 0, 0);
 	color: #666666;
 	border: none;
-	width: 32px;
+	width: 100%;
 	position: absolute;
 	font-size: 30px;
-	padding: 13px;
+	padding: 13px 0px;
 	top: 0;
 	bottom: 0;
 	left: 0;
-	right: 0;
 }
 
 /* sudoku info box */
