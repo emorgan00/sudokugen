@@ -27,6 +27,18 @@ function toggle_pencil() {
 	else pencil_button.value = "Numbers";
 }
 
+function clear_highlights() {
+	for (var i = full_marks.length - 1; i >= 0; i--) {
+		var f = full_marks[i];
+		if (f.lastChild.nodeName == "IMG") f.removeChild(f.lastChild);
+
+	}
+	for (var i = pencil_marks.length - 1; i >= 0; i--) {
+		var m = pencil_marks[i];
+		if (m.lastChild.nodeName == "IMG") m.removeChild(m.lastChild);
+	}
+}
+
 function click_number(id, shift, editable) {
 	var m = document.getElementById(id);
 	var f = document.getElementById(id.substring(0, id.length-2));
