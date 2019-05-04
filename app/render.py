@@ -2,6 +2,9 @@ from itertools import product
 from sudoku import grid_from_string, grid_to_string
 
 def formless_input(x, y, k):
+	'''special codes for k: 
+	-1: blank, but uneditable
+	-2: 0, but actually draw the 0'''
 
 	out = '<td class="sudoku_tile"><div style="position: absolute; z-index: 2; top: 0; bottom: 0; left: 0; right: 0;">'
 	# pencil mark numbers
@@ -11,9 +14,10 @@ def formless_input(x, y, k):
 			</div>'''.format(x = x, y = y, k = k0, editable = 'true' if k == 0 else 'false')
 	out += '</div><div style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 1;">'
 
-	if k <= 0:
+	if k == 0:
 		out += '<div class="full_mark inactive" id="tile_{x}{y}" style="color: rgba(0, 0, 0, 0)">0</div>'.format(x = x, y = y)
 	else:
+		k = 0 if k == -2 else '&nbsp;' if k == -1 else k
 		out += '<div class="full_mark immutable" id="tile_{x}{y}" style="color: #000000;">{k}</div>'.format(x = x, y = y, k = k)
 
 	return out + '</div></td>'
@@ -38,12 +42,12 @@ def render_grid(g, v):
 		out += '<tr class="sudoku_row">'
 		out += formless_input(9, 0, -1)
 		for y, k in enumerate(g[9]):
-			out += formless_input(9, y+1, k)
+			out += formless_input(9, y+1, -2 if k == 0 else k)
 		out += '</tr>'
 
 		for x, row in enumerate(g[:9]):
 			out += '<tr class="sudoku_row">'
-			out += formless_input(10, x, g[10][x])
+			out += formless_input(10, x, -2 if g[10][x] == 0 else g[10][x])
 			for y, k in enumerate(row):
 				out += formless_input(x, y, k+1)
 			out += '</tr>'

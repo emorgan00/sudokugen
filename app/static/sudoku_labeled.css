@@ -2,8 +2,7 @@
 
 .sudoku_container {
 	width: 100%;
-		border-collapse: collapse;
-	border: 2px solid;
+	border-collapse: collapse;
 }
 
 .sudoku_tile {
@@ -25,16 +24,27 @@
 /* grid lines within sudoku grid */
 
 .sudoku_tile:first-child {
-	border-left: 2px solid;
+	border-left: none;
+	border-top: none;
+	border-bottom: none;
 }
+
 .sudoku_tile:nth-child(3n+1) {
 	border-right: 2px solid ;
 }
-.sudoku_row:first-child {
-	border-top: 2px solid;
+
+.sudoku_row:first-child .sudoku_tile {
+	border-left: none;
+	border-right: none;
+	border-top: none;
 }
+
 .sudoku_row:nth-child(3n+1) .sudoku_tile {
 	border-bottom: 2px solid;
+}
+
+.sudoku_row:nth-child(3n+1) .sudoku_tile:first-child {
+	border-bottom: none;
 }
 
 .sudoku_input {

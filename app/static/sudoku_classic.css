@@ -2,7 +2,7 @@
 
 .sudoku_container {
 	width: 100%;
-		border-collapse: collapse;
+	border-collapse: collapse;
 	border: 2px solid;
 }
 
