@@ -6,9 +6,9 @@
 		<div style='width: 50%; float: left'>
 			<p class='choice_header'>Variant</p>
 			<div class='choice_box'>
-				{% for v in variants %}
+				{% for v in variants %} {% if v.display %}
 				<input type='radio' name='variant' value='{{ v.code }}' onclick='switch_form("{{ url_for("solve", v=v.code.lower()) }}")' required {% if v.code.upper() == v_code %}checked{% endif %}> {{ v.name }} <br>
-				{% endfor %}
+				{% endif %} {% endfor %}
 			</div>
 			<p class='choice_header'>Import Code</p>
 			<div class='choice_box'>

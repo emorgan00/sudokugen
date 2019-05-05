@@ -9,9 +9,9 @@ app = Flask(__name__)
 
 # commenting a variant here will totally remove it from the site
 VARIANTS = [
-	{'code': 'CLASSIC', 'name': 'Classic Sudoku'},
-	{'code': 'KNIGHT', 'name': 'Anti-Knight Sudoku'},
-	{'code': 'BETWEEN', 'name': 'Between 1 & 9 Sudoku'}
+	{'code': 'CLASSIC', 'name': 'Classic Sudoku', 'display': True},
+	{'code': 'KNIGHT', 'name': 'Anti-Knight Sudoku', 'display': True},
+	{'code': 'BETWEEN', 'name': 'Between 1 & 9 Sudoku', 'display': False}
 ]
 
 def full_name(code):
