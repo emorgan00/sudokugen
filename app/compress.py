@@ -7,7 +7,7 @@ def compress_code(code):
 	'''code should consist of characters: 1-9, other (10 options)'''
 
 	i = 0
-	for c in code[::-1]:
+	for c in code[80::-1]:
 		i *= 10
 		if c in '123456789':
 			i += int(c)
@@ -17,13 +17,12 @@ def compress_code(code):
 		out += VALID_CHARS[i%L_v]
 		i /= L_v
 
-	if len(out) == 0: return '.'
-	return out[::-1]
+	return out[::-1]+'_'+code[81:]
 
 def decompress_code(code):
 
 	i = 0
-	for c in code:
+	for c in code.split('_')[0]:
 		i *= L_v
 		i += VALID_CHARS.index(c)
 
@@ -32,4 +31,6 @@ def decompress_code(code):
 		out += OUT_CHARS[i%L_o]
 		i /= L_o
 
-	return out
+	while len(out) < 81: out += '.'
+
+	return out+''.join(code.split('_')[1:])

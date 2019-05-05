@@ -10,10 +10,11 @@ function import_code(variant) {
 		var ch = code.charAt(i);
 		var x = i%9;
 		var y = Math.floor(i/9);
-		if (ch != '' && '123456789'.indexOf(ch) !== -1) {
-			form.elements[`tile_${y}${x}`].value = ch;
-		} else {
-			form.elements[`tile_${y}${x}`].value = '';
+		var k = '';
+		if (ch != '')
+			k = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.indexOf(ch);
+		if (k !== -1) {
+			form.elements[`tile_${y}${x}`].value = k;
 		}
 	}
 }

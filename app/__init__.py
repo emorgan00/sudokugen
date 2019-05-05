@@ -132,8 +132,7 @@ def pdf():
 @app.route('/load/<v>/<code>', methods = ['GET'])
 def load(v, code):
 
-	if any(c not in '.123456789' for c in code):
-		code = decompress_code(code)
+	code = decompress_code(code)
 
 	g = grid_from_string(code, v);
 	code = sudoku.grid_to_string(g, v, True)

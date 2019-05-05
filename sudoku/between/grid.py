@@ -94,12 +94,14 @@ def grid():
 	grid.append(sums)
 
 	return grid
+	
+BASE = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
 def grid_to_string(g, noformat = False):
 	'''return the grid represented as a string. If <noformat> is True, then there will be no whitespace in the returned string.'''
 	if noformat:
-		out = ''.join(''.join('.' if x == -1 else str(x+1) for x in row) for row in g[:9])+'/'
-		out += ''.join(''.join(str(x) for x in row) for row in g[9:])
+		out = ''.join(''.join('.' if x == -1 else str(x+1) for x in row) for row in g[:9])
+		out += ''.join(''.join(BASE[x] if x != -1 else '.' for x in row) for row in g[9:])
 		return out
 	else:
 		out = '\n'.join(' '.join('.' if x == -1 else str(x+1) for x in row) for row in g[:9])+'\n'
@@ -110,9 +112,11 @@ def partial_grid(g, ratio):
 	return [[k if random() < ratio or x >= 9 else -1 for k in row] for x, row in enumerate(g)]
 
 def grid_from_string(s):
-	out = [[-1 for _ in xrange(9)] for _ in xrange(9)]
+	out = [[-1 for _ in xrange(9)] for _ in xrange(11)]
 	s = s.strip().replace('\n', '').replace(' ', '')
 	while len(s) < 81: s += '.'
-	for x, y in product(xrange(9), xrange(9)):
-		out[x][y] = int(s[x*9+y])-1 if s[x*9+y].isdigit() else -1 
+	for x, y in product(xrange(11), xrange(9)):
+		ch = s[x*9+y]
+		if ch == '.': out[x][y] = -1
+		else: out[x][y] = BASE.index(ch)
 	return out
