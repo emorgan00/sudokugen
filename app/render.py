@@ -63,10 +63,7 @@ def render_grid_pdf(g, v):
 		for row in g:
 			out += '<tr class="sudoku_row">'
 			for k in row:
-				if k == -1:
-					out += '<td class="sudoku_tile"><div class="sudoku_number">&nbsp;</div></td>\n'
-				else:
-					out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(k+1)
+				out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(k+1 if k != -1 else '&nbsp;')
 			out += '</tr>'
 
 		return out+'</table>'
@@ -77,17 +74,14 @@ def render_grid_pdf(g, v):
 		out += '<tr class="sudoku_row">'
 		out += '<td class="sudoku_tile"><div class="sudoku_number">&nbsp;</div></td>\n'
 		for y, k in enumerate(g[9]):
-			if k == -1:
-				out += '<td class="sudoku_tile"><div class="sudoku_number">&nbsp;</div></td>\n'
-			else:
-				out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(k)
+			out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(k)
 		out += '</tr>'
 
 		for x, row in enumerate(g[:9]):
 			out += '<tr class="sudoku_row">'
 			out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(g[10][x])
 			for y, k in enumerate(row):
-				out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(k+1)
+				out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(k+1 if k != -1 else '&nbsp;')
 			out += '</tr>'
 
 		return out+'</table>'
