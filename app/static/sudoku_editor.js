@@ -1,10 +1,43 @@
 var pencil = false;
 var pencil_marks = document.getElementsByClassName("pencil_mark");
 var full_marks = document.getElementsByClassName("full_mark");
+var numbers = true;
 
-var circle = document.createElement('div');
-circle.innerHTML = "<img src='/static/circle.png' style='width: 100%; position: absolute; left: 0; top: 0; z-index: 0;'>"
-circle = circle.firstChild;
+var img_o = document.createElement('div');
+img_o.innerHTML = "<img src='/static/circle.png' class='solid' style='width: 100%; position: absolute; left: 0; top: 0; z-index: 0;'>"
+img_o = img_o.firstChild;
+img_o_preview = img_o.cloneNode(true);
+img_o_preview.style.opacity = "0.5";
+img_o_preview.style.filter  = 'alpha(opacity=50)';
+img_o_preview.className  = 'preview';
+
+var img_x = document.createElement('div');
+img_x.innerHTML = "<img src='/static/x.png' class='solid' style='width: 100%; position: absolute; left: 0; top: 0; z-index: 0;'>"
+img_x = img_x.firstChild;
+img_x_preview = img_x.cloneNode(true);
+img_x_preview.style.opacity = "0.5";
+img_x_preview.style.filter  = 'alpha(opacity=50)';
+img_x_preview.className  = 'preview';
+
+var active_img = img_o;
+var active_preview = img_o_preview;
+
+document.addEventListener("keyup", function check_key(e) {
+	if (e.keyCode == 16) { // shift
+		if (numbers) {
+			numbers = false;
+			active_img = img_o;
+			active_preview = img_o_preview;
+		} else if (active_img == img_o) {
+			active_img = img_x;
+			active_preview = img_x_preview;
+		} else {
+			numbers = true;
+		}
+		clean_marks();
+		document.dispatchEvent(new Event("mousemove"));
+	}
+});
 
 window.oncontextmenu = function () {
 	for (var i = pencil_marks.length - 1; i >= 0; i--) {
@@ -44,9 +77,15 @@ function click_number(id, shift, editable) {
 	var f = document.getElementById(id.substring(0, id.length-2));
 
 	if (pencil && editable && f.className == "full_mark inactive") {
-		if (shift) {
-			if (m.lastChild.nodeName == "IMG") m.removeChild(m.lastChild);
-			else m.appendChild(circle.cloneNode(true));
+		if (!numbers) {
+			if (m.lastChild.nodeName == "IMG" && m.lastChild.className == "solid") {
+				m.removeChild(m.lastChild);
+				m.appendChild(active_preview.cloneNode(true));
+			} else if (m.lastChild.nodeName == "IMG") {
+				m.removeChild(m.lastChild);
+				m.appendChild(active_img.cloneNode(true));
+			} else
+				m.appendChild(active_img.cloneNode(true));
 		} else {
 			if (m.className == "pencil_mark inactive") {
 				m.className = "pencil_mark active";
@@ -57,10 +96,16 @@ function click_number(id, shift, editable) {
 			}
 		}
 	} else if (!pencil) {
-		if (shift) {
-			if (f.lastChild.nodeName == "IMG") f.removeChild(f.lastChild);
-			else f.appendChild(circle.cloneNode(true));
-		} else if (editable) {
+		if (!numbers) {
+			if (f.lastChild.nodeName == "IMG" && f.lastChild.className == "solid") {
+				f.removeChild(f.lastChild);
+				f.appendChild(active_preview.cloneNode(true));
+			} else if (f.lastChild.nodeName == "IMG") {
+				f.removeChild(f.lastChild);
+				f.appendChild(active_img.cloneNode(true));
+			} else
+				f.appendChild(active_img.cloneNode(true));
+		} else if (editable && numbers) {
 			if (f.className == "full_mark inactive") {
 				f.className = "full_mark active";
 				f.style.color = "#666666";
@@ -77,6 +122,8 @@ function clean_marks() {
 		var f = full_marks[i];
 		if (f.className == "full_mark inactive")
 			f.style.color = "rgba(0, 0, 0, 0)";
+		if (f.lastChild.nodeName == "IMG" && f.lastChild.className == "preview")
+			f.removeChild(f.lastChild);
 	}
 	for (var i = pencil_marks.length - 1; i >= 0; i--) {
 		var m = pencil_marks[i];
@@ -84,7 +131,12 @@ function clean_marks() {
 		if (f.className == "full_mark inactive") {
 			if (m.className == "pencil_mark active") m.style.color = "#666666";
 			else m.style.color = "rgba(0, 0, 0, 0)";
-			if (m.lastChild.nodeName == "IMG") m.lastChild.style.display = "block";
+			if (m.lastChild.nodeName == "IMG") {
+				if (m.lastChild.className == "preview")
+					m.removeChild(m.lastChild);
+				else
+					m.lastChild.style.display = "block";
+			}
 		}
 	}
 }
@@ -95,23 +147,33 @@ document.addEventListener("mousemove", function update_marks() {
 		var m = pencil_marks[i];
 		var f_id = m.id.substring(0, m.id.length-2);
 		var f = document.getElementById(f_id);
-		if (m.className == "pencil_mark inactive" && f.className == "full_mark inactive" && pencil) {
+		if (f.className == "full_mark inactive" && pencil) {
 			if (m.matches(":hover")) {
-				m.style.color = "#AAAAAA";
+				if (m.className == "pencil_mark inactive" && numbers)
+					m.style.color = "#AAAAAA";
+				if (m.lastChild.nodeName != "IMG" && !numbers)
+					m.appendChild(active_preview.cloneNode(true));
 			} else {
-				m.style.color = "rgba(0, 0, 0, 0)";
+				if (m.className == "pencil_mark inactive" && numbers)
+					m.style.color = "rgba(0, 0, 0, 0)";
+				if (m.lastChild.nodeName == "IMG" && m.lastChild.className == "preview" && !numbers)
+					m.removeChild(m.lastChild);
 			}
 		} else if (!pencil) {
 			if (m.matches(":hover")) {
 				outside = false;
 				if (f.className == "full_mark inactive") {
 					f.firstChild.textContent = m.id.substring(m.id.length-1, m.id.length);
-					f.style.color = "#AAAAAA";
+					if (numbers) f.style.color = "#AAAAAA";
+					else if (f.lastChild.nodeName != "IMG") f.appendChild(active_preview.cloneNode(true));
 				}
 				for (var i = full_marks.length - 1; i >= 0; i--) {
 					var f_other = full_marks[i];
-					if (f_other != f && f_other.className == "full_mark inactive") {
-						f_other.style.color = "rgba(0, 0, 0, 0)";
+					if (f_other != f) {
+						if (f_other.className == "full_mark inactive")
+							f_other.style.color = "rgba(0, 0, 0, 0)";
+						if (f_other.lastChild.nodeName == "IMG" && f_other.lastChild.className == "preview")
+							f_other.removeChild(f_other.lastChild);
 					}
 				}
 				for (var i = pencil_marks.length - 1; i >= 0; i--) {
