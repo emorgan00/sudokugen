@@ -23,7 +23,11 @@
 <style>
 
 .sudoku_tile {
-	width: 11.1%;
+	{% if v_code in ("CLASSIC", "KNIGHT") %}
+		width: 11.1%;
+	{% elif v_code in ("BETWEEN") %}
+		width: 10.0%;
+	{% endif %}
 }
 
 .sudoku_tile:after {
