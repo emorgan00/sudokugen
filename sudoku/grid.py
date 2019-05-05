@@ -1,6 +1,6 @@
 import knight.grid, knight.solver
 import classic.grid, classic.solver
-import between.grid
+import between.grid, between.solver
 
 def grid(variant):
 

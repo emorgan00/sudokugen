@@ -31,7 +31,7 @@
 				<input type='hidden' name='code' value='{{ code }}'>
 			</form>
 		</div> <br>
-		<div align='center' class='sudoku_info' id='code' style='width: 100vw; margin-left: 50%; transform: translateX(-50%); margin-top: 20px; display: none; position: relative;'>
+		<div align='center' class='sudoku_info' id='code' style='width: 100vw; margin-left: 50%; transform: translateX(-50%); margin-top: 20px; margin-bottom: 100px; display: none; position: relative;'>
 			<i>Code: </i><div style='font-family: Courier New, Courier; font-size: 12px;'>{{ code }}</div><br>
 			<i>Static Link: </i><div style='font-family: Courier New, Courier; font-size: 12px;'>{{ "www.sudokugen.com"+url_for("load", v = v_code.lower(), code = c_code) }}</div>
 		</div>

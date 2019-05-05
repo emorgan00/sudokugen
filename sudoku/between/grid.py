@@ -98,7 +98,7 @@ def grid():
 def grid_to_string(g, noformat = False):
 	'''return the grid represented as a string. If <noformat> is True, then there will be no whitespace in the returned string.'''
 	if noformat:
-		out = ''.join(''.join('.' if x == -1 else str(x+1) for x in row) for row in g[:9])+'\n'
+		out = ''.join(''.join('.' if x == -1 else str(x+1) for x in row) for row in g[:9])+'/'
 		out += ''.join(''.join(str(x) for x in row) for row in g[9:])
 		return out
 	else:
@@ -107,7 +107,7 @@ def grid_to_string(g, noformat = False):
 		return out
 
 def partial_grid(g, ratio):
-	return [[x if random() < ratio else -1 for x in row] for row in g]
+	return [[k if random() < ratio or x >= 9 else -1 for k in row] for x, row in enumerate(g)]
 
 def grid_from_string(s):
 	out = [[-1 for _ in xrange(9)] for _ in xrange(9)]

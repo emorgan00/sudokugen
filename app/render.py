@@ -115,15 +115,25 @@ def form_grid(v):
 
 def grid_from_form(form, v):
 	'''take a filled html form and return a standard grid. <form> should accept request.form'''
-
 	if 'grid' in form:
-		grid = grid_from_string(form['grid'], v)
-	else:
-		grid = [[-1 for _ in xrange(9)] for _ in xrange(9)]
-		for x, y in product(xrange(9), xrange(9)):
+		return grid_from_string(form['grid'], v)
 
-			k = form['tile_{}{}'.format(x, y)]
-			if k.isdigit():
-				grid[x][y] = int(k)-1
+	if v.upper() in ('CLASSIC', 'KNIGHT'):
+
+			grid = [[-1 for _ in xrange(9)] for _ in xrange(9)]
+			for x, y in product(xrange(9), xrange(9)):
+
+				k = form['tile_{}{}'.format(x, y)]
+				if k.isdigit():
+					grid[x][y] = int(k)-1
+
+	if v.upper() in ('BETWEEN'):
+
+			grid = [[-1 for _ in xrange(9)] for _ in xrange(11)]
+			for x, y in product(xrange(11), xrange(9)):
+
+				k = form['tile_{}{}'.format(x, y)]
+				if k.isdigit():
+					grid[x][y] = int(k)-(0 if x >= 9 else 1)
 
 	return grid
