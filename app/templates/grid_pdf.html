@@ -1,5 +1,10 @@
 <!doctype html>
 <html>
+	{% if v_code in ("CLASSIC", "KNIGHT") %}
+		<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_classic.css") }}'>
+	{% elif v_code in ("BETWEEN") %}
+		<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_labeled.css") }}'>
+	{% endif %}
 	<div align='center' id='content' style='width: 433px; margin-left: 95px; font-family: Times New Roman, Times, serif;'>
 		<p style='text-align: center; margin-bottom: 0; font-size: 30px;'>{{ variant }}</p>
 		<p style='text-align: center; margin-bottom: 30px;'>
@@ -16,46 +21,5 @@
 	</div>
 </html>
 <style>
-
-.sudoku_container {
-	width: 100%;
-	border-collapse: collapse;
-	border: 2px solid;
-}
-.sudoku_tile {
-	width: 11.1%;
-	text-align: center;
-	position: relative;
-	border: 1px solid black;
-	vertical-align: middle;
-}
-
-.sudoku_tile:after {
-	content: '';
-	display: block;
-}
-
-.sudoku_tile:first-child {
-	border-left: 2px solid;
-}
-.sudoku_tile:nth-child(3n) {
-	border-right: 2px solid ;
-}
-.sudoku_row:first-child {
-	border-top: 2px solid;
-}
-.sudoku_row:nth-child(3n) .sudoku_tile {
-	border-bottom: 2px solid;
-}
-
-.sudoku_number {
-	position: relative;
-	font-size: 30px;
-	padding: 2px;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-}
 
 </style>
