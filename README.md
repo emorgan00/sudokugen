@@ -26,8 +26,8 @@ to do:
 
 SITE:
 about page
-add recursive solver
 add timer
+z to toggle image
 
 CLASSIC:
 detect implicit triples

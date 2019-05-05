@@ -7,12 +7,11 @@ import sudoku
 
 app = Flask(__name__)
 
-
 # commenting a variant here will totally remove it from the site
 VARIANTS = [
 	{'code': 'CLASSIC', 'name': 'Classic Sudoku'},
 	{'code': 'KNIGHT', 'name': 'Anti-Knight Sudoku'},
-	{'code': 'BETWEEN', 'name': 'Between 1 & 9 Sudoku'}
+	{'code': 'BETWEEN', 'name': 'Between 1 & 9 Sudoku (in development -- generated puzzles are not solvable)'}
 ]
 
 def full_name(code):
@@ -63,7 +62,7 @@ def create():
 			puzzle = render_grid(g, v),
 			v_code = v,
 			variant = full_name(v),
-			difficulty = 1.00,
+			difficulty = sudoku.score(g, v),
 			code = code,
 			c_code = compress_code(code)
 		)
