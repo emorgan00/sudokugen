@@ -125,6 +125,7 @@ def pdf():
 		'grid_pdf.html',
 		puzzle = render_grid_pdf(sudoku.grid_from_string(request.form['code'], v), v),
 		variant = full_name(v),
+		v_code = v,
 		difficulty = request.form['difficulty']
 	)
 	return render_pdf(HTML(string = html))
