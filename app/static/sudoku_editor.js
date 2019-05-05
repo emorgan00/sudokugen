@@ -180,7 +180,7 @@ document.addEventListener("mousemove", function update_marks() {
 					var m_other = pencil_marks[i];
 					f_other_id = m_other.id.substring(0, m_other.id.length-2);
 					if (f_other_id == f_id) {
-						if (m_other.className == "pencil_mark active") m_other.style.color = "rgba(0, 0, 0, 0)";
+						if (m_other.className == "pencil_mark active" && numbers) m_other.style.color = "rgba(0, 0, 0, 0)";
 						if (m_other.lastChild.nodeName == "IMG") m_other.lastChild.style.display = "none";
 					} else {
 						f_other = document.getElementById(f_other_id);
