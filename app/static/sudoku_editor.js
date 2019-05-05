@@ -165,8 +165,8 @@ document.addEventListener("mousemove", function update_marks() {
 				if (f.className == "full_mark inactive") {
 					f.firstChild.textContent = m.id.substring(m.id.length-1, m.id.length);
 					if (numbers) f.style.color = "#AAAAAA";
-					else if (f.lastChild.nodeName != "IMG") f.appendChild(active_preview.cloneNode(true));
 				}
+				if (f.lastChild.nodeName != "IMG" && !numbers) f.appendChild(active_preview.cloneNode(true));
 				for (var i = full_marks.length - 1; i >= 0; i--) {
 					var f_other = full_marks[i];
 					if (f_other != f) {
