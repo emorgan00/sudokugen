@@ -5,6 +5,8 @@
 	width: 100%;
 	background-color: #555566;
 	margin-bottom: 15px;
+	position: fixed;
+	top: 0;
 }
 
 .header_item {
@@ -37,6 +39,7 @@
 
 .choice_header {
 	font-size: 1.5em;
+	vertical-align: top;
 }
 
 /* sudoku form */
@@ -93,6 +96,7 @@
 /* sudoku info box */
 
 #sudoku_info {
+	vertical-align: top;
 	text-align: center;
 	max-width: 538px;
 	margin-top: 30px;

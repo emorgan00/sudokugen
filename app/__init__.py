@@ -27,9 +27,16 @@ def full_name(code):
 @app.route('/')
 def index():
 
-	return redirect(url_for('create'))
+	return redirect(url_for('about'))
 
-@app.route('/create', methods = ('GET', 'POST'))
+@app.route('/about', methods = ['GET'])
+def about():
+
+	return render_template(
+		'about.html'
+	)
+
+@app.route('/create', methods = ['GET', 'POST'])
 def create():
 
 	if request.method == 'GET':
@@ -67,7 +74,7 @@ def create():
 			c_code = compress_code(code)
 		)
 
-@app.route('/solve', methods = ('GET', 'POST'))
+@app.route('/solve', methods = ['GET', 'POST'])
 def solve():
 
 	if request.method == 'GET':

@@ -4,10 +4,10 @@
 	<script src='{{ url_for("static", filename="sudoku_editor.js") }}'></script>
 	{% if v_code in ("CLASSIC", "KNIGHT") %}
 		<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_classic.css") }}'>
-		<div style='width: 540px'>
+		<div style='width: 540px; margin-top: 69.5px;'>
 	{% elif v_code in ("BETWEEN") %}
 		<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_labeled.css") }}'>
-		<div style='width: 600px;'>
+		<div style='width: 600px; margin-top: 69.5px;'>
 	{% endif %}
 		<div id='sudoku_info'>
 			Variant: {{ variant }}<br>

@@ -9,13 +9,13 @@
 	<link rel='icon' href='{{ url_for("static", filename="favicon.png") }}'>
 	<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="style.css") }}'>
 </head>
-<body style='margin: 0px'>
+<body style='margin: 0px; top: 0;'>
 	<div class='site_header'>
 		<a href='/' class='header_item'>Sudokugen.com</a>
 		<a href='/create' class='header_item'>Generator</a>
 		<a href='/solve' class='header_item'>Solver</a>
 	</div>
-	<div align='center' id='content'>
+	<div align='center' id='content' style='margin-top: 39.5px;'>
 		{% block content %}
 		{% endblock %}
 	</div>
