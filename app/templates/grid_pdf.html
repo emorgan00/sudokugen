@@ -22,13 +22,19 @@
 </html>
 <style>
 
-.sudoku_tile {
-	{% if v_code in ("CLASSIC", "KNIGHT") %}
+
+{% if v_code in ("CLASSIC", "KNIGHT") %}
+	.sudoku_tile {
 		width: 11.1%;
-	{% elif v_code in ("BETWEEN") %}
+	}
+{% elif v_code in ("BETWEEN") %}
+	.sudoku_tile {
 		width: 10.0%;
-	{% endif %}
-}
+	}
+	.sudoku_container {
+		width: 481.11px;
+	}
+{% endif %}
 
 .sudoku_tile:after {
 	margin-top: 0;
@@ -36,6 +42,7 @@
 
 .sudoku_number {
 	position: relative;
+	overflow: show;
 	font-size: 30px;
 	padding: 2px;
 	top: 0;
