@@ -57,18 +57,40 @@ def render_grid(g, v):
 def render_grid_pdf(g, v):
 	'''render a sudoku grid as an HTML element, optimized for use in PDFs. Contains no form elements.'''
 
-	out = '<table class="sudoku_container">'
+	if v.upper() in ('CLASSIC', 'KNIGHT'):
+		out = '<table class="sudoku_container">'
 
-	for row in g:
+		for row in g:
+			out += '<tr class="sudoku_row">'
+			for k in row:
+				if k == -1:
+					out += '<td class="sudoku_tile"><div class="sudoku_number">&nbsp;</div></td>\n'
+				else:
+					out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(k+1)
+			out += '</tr>'
+
+		return out+'</table>'
+
+	if v.upper() in ('BETWEEN'):
+		out = '<table class="sudoku_container">'
+
 		out += '<tr class="sudoku_row">'
-		for k in row:
+		out += '<td class="sudoku_tile"><div class="sudoku_number">&nbsp;</div></td>\n'
+		for y, k in enumerate(g[9]):
 			if k == -1:
 				out += '<td class="sudoku_tile"><div class="sudoku_number">&nbsp;</div></td>\n'
 			else:
-				out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(k+1)
+				out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(k)
 		out += '</tr>'
 
-	return out+'</table><input type="hidden" name="grid" value="{}">'.format(grid_to_string(g, v, True))
+		for x, row in enumerate(g[:9]):
+			out += '<tr class="sudoku_row">'
+			out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(g[10][x])
+			for y, k in enumerate(row):
+				out += '<td class="sudoku_tile"><div class="sudoku_number">{}</div></td>\n'.format(k+1)
+			out += '</tr>'
+
+		return out+'</table>'
 
 def form_grid(v):
 	'''render a blank fillable sudoku grid as part of an HTML form'''
