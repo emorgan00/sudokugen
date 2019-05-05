@@ -1,5 +1,3 @@
-www.sudokugen.com
-
 Difficulty guide:
 
 1.5 - Child's play  
@@ -13,11 +11,12 @@ Difficulty guide:
 Highest score ever recorded: 3.15  
 
 highest scores so far: (knight)  
-3.15: www.sudokugen.com/load/knight/Zfle7SkqHDMqpj1o4I7F5wlIJucG2iOgKjH8tL0CS5lk  
-3.11: www.sudokugen.com/load/knight/VPo7ZIrxR2Lneak-epv9BqR4xKBdJz1FR0DdLxHgcBxf  
-3.06: www.sudokugen.com/load/knight/9YNO0iSzGuYO1j2NoooiZ5vw2b69eOtA7ygRsU8oQjIQz  
-3.03: www.sudokugen.com/load/knight/Nv65DI4I4g086M-s6JFR1VuYtD40NtU3-WxPNcDIxa1Tx    
-3.00: www.sudokugen.com/load/knight/CqqMpZB-WKX89yFTPj45TciZbipGpav9rFnKOyVus4p
+3.34: www.sudokugen.com/load/knight/EEq4QlsKJSZxjnLqjWi55qExV98X50loU2NtgJdYWUmYs  
+3.31: www.sudokugen.com/load/knight/od29XmX9E4tg5Wh2ROkPu2iU1UjhRtT8qxUxNmMBr-ljd  
+3.25: www.sudokugen.com/load/knight/RFexKvYIjrSRehRJ7bQjHBNwWf87a1tbNHRhaRtioPvT  
+  
+3.15: www.sudokugen.com/load/knight/Zfle7SkqHDMqpj1o4I7F5wlIJucG2iOgKjH8tL0CS5lk (rotational symmetry)  
+3.11: www.sudokugen.com/load/knight/VPo7ZIrxR2Lneak-epv9BqR4xKBdJz1FR0DdLxHgcBxf (featured on Cracking the Cryptic)  
 
 fewest clues so far: (knight)  
 12: www.sudokugen.com/load/knight/EzmKLhgujIj5AtHxH0hzIlvkgLnuh4xPgbC095kDIde  
