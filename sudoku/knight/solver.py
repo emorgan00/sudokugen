@@ -340,7 +340,38 @@ def make_step(g, opts):
 		if evaluate_pair_knight(pair): edited = True
 		pairs.append(pair)
 
-	if edited: return 150, 'KNIGHT X WING', False
+	if edited: return 200, 'KNIGHT X WING', False
+
+# HIGHER ORDER GROUP SET (score: 200)
+
+	def common_set_tiles(tileset):
+		out = []
+		for p in product(xrange(9), xrange(9)):
+			if all(intersecting(p, q) for q in tileset):
+				out.append(p)
+		return out
+
+	def sets_in_group(group):
+		e = False
+		sets = [[(x, y) for x, y in group if k in opts[x][y]] for k in xrange(9)]
+		for k, tileset in enumerate(sets):
+			if len(tileset) < 3: continue
+			for tile in common_set_tiles(tileset):
+				if k in opts[tile[0]][tile[1]]:
+					opts[tile[0]][tile[1]].remove(k)
+					e = True
+		return e
+
+	# boxes
+	for cx, cy in product(xrange(0, 9, 3), xrange(0, 9, 3)):
+		if sets_in_group(list(product(xrange(cx, cx+3), xrange(cy, cy+3)))): edited = True
+
+	# rows/cols
+	for i in xrange(9):
+		if sets_in_group(list(product([i], xrange(9)))): edited = True
+		if sets_in_group(list(product(xrange(9), [i]))): edited = True
+
+	if edited: return 200, 'HIGHER ORDER GROUP SET', False
 
 # NOTHING WORKED (either we are done, or the puzzle is unsolvable)
 

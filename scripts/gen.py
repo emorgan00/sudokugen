@@ -9,11 +9,11 @@ m_clues = 81
 
 puzzles = []
 
-file_out = 'rsymmetry.txt'
+file_out = 'freeform_2.txt'
 
 if __name__ == '__main__':
 	for i in xrange(1, 101):
-		g = generate_symmetric_grid('R', 'KNIGHT')
+		g = generate_grid('KNIGHT')
 		s = score(g, 'KNIGHT')
 		c = sum(sum(x != -1 for x in row) for row in g)
 		puzzles.append((g, s, c))
