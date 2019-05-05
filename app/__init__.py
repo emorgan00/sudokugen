@@ -11,7 +11,7 @@ app = Flask(__name__)
 VARIANTS = [
 	{'code': 'CLASSIC', 'name': 'Classic Sudoku'},
 	{'code': 'KNIGHT', 'name': 'Anti-Knight Sudoku'},
-	{'code': 'BETWEEN', 'name': 'Between 1 & 9 Sudoku (in development)'}
+	{'code': 'BETWEEN', 'name': 'Between 1 & 9 Sudoku'}
 ]
 
 def full_name(code):

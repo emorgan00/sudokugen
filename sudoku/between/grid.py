@@ -118,5 +118,5 @@ def grid_from_string(s):
 	for x, y in product(xrange(11), xrange(9)):
 		ch = s[x*9+y]
 		if ch == '.': out[x][y] = -1
-		else: out[x][y] = BASE.index(ch)
+		else: out[x][y] = BASE.index(ch)-(1 if x < 9 else 0)
 	return out

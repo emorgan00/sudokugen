@@ -9,8 +9,6 @@ Difficulty guide:
 3.0 - Extreme  
 3.3 - Very Extreme
 
-Highest score ever recorded: 3.15  
-
 highest scores so far: (knight)  
 3.34: www.sudokugen.com/load/knight/EEq4QlsKJSZxjnLqjWi55qExV98X50loU2NtgJdYWUmYs  
 3.31: www.sudokugen.com/load/knight/od29XmX9E4tg5Wh2ROkPu2iU1UjhRtT8qxUxNmMBr-ljd  
