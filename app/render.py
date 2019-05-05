@@ -87,7 +87,7 @@ def form_grid(v):
 		return out+'</table>'
 
 	if v.upper() in ('BETWEEN'):
-		out = '<table class="sudoku_container">'
+		out = '<table class="sudoku_container form_input">'
 
 		for x in xrange(10):
 			out += '<tr class="sudoku_row">'

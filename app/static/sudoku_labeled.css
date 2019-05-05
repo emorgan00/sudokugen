@@ -6,7 +6,7 @@
 }
 
 .sudoku_tile {
-	width: 10.0%;
+	width: 60px;
 	text-align: center;
 	position: relative;
 	border: 1px solid black;
@@ -65,4 +65,23 @@
 
 .sudoku_row:nth-child(3n+1) .sudoku_tile.sum:first-child {
 	border-bottom: dotted;
+}
+
+.sudoku_container {
+	width: 600px;
+	transform: translateX(-60px);
+}
+
+.sudoku_container.form_input {
+	transform: translateX(0);
+}
+
+/* sudoku info box */
+
+#sudoku_info {
+	vertical-align: top;
+	text-align: center;
+	max-width: 538px;
+	margin-top: 30px;
+	margin-bottom: 15px;
 }

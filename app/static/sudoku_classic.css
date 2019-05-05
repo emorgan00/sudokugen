@@ -7,7 +7,7 @@
 }
 
 .sudoku_tile {
-	width: 11.1%;
+	width: 60px;
 	text-align: center;
 	position: relative;
 	border: 1px solid black;
@@ -35,4 +35,14 @@
 }
 .sudoku_row:nth-child(3n) .sudoku_tile {
 	border-bottom: 2px solid;
+}
+
+/* sudoku info box */
+
+#sudoku_info {
+	vertical-align: top;
+	text-align: center;
+	max-width: 538px;
+	margin-top: 30px;
+	margin-bottom: 30px;
 }

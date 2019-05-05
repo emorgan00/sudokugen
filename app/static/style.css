@@ -92,13 +92,3 @@
 	bottom: 0;
 	left: 0;
 }
-
-/* sudoku info box */
-
-#sudoku_info {
-	vertical-align: top;
-	text-align: center;
-	max-width: 538px;
-	margin-top: 30px;
-	margin-bottom: 30px;
-}
