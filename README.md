@@ -13,21 +13,21 @@ Difficulty guide:
 Highest score ever recorded: 3.15  
 
 highest scores so far: (knight)  
-3.15: ..9...7.2...9....5.5..4.....1.......7.......1.......9.....6..3.3....9...5.8...6..  
-3.11: .....6.....3.....72..3..49.6......45..2...8.....1.....3........7....1..9......5..  
-3.06: ..2.......17....................9......84......9..56..7.....3.8..8.............19  
-3.03: .....6......21..7........1.....9..61...5....8.3..8......3.4.......7...8.......4.2    
-3.00: ..6...51......5..3......6..5...4........8..9..9.............4......2........1....
+3.15: www.sudokugen.com/load/knight/Zfle7SkqHDMqpj1o4I7F5wlIJucG2iOgKjH8tL0CS5lk  
+3.11: www.sudokugen.com/load/knight/VPo7ZIrxR2Lneak-epv9BqR4xKBdJz1FR0DdLxHgcBxf  
+3.06: www.sudokugen.com/load/knight/9YNO0iSzGuYO1j2NoooiZ5vw2b69eOtA7ygRsU8oQjIQz  
+3.03: www.sudokugen.com/load/knight/Nv65DI4I4g086M-s6JFR1VuYtD40NtU3-WxPNcDIxa1Tx    
+3.00: www.sudokugen.com/load/knight/CqqMpZB-WKX89yFTPj45TciZbipGpav9rFnKOyVus4p
 
 fewest clues so far: (knight)  
-12: .......6.1.6...24.....3.5..................89......................4.......81....  
+12: www.sudokugen.com/load/knight/EzmKLhgujIj5AtHxH0hzIlvkgLnuh4xPgbC095kDIde  
 
 to do:
 
 SITE:
 about page
 add timer
-z to toggle image
+sort out codes for between
 
 CLASSIC:
 detect implicit triples
