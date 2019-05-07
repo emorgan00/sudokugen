@@ -1,5 +1,19 @@
 /* formatting for global site header */
 
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
 .site_header {
     height: 39.5px;
 	width: 100%;

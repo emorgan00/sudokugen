@@ -20,6 +20,9 @@ highest scores so far: (knight)
 fewest clues so far: (knight)  
 12: www.sudokugen.com/load/knight/EzmKLhgujIj5AtHxH0hzIlvkgLnuh4xPgbC095kDIde  
 
+highest scores so far: (classic)
+2.45: .....13....4..67.95..47.1...65..7......9.....8......4..3..854....76..9....27....5
+
 to do:
 
 SITE:
@@ -35,5 +38,3 @@ KNIGHT:
 higher order group set
 singly chained recursive slice
 higher order recursive slice
-
-/load/between/ClnV0f4V1NhHFILxqNsALoU_J7FJ4069Z5DK9C04E5

@@ -54,6 +54,7 @@ def make_step(g, opts, col_sums, row_sums):
 # REDUCE BY SUM LENGTH (score: 10)
 # for certain sums, the number of digits between the 1 and 9 is restricted, which restrict the placement of 1 and 9
 	
+	
 
 # at this point, we will need to start using pairs, which are set up here
 # pair format: (k, [(x, y), (x, y)]) (same goes for triples, quads)
