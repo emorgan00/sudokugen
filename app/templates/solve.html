@@ -2,36 +2,37 @@
 {% block content %}
 
 	<script src='{{ url_for("static", filename="solve.js") }}'></script>
-	<form class='sudoku_form' id='sudoku_form' method='POST' onkeypress='return event.keyCode != 13;'>
-		<div style='width: 50%; float: left'>
-			<p class='choice_header'>Variant</p>
-			<div class='choice_box'>
-				{% for v in variants %} {% if v.display %}
-				<input type='radio' name='variant' value='{{ v.code }}' onclick='switch_form("{{ url_for("solve", v=v.code.lower()) }}")' required {% if v.code.upper() == v_code %}checked{% endif %}> {{ v.name }} <br>
-				{% endif %} {% endfor %}
-			</div>
-			<p class='choice_header'>Import Code</p>
-			<div class='choice_box'>
-				<input type='button' value='Import Code...' onclick='import_code("{{v_code}}");'>
-				<input type='text' id='code' placeholder='Enter Code' autocomplete='new-password'>
+	{% if v_code in ("CLASSIC", "KNIGHT") %}
+		<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_classic.css") }}'>
+	{% elif v_code in ("BETWEEN") %}
+		<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_labeled.css") }}'>
+	{% endif %}
+	<form class='sudoku_form two_column' id='sudoku_form' method='POST' onkeypress='return event.keyCode != 13;'>
+		<div>
+			<div style='width: 540px;'>
+				<p class='choice_header'>Variant</p>
+				<div class='choice_box'>
+					{% for v in variants %} {% if v.display %}
+					<input type='radio' name='variant' value='{{ v.code }}' onclick='switch_form("{{ url_for("solve", v=v.code.lower()) }}")' required {% if v.code.upper() == v_code %}checked{% endif %}> {{ v.name }} <br>
+					{% endif %} {% endfor %}
+				</div>
+				<p class='choice_header'>Import Code</p>
+				<div class='choice_box'>
+					<input type='button' value='Import Code...' onclick='import_code("{{v_code}}");'>
+					<input type='text' id='code' placeholder='Enter Code' autocomplete='new-password'>
+				</div>
 			</div>
 		</div>
-		{% if v_code in ("CLASSIC", "KNIGHT") %}
-			<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_classic.css") }}'>
-			<div style='width: 50%; min-width: 540px; float: left'>
-				<div style='width: 540px; float: center'>
-		{% elif v_code in ("BETWEEN") %}
-			<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="sudoku_labeled.css") }}'>
-			<div style='width: 50%; min-width: 600px; float: left'>
-				<div style='width: 600px; float: center'>
-		{% endif %}
-				<p class='choice_header'>Edit Grid:</p>
+		<div style='page-break-before: always; page-break-inside: avoid;'>
+			<div class='variable_grid_width'>
+				<p class='choice_header' style='padding-top: 24px;'>Edit Grid:</p>
 				<div>{{ puzzle|safe }}</div>
 				<input id='solve_button' type='submit' name='submit_type' value='Solve' style='margin-top: 50px; float: left;' onclick='loading();'>
 				<input id='solve_button' type='submit' name='submit_type' value='Score (Without Solving)' style='margin-top: 50px; float: left; margin-left: 15px;' onclick='loading();'>
 			</div>
 		</div>
 	</form>
+	<div style='height: 100px;'></div>
 
 	<script type='text/javascript'>
 

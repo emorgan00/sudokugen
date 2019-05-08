@@ -26,15 +26,15 @@ highest scores so far: (classic)
 to do:
 
 SITE:
-about page
 add timer
-sort out codes for between
 
 CLASSIC:
 detect implicit triples
 y wing
 
 KNIGHT:
-higher order group set
-singly chained recursive slice
+singly chained recursive slice  -- non-trivial
 higher order recursive slice
+
+BETWEEN:
+do it

@@ -106,3 +106,9 @@ html {
 	bottom: 0;
 	left: 0;
 }
+
+.two_column {
+	-webkit-column-count: 2;
+	-moz-column-count: 2;
+	column-count: 2;
+}

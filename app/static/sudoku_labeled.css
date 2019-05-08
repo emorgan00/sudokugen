@@ -21,6 +21,16 @@
 	margin-top: 100%;
 }
 
+.variable_grid_width {
+	width: 600px;
+}
+
+.two_column {
+	-webkit-column-width: 600px;
+	-moz-column-width: 600px;
+	column-width: 600px;
+}
+
 /* grid lines within sudoku grid */
 
 .sudoku_tile:nth-child(3n+1) {
