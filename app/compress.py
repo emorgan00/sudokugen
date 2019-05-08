@@ -19,7 +19,7 @@ def compress_code(code):
 
 	out = out[::-1]
 
-	if code.length <= 81: return out
+	if len(code) <= 81: return out
 	return out+'_'+code[81:]
 
 def decompress_code(code):
