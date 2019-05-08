@@ -17,7 +17,10 @@ def compress_code(code):
 		out += VALID_CHARS[i%L_v]
 		i /= L_v
 
-	return out[::-1]+'_'+code[81:]
+	out = out[::-1]
+
+	if code.length <= 81: return out
+	return out+'_'+code[81:]
 
 def decompress_code(code):
 
