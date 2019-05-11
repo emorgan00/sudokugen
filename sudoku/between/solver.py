@@ -1,10 +1,13 @@
 from sys import stdout
 from itertools import product
 from grid import neighbors_all, same_box, in_range, grid_to_string
+from constants import SUM_LENGTHS, SUM_SETS
 
 def make_step(g, opts, col_sums, row_sums):
 	'''try each method in turn, exiting once any progress is made and returning the difficulty score of that method
 	returns (score, name of method, grid modified?)'''
+
+	edited = False
 
 # ELIMINATE BY DIRECT CONFLICT (this method has a score of 0, and thus does not early-exit)
 
@@ -51,10 +54,16 @@ def make_step(g, opts, col_sums, row_sums):
 		if slice_group(product([i], xrange(9))): return 1, 'ROW SLICE', True
 		if slice_group(product(xrange(9), [i])): return 1, 'COL SLICE', True
 
-# REDUCE BY SUM LENGTH (score: 10)
+# REDUCE BY SUM SET LENGTH (score: 10)
 # for certain sums, the number of digits between the 1 and 9 is restricted, which restrict the placement of 1 and 9
 	
-	
+	def sum_set_length(group):
+		pass
+
+	# rows/cols
+	for i in xrange(9):
+		if sum_set_length(product([i], xrange(9))): edited = True
+		if sum_set_length(product(xrange(9), [i])): edited = True
 
 # at this point, we will need to start using pairs, which are set up here
 # pair format: (k, [(x, y), (x, y)]) (same goes for triples, quads)
@@ -112,7 +121,6 @@ def make_step(g, opts, col_sums, row_sums):
 					e = True
 		return e
 
-	edited = False
 	for pair in pairs:
 		if evaluate_pair(pair): edited = True
 

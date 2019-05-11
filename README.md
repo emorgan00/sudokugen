@@ -33,8 +33,7 @@ detect implicit triples
 y wing
 
 KNIGHT:
-singly chained recursive slice  -- non-trivial
-higher order recursive slice
+single-number linking (300?)
 
 BETWEEN:
 do it
