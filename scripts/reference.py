@@ -4,10 +4,9 @@ from sudoku import *
 
 puzzle = grid_from_string('''
 
-.....13....4..67.95..47.1...65..7......9.....8......4..3..854....76..9....27....5
+........1...............................1........................................J7FJ4069Z5DK9C04E5
 
-
-''', 'CLASSIC')
+''', 'BETWEEN')
 
 if __name__ == '__main__':
-	print score(puzzle, 'classic', True)
+	print score(puzzle, 'BETWEEN', True)

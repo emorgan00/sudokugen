@@ -3,7 +3,7 @@ from itertools import product
 from grid import neighbors_all, same_box, in_range, grid_to_string
 from constants import SUM_LENGTHS, SUM_SETS
 
-def make_step(g, opts, col_sums, row_sums):
+def make_step(g, opts, req, col_sums, row_sums):
 	'''try each method in turn, exiting once any progress is made and returning the difficulty score of that method
 	returns (score, name of method, grid modified?)'''
 
@@ -53,17 +53,6 @@ def make_step(g, opts, col_sums, row_sums):
 	for i in xrange(9):
 		if slice_group(product([i], xrange(9))): return 1, 'ROW SLICE', True
 		if slice_group(product(xrange(9), [i])): return 1, 'COL SLICE', True
-
-# REDUCE BY SUM SET LENGTH (score: 10)
-# for certain sums, the number of digits between the 1 and 9 is restricted, which restrict the placement of 1 and 9
-	
-	def sum_set_length(group):
-		pass
-
-	# rows/cols
-	for i in xrange(9):
-		if sum_set_length(product([i], xrange(9))): edited = True
-		if sum_set_length(product(xrange(9), [i])): edited = True
 
 # at this point, we will need to start using pairs, which are set up here
 # pair format: (k, [(x, y), (x, y)]) (same goes for triples, quads)
@@ -248,6 +237,56 @@ def make_step(g, opts, col_sums, row_sums):
 
 	# if edited: return 30, 'OVERLAPPING TRIPLE', False
 
+# update req from opts/g, this is just to streamline other methods to follow.
+
+	for x, y in product(xrange(9), xrange(9)):
+		if g[x][y] in (0, 8):
+			req[x][y] = True
+			continue
+		if len(opts[x][y]) == 2 and opts[x][y][0] == 0 and opts[x][y][1] == 8:
+			req[x][y] = True
+
+# REDUCE BY SUM SET LENGTH w/ 1 given (score: 40)
+# for certain sums, the number of digits between the 1 and 9 is restricted, which restricts the placement of 1 and 9
+	
+	# rows
+	for x in xrange(9):
+		lens = SUM_LENGTHS[row_sums[x]]
+		r, c = None, 0
+		for y in xrange(9):
+			if req[x][y]:
+				r = y
+				c += 1
+		if c != 1: continue
+		for y in xrange(9):
+			if abs(y-r)-1 not in lens:
+				if 0 in opts[x][y]:
+					opts[x][y].remove(0)
+					edited = True
+				if 8 in opts[x][y]:
+					opts[x][y].remove(8)
+					edited = True
+	
+	# cols
+	for y in xrange(9):
+		lens = SUM_LENGTHS[col_sums[y]]
+		r, c = None, 0
+		for x in xrange(9):
+			if req[x][y]:
+				r = x
+				c += 1
+		if c != 1: continue
+		for x in xrange(9):
+			if abs(x-r)-1 not in lens:
+				if 0 in opts[x][y]:
+					opts[x][y].remove(0)
+					edited = True
+				if 8 in opts[x][y]:
+					opts[x][y].remove(8)
+					edited = True
+
+	if edited: return 40, 'SUM SET LENGTH (1 GIVEN)', False
+
 # X WING (score: 100)
 
 	for i in xrange(len(pairs)):
@@ -290,6 +329,7 @@ def score(g, verbose = False):
 
 	score = 0
 	opts = [[range(9) if g[x][y] == -1 else [] for y in xrange(9)] for x in xrange(9)]
+	req = [[g[x][y] in (0, 8) for y in xrange(9)] for x in xrange(9)] # true if tile must be a 1 or 9
 	col_sums = g[9]
 	row_sums = g[10]
 
@@ -298,7 +338,7 @@ def score(g, verbose = False):
 		print grid_to_string(g)
 
 	while True:
-		s, name, display = make_step(g, opts, col_sums, row_sums)
+		s, name, display = make_step(g, opts, req, col_sums, row_sums)
 		if s == -1: break
 
 		score += s
@@ -306,6 +346,7 @@ def score(g, verbose = False):
 			print name+' '+str(score)
 			if display:
 				print grid_to_string(g)
+				print req
 			stdout.flush()
 
 	for x, y in product(xrange(9), xrange(9)):
