@@ -32,9 +32,9 @@ def grid_to_string(g, variant, noFormat = False):
 
 	return fetch_module(variant).grid_to_string(g, noFormat)
 
-def print_grid(g, variant):
+def print_grid(g, variant, noFormat = False):
 
-	print grid_to_string(g, variant)
+	print grid_to_string(g, variant, noFormat)
 
 def grid_from_string(g, variant):
 

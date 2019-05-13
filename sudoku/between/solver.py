@@ -54,6 +54,67 @@ def make_step(g, opts, req, sets, col_sums, row_sums):
 		if slice_group(product([i], xrange(9))): return 1, 'ROW SLICE', True
 		if slice_group(product(xrange(9), [i])): return 1, 'COL SLICE', True
 
+# update req from opts/g, this is just to streamline other methods to follow.
+
+	for x, y in product(xrange(9), xrange(9)):
+		if g[x][y] in (0, 8):
+			req[x][y] = True
+			continue
+		if len(opts[x][y]) == 2 and opts[x][y][0] == 0 and opts[x][y][1] == 8:
+			req[x][y] = True
+
+	def can_be_19(opt):
+		for k in opt:
+			if k == 0 or k == 8: return True
+		return False
+
+	def del_19_from_opt(x, y):
+		e = False
+		if 0 in opts[x][y]:
+			opts[x][y].remove(0)
+			e = True
+		if 8 in opts[x][y]:
+			opts[x][y].remove(8)
+			e = True
+		return e
+
+# REDUCE BY SUM SET LENGTH w/ 1 given (score: 20)
+# for certain sums, the number of digits between the 1 and 9 is restricted, which restricts the placement of 1 and 9
+	
+	# rows
+	for x in xrange(9):
+
+		r, c = None, 0
+		for y in xrange(9):
+			if req[x][y]:
+				r = y
+				c += 1
+		if c != 1: continue
+
+		lens = set(len(s) for s in sets[row_sums[x]])
+		for y in xrange(9):
+			if abs(y-r)-1 not in lens:
+				if del_19_from_opt(x, y):
+					edited = True
+	
+	# cols
+	for y in xrange(9):
+
+		r, c = None, 0
+		for x in xrange(9):
+			if req[x][y]:
+				r = x
+				c += 1
+		if c != 1: continue
+
+		lens = set(len(s) for s in sets[col_sums[y]])
+		for x in xrange(9):
+			if abs(x-r)-1 not in lens:
+				if del_19_from_opt(x, y):
+					edited = True
+
+	if edited: return 20, 'SUM SET LENGTH (1 GIVEN)', False
+
 # at this point, we will need to start using pairs, which are set up here
 # pair format: (k, [(x, y), (x, y)]) (same goes for triples, quads)
 	
@@ -237,67 +298,6 @@ def make_step(g, opts, req, sets, col_sums, row_sums):
 
 	# if edited: return 30, 'OVERLAPPING TRIPLE', False
 
-# update req from opts/g, this is just to streamline other methods to follow.
-
-	for x, y in product(xrange(9), xrange(9)):
-		if g[x][y] in (0, 8):
-			req[x][y] = True
-			continue
-		if len(opts[x][y]) == 2 and opts[x][y][0] == 0 and opts[x][y][1] == 8:
-			req[x][y] = True
-
-	def can_be_19(opt):
-		for k in opt:
-			if k == 0 or k == 8: return True
-		return False
-
-	def del_19_from_opt(x, y):
-		e = False
-		if 0 in opts[x][y]:
-			opts[x][y].remove(0)
-			e = True
-		if 8 in opts[x][y]:
-			opts[x][y].remove(8)
-			e = True
-		return e
-
-# REDUCE BY SUM SET LENGTH w/ 1 given (score: 30)
-# for certain sums, the number of digits between the 1 and 9 is restricted, which restricts the placement of 1 and 9
-	
-	# rows
-	for x in xrange(9):
-
-		r, c = None, 0
-		for y in xrange(9):
-			if req[x][y]:
-				r = y
-				c += 1
-		if c != 1: continue
-
-		lens = set(len(s) for s in sets[row_sums[x]])
-		for y in xrange(9):
-			if abs(y-r)-1 not in lens:
-				if del_19_from_opt(x, y):
-					edited = True
-	
-	# cols
-	for y in xrange(9):
-
-		r, c = None, 0
-		for x in xrange(9):
-			if req[x][y]:
-				r = x
-				c += 1
-		if c != 1: continue
-
-		lens = set(len(s) for s in sets[col_sums[y]])
-		for x in xrange(9):
-			if abs(x-r)-1 not in lens:
-				if del_19_from_opt(x, y):
-					edited = True
-
-	if edited: return 30, 'SUM SET LENGTH (1 GIVEN)', False
-
 # REDUCE BY SUM SET LENGTH w/ 0 given (score: 100)
 	
 	# rows
@@ -309,7 +309,6 @@ def make_step(g, opts, req, sets, col_sums, row_sums):
 		for y in xrange(9):
 			if not any(y+l < 8 and can_be_19(opts[x][y+l+1]) or y-l > 0 and can_be_19(opts[x][y-l-1]) for l in lens):
 				if del_19_from_opt(x, y):
-					print 'r', x, y
 					edited = True
 
 	# cols
@@ -321,7 +320,6 @@ def make_step(g, opts, req, sets, col_sums, row_sums):
 		for x in xrange(9):
 			if not any(x+l < 8 and can_be_19(opts[x+l+1][y]) or x-l > 0 and can_be_19(opts[x-l-1][y]) for l in lens):
 				if del_19_from_opt(x, y):
-					print 'c', x, y
 					edited = True
 
 	if edited: return 100, 'SUM SET LENGTH (0 GIVEN)', False
