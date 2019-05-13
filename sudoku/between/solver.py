@@ -3,7 +3,7 @@ from itertools import product
 from grid import neighbors_all, same_box, in_range, grid_to_string
 from constants import SUM_LENGTHS, SUM_SETS
 
-def make_step(g, opts, req, col_sums, row_sums):
+def make_step(g, opts, req, sets, col_sums, row_sums):
 	'''try each method in turn, exiting once any progress is made and returning the difficulty score of that method
 	returns (score, name of method, grid modified?)'''
 
@@ -246,46 +246,85 @@ def make_step(g, opts, req, col_sums, row_sums):
 		if len(opts[x][y]) == 2 and opts[x][y][0] == 0 and opts[x][y][1] == 8:
 			req[x][y] = True
 
-# REDUCE BY SUM SET LENGTH w/ 1 given (score: 40)
+	def can_be_19(opt):
+		for k in opt:
+			if k == 0 or k == 8: return True
+		return False
+
+	def del_19_from_opt(x, y):
+		e = False
+		if 0 in opts[x][y]:
+			opts[x][y].remove(0)
+			e = True
+		if 8 in opts[x][y]:
+			opts[x][y].remove(8)
+			e = True
+		return e
+
+# REDUCE BY SUM SET LENGTH w/ 1 given (score: 30)
 # for certain sums, the number of digits between the 1 and 9 is restricted, which restricts the placement of 1 and 9
 	
 	# rows
 	for x in xrange(9):
-		lens = SUM_LENGTHS[row_sums[x]]
+
 		r, c = None, 0
 		for y in xrange(9):
 			if req[x][y]:
 				r = y
 				c += 1
 		if c != 1: continue
+
+		lens = set(len(s) for s in sets[row_sums[x]])
 		for y in xrange(9):
 			if abs(y-r)-1 not in lens:
-				if 0 in opts[x][y]:
-					opts[x][y].remove(0)
-					edited = True
-				if 8 in opts[x][y]:
-					opts[x][y].remove(8)
+				if del_19_from_opt(x, y):
 					edited = True
 	
 	# cols
 	for y in xrange(9):
-		lens = SUM_LENGTHS[col_sums[y]]
+
 		r, c = None, 0
 		for x in xrange(9):
 			if req[x][y]:
 				r = x
 				c += 1
 		if c != 1: continue
+
+		lens = set(len(s) for s in sets[col_sums[y]])
 		for x in xrange(9):
 			if abs(x-r)-1 not in lens:
-				if 0 in opts[x][y]:
-					opts[x][y].remove(0)
-					edited = True
-				if 8 in opts[x][y]:
-					opts[x][y].remove(8)
+				if del_19_from_opt(x, y):
 					edited = True
 
-	if edited: return 40, 'SUM SET LENGTH (1 GIVEN)', False
+	if edited: return 30, 'SUM SET LENGTH (1 GIVEN)', False
+
+# REDUCE BY SUM SET LENGTH w/ 0 given (score: 100)
+	
+	# rows
+	for x in xrange(9):
+		c = sum(req[x][y] for y in xrange(9))
+		if c != 0: continue
+
+		lens = set(len(s) for s in sets[row_sums[x]])
+		for y in xrange(9):
+			if not any(y+l < 8 and can_be_19(opts[x][y+l+1]) or y-l > 0 and can_be_19(opts[x][y-l-1]) for l in lens):
+				if del_19_from_opt(x, y):
+					print 'r', x, y
+					edited = True
+
+	# cols
+	for y in xrange(9):
+		c = sum(req[x][y] for x in xrange(9))
+		if c != 0: continue
+
+		lens = set(len(s) for s in sets[col_sums[y]])
+		for x in xrange(9):
+			if not any(x+l < 8 and can_be_19(opts[x+l+1][y]) or x-l > 0 and can_be_19(opts[x-l-1][y]) for l in lens):
+				if del_19_from_opt(x, y):
+					print 'c', x, y
+					edited = True
+
+	if edited: return 100, 'SUM SET LENGTH (0 GIVEN)', False
 
 # X WING (score: 100)
 
@@ -332,13 +371,14 @@ def score(g, verbose = False):
 	req = [[g[x][y] in (0, 8) for y in xrange(9)] for x in xrange(9)] # true if tile must be a 1 or 9
 	col_sums = g[9]
 	row_sums = g[10]
+	sets = SUM_SETS.copy()
 
 	if verbose:
 		print 'STARTING POSITION 0'
 		print grid_to_string(g)
 
 	while True:
-		s, name, display = make_step(g, opts, req, col_sums, row_sums)
+		s, name, display = make_step(g, opts, req, sets, col_sums, row_sums)
 		if s == -1: break
 
 		score += s
@@ -346,7 +386,6 @@ def score(g, verbose = False):
 			print name+' '+str(score)
 			if display:
 				print grid_to_string(g)
-				print req
 			stdout.flush()
 
 	for x, y in product(xrange(9), xrange(9)):
