@@ -11,3 +11,4 @@ if __name__ == '__main__':
 	puzzle = generate_grid(variant, 4.0, True)
 	print score(puzzle, variant)
 	print_grid(puzzle, variant, True)
+	print compress.compress_code(grid_to_string(puzzle, variant, True))

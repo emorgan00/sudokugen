@@ -36,4 +36,6 @@ KNIGHT:
 single-number linking (300?)
 
 BETWEEN:
-do it
+reduce potential sets by lack of component (componentless set)
+2-ended set group slice
+1-ended set group slice (symmetric pairs)

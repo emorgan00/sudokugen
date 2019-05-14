@@ -78,7 +78,7 @@ def make_step(g, opts, req, sets, col_sums, row_sums):
 			e = True
 		return e
 
-# REDUCE BY SUM SET LENGTH w/ 1 given (score: 20)
+# REDUCE BY SUM SET LENGTH w/ 1 given (score: 25)
 # for certain sums, the number of digits between the 1 and 9 is restricted, which restricts the placement of 1 and 9
 	
 	# rows
@@ -113,7 +113,47 @@ def make_step(g, opts, req, sets, col_sums, row_sums):
 				if del_19_from_opt(x, y):
 					edited = True
 
-	if edited: return 20, 'SUM SET LENGTH (1 GIVEN)', False
+	if edited: return 25, 'SUM SET LENGTH (1 GIVEN)', False
+
+# POTENTIAL SUMS (2 ENDS) (score: 50)
+	
+	# rows
+	for x in xrange(9):
+
+		r = [y for y in xrange(9) if req[x][y]]
+		if len(r) != 2: continue
+
+		sum_set = sets[row_sums[x]]
+		ks = range(9)
+		for s in sum_set:
+			for k in s:
+				if k in ks: ks.remove(k)
+		
+		for y in xrange(r[0]+1, r[1]):
+			for k in ks:
+				if k in opts[x][y]:
+					edited = True
+					opts[x][y].remove(k)
+	
+	# cols
+	for y in xrange(9):
+
+		r = [x for x in xrange(9) if req[x][y]]
+		if len(r) != 2: continue
+
+		sum_set = sets[col_sums[y]]
+		ks = range(9)
+		for s in sum_set:
+			for k in s:
+				if k in ks: ks.remove(k)
+		
+		for x in xrange(r[0]+1, r[1]):
+			for k in ks:
+				if k in opts[x][y]:
+					edited = True
+					opts[x][y].remove(k)
+
+	if edited: return 50, 'POTENTIAL SUMS (2 ENDS)', False
 
 # at this point, we will need to start using pairs, which are set up here
 # pair format: (k, [(x, y), (x, y)]) (same goes for triples, quads)
