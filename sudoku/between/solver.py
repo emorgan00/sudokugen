@@ -3,7 +3,7 @@ from itertools import product
 from grid import neighbors_all, same_box, in_range, grid_to_string
 from constants import SUM_LENGTHS, SUM_SETS
 
-def make_step(g, opts, req, sets, col_sums, row_sums):
+def make_step(g, opts, req, col_sets, row_sets, col_sums, row_sums):
 	'''try each method in turn, exiting once any progress is made and returning the difficulty score of that method
 	returns (score, name of method, grid modified?)'''
 
@@ -91,7 +91,7 @@ def make_step(g, opts, req, sets, col_sums, row_sums):
 				c += 1
 		if c != 1: continue
 
-		lens = set(len(s) for s in sets[row_sums[x]])
+		lens = set(len(s) for s in row_sets[x])
 		for y in xrange(9):
 			if abs(y-r)-1 not in lens:
 				if del_19_from_opt(x, y):
@@ -107,7 +107,7 @@ def make_step(g, opts, req, sets, col_sums, row_sums):
 				c += 1
 		if c != 1: continue
 
-		lens = set(len(s) for s in sets[col_sums[y]])
+		lens = set(len(s) for s in col_sets[y])
 		for x in xrange(9):
 			if abs(x-r)-1 not in lens:
 				if del_19_from_opt(x, y):
@@ -123,7 +123,7 @@ def make_step(g, opts, req, sets, col_sums, row_sums):
 		r = [y for y in xrange(9) if req[x][y]]
 		if len(r) != 2: continue
 
-		sum_set = sets[row_sums[x]]
+		sum_set = row_sets[x]
 		ks = range(9)
 		for s in sum_set:
 			for k in s:
@@ -141,7 +141,7 @@ def make_step(g, opts, req, sets, col_sums, row_sums):
 		r = [x for x in xrange(9) if req[x][y]]
 		if len(r) != 2: continue
 
-		sum_set = sets[col_sums[y]]
+		sum_set = col_sets[y]
 		ks = range(9)
 		for s in sum_set:
 			for k in s:
@@ -409,14 +409,16 @@ def score(g, verbose = False):
 	req = [[g[x][y] in (0, 8) for y in xrange(9)] for x in xrange(9)] # true if tile must be a 1 or 9
 	col_sums = g[9]
 	row_sums = g[10]
-	sets = SUM_SETS.copy()
+
+	col_sets =[list(SUM_SETS[s]) for s in col_sums]
+	row_sets =[list(SUM_SETS[s]) for s in row_sums]
 
 	if verbose:
 		print 'STARTING POSITION 0'
 		print grid_to_string(g)
 
 	while True:
-		s, name, display = make_step(g, opts, req, sets, col_sums, row_sums)
+		s, name, display = make_step(g, opts, req, col_sets, row_sets, col_sums, row_sums)
 		if s == -1: break
 
 		score += s
