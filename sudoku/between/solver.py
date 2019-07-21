@@ -24,7 +24,7 @@ def make_step(g, opts, req, col_sets, row_sets, col_sums, row_sums):
 	for x, y in product(xrange(9), xrange(9)):
 		if g[x][y] != -1: continue
 		if len(opts[x][y]) == 0:
-			return -1, 'ERROR', False
+			return -1, 'ERROR', True
 		if len(opts[x][y]) == 1:
 			g[x][y] = opts[x][y].pop()
 			return 1, 'COLLAPSE', True
@@ -43,6 +43,7 @@ def make_step(g, opts, req, col_sets, row_sets, col_sums, row_sums):
 		for k, c in enumerate(count):
 			if c[0] == 1:
 				g[c[1]][c[2]] = k
+				opts[c[1]][c[2]] = []
 				return True
 
 	# boxes
@@ -77,83 +78,6 @@ def make_step(g, opts, req, col_sets, row_sets, col_sums, row_sums):
 			opts[x][y].remove(8)
 			e = True
 		return e
-
-# REDUCE BY SUM SET LENGTH w/ 1 given (score: 25)
-# for certain sums, the number of digits between the 1 and 9 is restricted, which restricts the placement of 1 and 9
-	
-	# rows
-	for x in xrange(9):
-
-		r, c = None, 0
-		for y in xrange(9):
-			if req[x][y]:
-				r = y
-				c += 1
-		if c != 1: continue
-
-		lens = set(len(s) for s in row_sets[x])
-		for y in xrange(9):
-			if abs(y-r)-1 not in lens:
-				if del_19_from_opt(x, y):
-					edited = True
-	
-	# cols
-	for y in xrange(9):
-
-		r, c = None, 0
-		for x in xrange(9):
-			if req[x][y]:
-				r = x
-				c += 1
-		if c != 1: continue
-
-		lens = set(len(s) for s in col_sets[y])
-		for x in xrange(9):
-			if abs(x-r)-1 not in lens:
-				if del_19_from_opt(x, y):
-					edited = True
-
-	if edited: return 25, 'SUM SET LENGTH (1 GIVEN)', False
-
-# POTENTIAL SUMS (2 ENDS) (score: 50)
-	
-	# rows
-	for x in xrange(9):
-
-		r = [y for y in xrange(9) if req[x][y]]
-		if len(r) != 2: continue
-
-		sum_set = row_sets[x]
-		ks = range(9)
-		for s in sum_set:
-			for k in s:
-				if k in ks: ks.remove(k)
-		
-		for y in xrange(r[0]+1, r[1]):
-			for k in ks:
-				if k in opts[x][y]:
-					edited = True
-					opts[x][y].remove(k)
-	
-	# cols
-	for y in xrange(9):
-
-		r = [x for x in xrange(9) if req[x][y]]
-		if len(r) != 2: continue
-
-		sum_set = col_sets[y]
-		ks = range(9)
-		for s in sum_set:
-			for k in s:
-				if k in ks: ks.remove(k)
-		
-		for x in xrange(r[0]+1, r[1]):
-			for k in ks:
-				if k in opts[x][y]:
-					edited = True
-					opts[x][y].remove(k)
-
-	if edited: return 50, 'POTENTIAL SUMS (2 ENDS)', False
 
 # at this point, we will need to start using pairs, which are set up here
 # pair format: (k, [(x, y), (x, y)]) (same goes for triples, quads)
@@ -316,6 +240,43 @@ def make_step(g, opts, req, col_sets, row_sets, col_sums, row_sums):
 
 	if edited: return 25, 'OVERLAPPING PAIR', False
 
+# REDUCE BY SUM SET LENGTH w/ 1 given (score: 25)
+# for certain sums, the number of digits between the 1 and 9 is restricted, which restricts the placement of 1 and 9
+	
+	# rows
+	for x in xrange(9):
+
+		r, c = None, 0
+		for y in xrange(9):
+			if req[x][y]:
+				r = y
+				c += 1
+		if c != 1: continue
+
+		lens = set(len(s) for s in row_sets[x])
+		for y in xrange(9):
+			if abs(y-r)-1 not in lens:
+				if del_19_from_opt(x, y):
+					edited = True
+	
+	# cols
+	for y in xrange(9):
+
+		r, c = None, 0
+		for x in xrange(9):
+			if req[x][y]:
+				r = x
+				c += 1
+		if c != 1: continue
+
+		lens = set(len(s) for s in col_sets[y])
+		for x in xrange(9):
+			if abs(x-r)-1 not in lens:
+				if del_19_from_opt(x, y):
+					edited = True
+
+	if edited: return 25, 'SUM SET LENGTH (1 GIVEN)', False
+
 # OVERLAPPING TRIPLE (score: 30)
 # note: this won't detect triples with pairs as components (which is most triples)
 # note: this is currently commented out because it is SUPER expensive and rarely is useful
@@ -338,6 +299,72 @@ def make_step(g, opts, req, col_sets, row_sets, col_sums, row_sums):
 
 	# if edited: return 30, 'OVERLAPPING TRIPLE', False
 
+# POTENTIAL SUMS (2 ENDS) (score: 50)
+	
+	# rows
+	for x in xrange(9):
+
+		r = [y for y in xrange(9) if req[x][y]]
+		if len(r) != 2: continue
+
+		sum_set = row_sets[x]
+		ks = range(9)
+		for s in sum_set:
+			for k in s:
+				if k in ks: ks.remove(k)
+		
+		for y in xrange(r[0]+1, r[1]):
+			for k in ks:
+				if k in opts[x][y]:
+					edited = True
+					opts[x][y].remove(k)
+	
+	# cols
+	for y in xrange(9):
+
+		r = [x for x in xrange(9) if req[x][y]]
+		if len(r) != 2: continue
+
+		sum_set = col_sets[y]
+		ks = range(9)
+		for s in sum_set:
+			for k in s:
+				if k in ks: ks.remove(k)
+		
+		for x in xrange(r[0]+1, r[1]):
+			for k in ks:
+				if k in opts[x][y]:
+					edited = True
+					opts[x][y].remove(k)
+
+	if edited: return 50, 'POTENTIAL SUMS (2 ENDS)', False
+
+# UNATTAINABLE SUM SET LENGTHS (2 ENDS) (score: 50)
+	
+	# rows
+	for x in xrange(9):
+
+		r = [y for y in xrange(9) if req[x][y]]
+		if len(r) != 2: continue
+
+		new_sets = [s for s in row_sets[x] if len(s) == r[1]-r[0]-1]
+		if len(new_sets) != len(row_sets[x]):
+			row_sets[x] = new_sets
+			edited = True
+	
+	# cols
+	for y in xrange(9):
+
+		r = [x for x in xrange(9) if req[x][y]]
+		if len(r) != 2: continue
+
+		new_sets = [s for s in col_sets[y] if len(s) == r[1]-r[0]-1]
+		if len(new_sets) != len(col_sets[y]):
+			col_sets[y] = new_sets
+			edited = True
+
+	if edited: return 50, 'UNATTAINABLE SUM SET LENGTHS (2 ENDS)', False
+
 # REDUCE BY SUM SET LENGTH w/ 0 given (score: 100)
 	
 	# rows
@@ -345,7 +372,7 @@ def make_step(g, opts, req, col_sets, row_sets, col_sums, row_sums):
 		c = sum(req[x][y] for y in xrange(9))
 		if c != 0: continue
 
-		lens = set(len(s) for s in sets[row_sums[x]])
+		lens = set(len(s) for s in row_sets[x])
 		for y in xrange(9):
 			if not any(y+l < 8 and can_be_19(opts[x][y+l+1]) or y-l > 0 and can_be_19(opts[x][y-l-1]) for l in lens):
 				if del_19_from_opt(x, y):
@@ -356,7 +383,7 @@ def make_step(g, opts, req, col_sets, row_sets, col_sums, row_sums):
 		c = sum(req[x][y] for x in xrange(9))
 		if c != 0: continue
 
-		lens = set(len(s) for s in sets[col_sums[y]])
+		lens = set(len(s) for s in col_sets[y])
 		for x in xrange(9):
 			if not any(x+l < 8 and can_be_19(opts[x+l+1][y]) or x-l > 0 and can_be_19(opts[x-l-1][y]) for l in lens):
 				if del_19_from_opt(x, y):

@@ -40,6 +40,7 @@ def make_step(g, opts):
 		for k, c in enumerate(count):
 			if c[0] == 1:
 				g[c[1]][c[2]] = k
+				opts[c[1]][c[2]] = []
 				return True
 
 	# boxes

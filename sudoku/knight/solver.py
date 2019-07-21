@@ -26,6 +26,7 @@ def make_step(g, opts):
 			return -1, 'ERROR', False
 		if len(opts[x][y]) == 1:
 			g[x][y] = opts[x][y].pop()
+			opts[c[1]][c[2]] = []
 			return 1, 'COLLAPSE', True
 
 # BOX/ROW/COL SLICE (score: 1)
