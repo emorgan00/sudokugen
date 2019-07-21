@@ -365,6 +365,36 @@ def make_step(g, opts, req, col_sets, row_sets, col_sums, row_sums):
 
 	if edited: return 50, 'UNATTAINABLE SUM SET LENGTHS (2 ENDS)', False
 
+# COMPONENTLESS SETS (2 ENDS) (score: 50)
+	
+	# rows
+	for x in xrange(9):
+
+		r = [y for y in xrange(9) if req[x][y]]
+		if len(r) != 2: continue
+
+		for k in xrange(9):
+			if not any(k in opts[x][y] for y in xrange(r[0]+1, r[1])):
+				new_sets = [s for s in row_sets[x] if k not in s]
+				if len(new_sets) != len(row_sets[x]):
+					row_sets[x] = new_sets
+					edited = True
+	
+	# cols
+	for y in xrange(9):
+
+		r = [x for x in xrange(9) if req[x][y]]
+		if len(r) != 2: continue
+
+		for k in xrange(9):
+			if not any(k in opts[x][y] for x in xrange(r[0]+1, r[1])):
+				new_sets = [s for s in col_sets[y] if k not in s]
+				if len(new_sets) != len(col_sets[y]):
+					col_sets[y] = new_sets
+					edited = True
+
+	if edited: return 50, 'COMPONENTLESS SETS (2 ENDS)', False
+
 # REDUCE BY SUM SET LENGTH w/ 0 given (score: 100)
 	
 	# rows
@@ -444,7 +474,7 @@ def score(g, verbose = False):
 		print 'STARTING POSITION 0'
 		print grid_to_string(g)
 
-	while True:
+	while any(g[x][y] == -1 for x, y in product(xrange(9), xrange(9))):
 		s, name, display = make_step(g, opts, req, col_sets, row_sets, col_sums, row_sums)
 		if s == -1: break
 
