@@ -2,11 +2,13 @@ import sys, os
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from sudoku import *
 
+variant = 'BETWEEN'
 puzzle = grid_from_string('''
 
-...3................61.......1...6.8..7....1.6.........4....1....3....67........53TB22R27KVT53DIDB0
+.....8........5......4......3..7.........3..........1........4.9.................SZ0RO38FK5RAFA8EBV
 
-''', 'BETWEEN')
+''', variant)
 
 if __name__ == '__main__':
-	print score(puzzle, 'BETWEEN', True)
+	print solve(puzzle, variant, True)
+	print_grid(puzzle, variant, True)

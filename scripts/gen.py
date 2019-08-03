@@ -9,12 +9,13 @@ m_clues = 81
 
 puzzles = []
 
-file_out = 'freeform_2.txt'
+file_out = 'freeform_classic2.txt'
+variant = 'CLASSIC'
 
 if __name__ == '__main__':
 	for i in xrange(1, 101):
-		g = generate_grid('KNIGHT')
-		s = score(g, 'KNIGHT')
+		g = generate_grid(variant)
+		s = score(g, variant)
 		c = sum(sum(x != -1 for x in row) for row in g)
 		puzzles.append((g, s, c))
 		print str(i)+' / 100'
@@ -26,11 +27,11 @@ if __name__ == '__main__':
 		for p, s, c in puzzles[:5]:
 			f.write('\n\nSCORE: '+str(s)+'\n')
 			f.write('CLUES: '+str(c)+'\n')
-			f.write(grid_to_string(p, 'KNIGHT'))
+			f.write(grid_to_string(p, variant))
 
 		puzzles.sort(key = lambda x: (x[2], x[1]))
 		f.write('\n\nFEWEST CLUES:')
 		for p, s, c in puzzles:
 			f.write('\n\nSCORE: '+str(s)+'\n')
 			f.write('CLUES: '+str(c)+'\n')
-			f.write(grid_to_string(p, 'KNIGHT'))
+			f.write(grid_to_string(p, variant))
